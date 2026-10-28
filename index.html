@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutritional Lawyer - Calm Edition</title>
-    <!-- تضمين مكتبة html2canvas المتوافقة محلياً -->
+    <!-- html2canvas library for screenshot/export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -22,6 +22,7 @@
             --color-pro: #7c3aed;     
             --color-intake: #0d9488;  
             --color-faeces: #be185d;  
+            --color-mfn: #059669;
             --color-dcp: #7c3aed;     
             --color-dnfe: #d97706;    
             --color-dcf: #16a34a;     
@@ -46,6 +47,7 @@
             --color-pro: #c084fc;
             --color-intake: #2dd4bf;
             --color-faeces: #f472b6;
+            --color-mfn: #34d399;
             --color-dcp: #c084fc;
             --color-dnfe: #fbbf24;
             --color-dcf: #4ade80;
@@ -151,7 +153,6 @@
         }
         .denominator { padding-top: 2px; }
         
-        /* الصناديق الصغيرة مع العنوان الصغير الأنيق بدون زيادة ارتفاع */
         .dynamic-slot {
             display: inline-flex;
             flex-direction: column;
@@ -180,6 +181,7 @@
         .slot-pro { border: 2px solid var(--color-pro); color: var(--color-pro); }
         .slot-intake { border: 2px solid var(--color-intake); color: var(--color-intake); }
         .slot-faeces { border: 2px solid var(--color-faeces); color: var(--color-faeces); }
+        .slot-mfn { border: 2px solid var(--color-mfn); color: var(--color-mfn); }
         .slot-dcp { border: 2px solid var(--color-dcp); color: var(--color-dcp); }
         .slot-dnfe { border: 2px solid var(--color-dnfe); color: var(--color-dnfe); }
         .slot-dcf { border: 2px solid var(--color-dcf); color: var(--color-dcf); }
@@ -189,6 +191,8 @@
         .slot-tdn { border: 2.5px solid var(--color-tdn); color: var(--color-tdn); }
 
         .form-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 25px; }
+        .form-row { display: flex; gap: 14px; }
+        .form-row .form-group { flex: 1; }
         .form-group { width: 100%; }
         label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-color); }
         
@@ -197,6 +201,7 @@
         input.input-pro { border: 2px solid var(--color-pro); }
         input.input-intake { border: 2px solid var(--color-intake); }
         input.input-faeces { border: 2px solid var(--color-faeces); }
+        input.input-mfn { border: 2px solid var(--color-mfn); }
         input.input-dcp { border: 2px solid var(--color-dcp); }
         input.input-dnfe { border: 2px solid var(--color-dnfe); }
         input.input-dcf { border: 2px solid var(--color-dcf); }
@@ -205,7 +210,7 @@
         input.input-wt { border: 2px solid var(--color-wt); }
         input.input-tdn { border: 2.5px solid var(--color-tdn); }
 
-        input {
+        input, select {
             width: 100%;
             padding: 14px;
             box-sizing: border-box;
@@ -215,6 +220,100 @@
             color: var(--text-color);
             font-weight: 600;
         }
+
+        /* Toggle & Option Badges */
+        .option-panel {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .segmented-control {
+            display: flex;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 4px;
+        }
+        .segment-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .segment-btn.active {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        .switch-label-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+        .switch-title {
+            font-weight: bold;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .switch-sub {
+            font-size: 0.8rem;
+            opacity: 0.75;
+        }
+
+        /* Toggle switch control */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #94a3b8;
+            transition: .3s;
+            border-radius: 26px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--color-mfn); }
+        input:checked + .slider:before { transform: translateX(22px); }
         
         .action-btn {
             background-color: var(--primary);
@@ -314,14 +413,17 @@
         <button class="action-btn export-btn hide-on-export" onclick="exportSection('t1', 'Energy_Evaluation_Result.png')">📸 Export Law & Steps as Image</button>
     </div>
 
-    <!-- 2. CD% -->
+    <!-- 2. CD% (Apparent & True Digestibility + Percentage Mode) -->
     <div id="t2" class="section-card">
-        <h2>2. Digestibility Coefficient (CD %) Law Visualizer</h2>
+        <h2>2. Digestibility Coefficient (CD %) & True Digestibility Visualizer</h2>
         <hr class="section-divider">
-        <div class="law-box-preview">
-            CD % = 
+        
+        <!-- Interactive Formula Display -->
+        <div class="law-box-preview" id="cd-formula-preview">
+            <span id="cd-formula-label">Apparent CD %</span> = 
             <div class="fraction">
-                <div class="numerator">(
+                <div class="numerator" id="cd-numerator-preview">
+                    (
                     <span class="dynamic-slot slot-intake">
                         <span class="slot-tag">Intake</span>
                         <span id="preview-intake">Intake</span>
@@ -329,7 +431,14 @@
                     <span class="dynamic-slot slot-faeces">
                         <span class="slot-tag">Faeces</span>
                         <span id="preview-faeces">Faeces</span>
-                    </span>)
+                    </span>
+                    <span id="preview-mfn-block" style="display:none;">
+                        - <span class="dynamic-slot slot-mfn">
+                            <span class="slot-tag">MFN</span>
+                            <span id="preview-mfn">MFN</span>
+                        </span>
+                    </span>
+                    )
                 </div>
                 <div class="denominator">
                     <span class="dynamic-slot slot-intake">
@@ -340,10 +449,81 @@
             </div>
             × 100
         </div>
-        <div class="form-grid hide-on-export">
-            <div class="form-group"><label>Total Nutrient Intake:</label><input type="number" id="c_intake" class="input-intake" oninput="calcCD()"></div>
-            <div class="form-group"><label>Total Nutrient in Faeces:</label><input type="number" id="c_faeces" class="input-faeces" oninput="calcCD()"></div>
+
+        <!-- Controls: Input Mode & True Digestibility Toggle -->
+        <div class="option-panel hide-on-export">
+            <div>
+                <label style="margin-bottom:6px;">Calculation Input Mode:</label>
+                <div class="segmented-control">
+                    <button type="button" class="segment-btn active" id="btn-mode-direct" onclick="setCDInputMode('direct')">Direct Nutrient (g)</button>
+                    <button type="button" class="segment-btn" id="btn-mode-percent" onclick="setCDInputMode('percent')">Meal & Feces Percentage (%)</button>
+                </div>
+            </div>
+
+            <div class="switch-container">
+                <div class="switch-label-wrap">
+                    <span class="switch-title">🧪 True Digestibility Option</span>
+                    <span class="switch-sub">Deducts Metabolic Fecal Loss (MFN / Endogenous loss)</span>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="c_toggle_true" onchange="toggleTrueDigestibility()">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
+
+        <!-- Input Form -->
+        <div class="form-grid hide-on-export">
+            <!-- Mode 1: Direct Nutrients -->
+            <div id="cd-direct-fields">
+                <div class="form-group"><label>Total Nutrient Intake (g):</label><input type="number" id="c_intake" class="input-intake" placeholder="e.g. 400" oninput="calcCD()"></div>
+                <div class="form-group" style="margin-top: 14px;"><label>Total Nutrient in Faeces (g):</label><input type="number" id="c_faeces" class="input-faeces" placeholder="e.g. 80" oninput="calcCD()"></div>
+            </div>
+
+            <!-- Mode 2: Meal & Percentages -->
+            <div id="cd-percent-fields" style="display:none;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Total Meal / Feed Intake (g):</label>
+                        <input type="number" id="c_total_meal" class="input-intake" placeholder="e.g. 2500" oninput="calcCD()">
+                    </div>
+                    <div class="form-group">
+                        <label>Nutrient in Feed (e.g. % CP):</label>
+                        <input type="number" id="c_feed_pct" class="input-intake" placeholder="e.g. 16" oninput="calcCD()">
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top: 14px;">
+                    <div class="form-group">
+                        <label>Total Feces Output (g):</label>
+                        <input type="number" id="c_total_feces" class="input-faeces" placeholder="e.g. 1000" oninput="calcCD()">
+                    </div>
+                    <div class="form-group">
+                        <label>Nutrient in Feces (e.g. % CP):</label>
+                        <input type="number" id="c_feces_pct" class="input-faeces" placeholder="e.g. 5" oninput="calcCD()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- True Digestibility Parameters (Visible when True Digestibility is ON) -->
+            <div id="cd-true-params" style="display:none; background: rgba(5,150,105,0.08); border: 1.5px dashed var(--color-mfn); padding: 15px; border-radius: 8px;">
+                <label style="color: var(--color-mfn); font-weight: bold; margin-bottom: 8px;">Metabolic Fecal Loss (MFN) Configuration:</label>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label style="font-size:0.9rem;">Rate per 100g Feed Intake (default 0.5g):</label>
+                        <input type="number" step="0.01" id="c_mfn_rate" class="input-mfn" value="0.5" oninput="calcCD()">
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size:0.9rem;">Feed Intake Base (g) for MFN:</label>
+                        <input type="number" id="c_mfn_feed_base" class="input-mfn" placeholder="Auto uses feed intake" oninput="calcCD()">
+                    </div>
+                </div>
+                <div style="font-size: 0.85rem; margin-top: 8px; opacity: 0.85;">
+                    💡 Default animal nutrition rule: 0.5g metabolic nitrogen/protein loss for each 100g of dry meal consumed (e.g., 2500g meal intake → 12.5g MFN).
+                </div>
+            </div>
+        </div>
+
         <button class="action-btn hide-on-export" onclick="calcCD()">Calculate Digestibility Coefficient</button>
         <div class="result-box" id="res_c">Result: --</div>
         <div class="step-breakdown" id="step_c"></div>
@@ -632,7 +812,7 @@
     <div id="t11" class="section-card">
         <h2>11. Formula Glossary & Feed Evaluation Tables</h2>
         <hr class="section-divider">
-        <input type="text" id="glossarySearch" placeholder="Search acronyms or terms (GE, TDN, SARA, Corn...)" onkeyup="filterGlossary()" style="margin-bottom: 20px;">
+        <input type="text" id="glossarySearch" placeholder="Search acronyms or terms (GE, TDN, True Digestibility, SARA, Corn...)" onkeyup="filterGlossary()" style="margin-bottom: 20px;">
         <table id="glossaryTable">
             <thead>
                 <tr><th>Term / Parameter</th><th>Category / Formula</th><th>Clinical & Academic Description</th></tr>
@@ -642,7 +822,9 @@
                 <tr><td><strong>DE (Digestible Energy)</strong></td><td>Energy Evaluation</td><td>Apparent absorbed energy after subtracting fecal energy loss from gross energy: DE = GE − FE.</td></tr>
                 <tr><td><strong>ME (Metabolizable Energy)</strong></td><td>Energy Evaluation</td><td>Energy available for tissue metabolism after subtracting urinary energy (UE) and methane/gas energy (GaE): ME = DE − (UE + GaE).</td></tr>
                 <tr><td><strong>NE (Net Energy)</strong></td><td>Energy Evaluation</td><td>Energy actually retained for maintenance (NEm) and production (NEp: milk, meat, wool) after heat increment loss: NE = ME − HI.</td></tr>
-                <tr><td><strong>CD% (Digestibility Coefficient)</strong></td><td>Digestibility</td><td>Percentage of ingested nutrient absorbed through digestive tract: [ (Intake − Faecal Output) ÷ Intake ] × 100.</td></tr>
+                <tr><td><strong>CD% (Apparent Digestibility)</strong></td><td>Digestibility</td><td>Percentage of ingested nutrient apparently absorbed: [ (Intake − Total Faecal Output) ÷ Intake ] × 100. Overlooks endogenous losses.</td></tr>
+                <tr><td><strong>True Digestibility (TD %)</strong></td><td>Digestibility</td><td>Actual absorbed percentage correcting for metabolic fecal nitrogen / endogenous loss (MFN): [ (Intake − (Faecal Output − MFN)) ÷ Intake ] × 100. Standard MFN: ~0.5g / 100g meal intake.</td></tr>
+                <tr><td><strong>MFN (Metabolic Fecal Nitrogen)</strong></td><td>Digestive Physiology</td><td>Endogenous nitrogen in faeces originating from sloughed intestinal epithelial cells, digestive juices, enzymes, and microbial residue rather than unabsorbed feed.</td></tr>
                 <tr><td><strong>TDN (Total Digestible Nutrients)</strong></td><td>Energy Index</td><td>Standard measure of energy density: TDN % = DCP + DNFE + DCF + (DEE × 2.25). DEE multiplied by 2.25 due to fat's higher caloric density.</td></tr>
                 <tr><td><strong>CP (Crude Protein)</strong></td><td>Proximate Analysis</td><td>Total nitrogen determined via Kjeldahl method multiplied by standard factor 6.25: CP % = N % × 6.25. (Assumes 16% average N in protein).</td></tr>
                 <tr><td><strong>DCP (Digestible Crude Protein)</strong></td><td>Protein Evaluation</td><td>The fraction of crude protein digested and absorbed: DCP % = CP % × Digestion Coefficient of Protein.</td></tr>
@@ -683,6 +865,8 @@
 </footer>
 
 <script>
+    let currentCDMode = 'direct'; // 'direct' or 'percent'
+
     function toggleTheme() {
         let body = document.body;
         body.setAttribute("data-theme", body.getAttribute("data-theme") === "light" ? "dark" : "light");
@@ -695,12 +879,49 @@
         event.currentTarget.classList.add('active');
     }
 
-    // دالة تصدير محسنة: تلغي أنميشن الـ fadeIn وتمنع الشفافية وتعمل على المسارات المحلية file:///
+    function setCDInputMode(mode) {
+        currentCDMode = mode;
+        const btnDirect = document.getElementById('btn-mode-direct');
+        const btnPercent = document.getElementById('btn-mode-percent');
+        const fieldsDirect = document.getElementById('cd-direct-fields');
+        const fieldsPercent = document.getElementById('cd-percent-fields');
+
+        if(mode === 'direct') {
+            btnDirect.classList.add('active');
+            btnPercent.classList.remove('active');
+            fieldsDirect.style.display = 'block';
+            fieldsPercent.style.display = 'none';
+        } else {
+            btnPercent.classList.add('active');
+            btnDirect.classList.remove('active');
+            fieldsDirect.style.display = 'none';
+            fieldsPercent.style.display = 'block';
+        }
+        calcCD();
+    }
+
+    function toggleTrueDigestibility() {
+        const isTrue = document.getElementById('c_toggle_true').checked;
+        const mfnParams = document.getElementById('cd-true-params');
+        const mfnBlock = document.getElementById('preview-mfn-block');
+        const formulaLabel = document.getElementById('cd-formula-label');
+
+        if(isTrue) {
+            mfnParams.style.display = 'block';
+            mfnBlock.style.display = 'inline-flex';
+            formulaLabel.innerText = "True Digestibility (TD %)";
+        } else {
+            mfnParams.style.display = 'none';
+            mfnBlock.style.display = 'none';
+            formulaLabel.innerText = "Apparent CD %";
+        }
+        calcCD();
+    }
+
     function exportSection(sectionId, filename) {
         const element = document.getElementById(sectionId);
         const hideElements = element.querySelectorAll('.hide-on-export');
         
-        // إخفاء حقول الإدخال والأزرار مؤقتاً
         hideElements.forEach(el => el.style.display = 'none');
 
         const isDark = document.body.getAttribute('data-theme') === 'dark';
@@ -712,8 +933,6 @@
             backgroundColor: solidBg,
             onclone: (clonedDoc) => {
                 const clonedEl = clonedDoc.getElementById(sectionId);
-                
-                // إلغاء تشغيل الأنميشن فوراً في النسخة المستنسخة لمنع شفافية الـ 10%
                 clonedEl.style.animation = 'none';
                 clonedEl.style.opacity = '1';
                 clonedEl.style.backgroundColor = solidBg;
@@ -744,14 +963,6 @@
             document.getElementById('preview-fat').innerText = fat;
             document.getElementById('preview-cho').innerText = cho;
             document.getElementById('preview-pro').innerText = pro;
-        }
-
-        let intake = document.getElementById('c_intake').value || '0';
-        let faeces = document.getElementById('c_faeces').value || '0';
-        if(document.getElementById('preview-intake')) {
-            document.getElementById('preview-intake').innerText = intake;
-            document.getElementById('preview-faeces').innerText = faeces;
-            document.getElementById('preview-intake2').innerText = intake;
         }
 
         let dcp = document.getElementById('t_dcp').value || '0';
@@ -844,14 +1055,83 @@
 
     function calcCD() {
         updatePreviews();
-        let i = parseFloat(document.getElementById('c_intake').value) || 0;
-        let fa = parseFloat(document.getElementById('c_faeces').value) || 0;
-        if(i <= 0) { document.getElementById('res_c').innerText = "Error: Intake must be greater than zero."; return; }
-        let cd = ((i - fa) / i) * 100;
-        document.getElementById('res_c').innerHTML = `Digestibility Coefficient (CD %) = <strong>${cd.toFixed(2)}%</strong>`;
+        let intake = 0;
+        let feces = 0;
+        let mealWeight = 0;
+        let stepsInfo = [];
+
+        const isTrueDig = document.getElementById('c_toggle_true').checked;
+
+        if (currentCDMode === 'direct') {
+            intake = parseFloat(document.getElementById('c_intake').value) || 0;
+            feces = parseFloat(document.getElementById('c_faeces').value) || 0;
+            mealWeight = parseFloat(document.getElementById('c_mfn_feed_base').value) || intake;
+            stepsInfo.push(`<strong>Mode:</strong> Direct Nutrient Quantities (Intake = ${intake}g, Feces = ${feces}g)`);
+        } else {
+            let totalMeal = parseFloat(document.getElementById('c_total_meal').value) || 0;
+            let feedPct = parseFloat(document.getElementById('c_feed_pct').value) || 0;
+            let totalFeces = parseFloat(document.getElementById('c_total_feces').value) || 0;
+            let fecesPct = parseFloat(document.getElementById('c_feces_pct').value) || 0;
+
+            mealWeight = totalMeal;
+            intake = totalMeal * (feedPct / 100);
+            feces = totalFeces * (fecesPct / 100);
+
+            stepsInfo.push(`<strong>Mode:</strong> Meal & Percentage Calculation:`);
+            stepsInfo.push(`• Nutrient Intake = Total Meal (${totalMeal}g) × ${feedPct}% = <strong>${intake.toFixed(2)}g</strong>`);
+            stepsInfo.push(`• Nutrient in Feces = Total Feces (${totalFeces}g) × ${fecesPct}% = <strong>${feces.toFixed(2)}g</strong>`);
+        }
+
+        // Update visual slots
+        const prevIntake = document.getElementById('preview-intake');
+        const prevFaeces = document.getElementById('preview-faeces');
+        const prevIntake2 = document.getElementById('preview-intake2');
+        const prevMfn = document.getElementById('preview-mfn');
+
+        if (prevIntake) prevIntake.innerText = intake > 0 ? intake.toFixed(1) : 'Intake';
+        if (prevFaeces) prevFaeces.innerText = feces > 0 ? feces.toFixed(1) : 'Faeces';
+        if (prevIntake2) prevIntake2.innerText = intake > 0 ? intake.toFixed(1) : 'Intake';
+
+        if (intake <= 0) {
+            document.getElementById('res_c').innerText = "Please specify a positive Nutrient Intake amount.";
+            document.getElementById('step_c').style.display = 'none';
+            return;
+        }
+
+        let mfn = 0;
+        if (isTrueDig) {
+            let userBase = parseFloat(document.getElementById('c_mfn_feed_base').value);
+            let effectiveFeedBase = (!isNaN(userBase) && userBase > 0) ? userBase : (mealWeight > 0 ? mealWeight : intake);
+            let mfnRate = parseFloat(document.getElementById('c_mfn_rate').value);
+            if (isNaN(mfnRate)) mfnRate = 0.5;
+
+            // e.g. 2500g meal * (0.5 / 100) = 12.5g
+            mfn = (effectiveFeedBase * mfnRate) / 100;
+            if (prevMfn) prevMfn.innerText = mfn.toFixed(2);
+
+            let unabsorbedExogenous = Math.max(0, feces - mfn);
+            let trueCd = ((intake - (feces - mfn)) / intake) * 100;
+            let apparentCd = ((intake - feces) / intake) * 100;
+
+            document.getElementById('res_c').innerHTML = `
+                True Digestibility (TD %) = <span style="color:var(--color-mfn);"><strong>${trueCd.toFixed(2)}%</strong></span>
+                <span style="display:block; font-size:0.95rem; margin-top:6px; opacity:0.85;">(Apparent CD% was ${apparentCd.toFixed(2)}% | MFN Loss = ${mfn.toFixed(2)}g)</span>
+            `;
+
+            stepsInfo.push(`<strong>True Digestibility Calculation:</strong>`);
+            stepsInfo.push(`1. Metabolic Fecal Loss (MFN) = (${effectiveFeedBase}g feed intake ÷ 100) × ${mfnRate}g = <strong>${mfn.toFixed(2)}g</strong>`);
+            stepsInfo.push(`2. True Undigested Nutrient = Feces (${feces.toFixed(2)}g) - MFN (${mfn.toFixed(2)}g) = <strong>${(feces - mfn).toFixed(2)}g</strong>`);
+            stepsInfo.push(`3. TD % = [(${intake.toFixed(2)} - ${(feces - mfn).toFixed(2)}) ÷ ${intake.toFixed(2)}] × 100 = <strong>${trueCd.toFixed(2)}%</strong>`);
+        } else {
+            let apparentCd = ((intake - feces) / intake) * 100;
+            document.getElementById('res_c').innerHTML = `Digestibility Coefficient (CD %) = <strong>${apparentCd.toFixed(2)}%</strong>`;
+            stepsInfo.push(`<strong>Apparent Digestibility Calculation:</strong>`);
+            stepsInfo.push(`CD % = [(${intake.toFixed(2)} - ${feces.toFixed(2)}) ÷ ${intake.toFixed(2)}] × 100 = <strong>${apparentCd.toFixed(2)}%</strong>`);
+        }
+
         let step = document.getElementById('step_c');
         step.style.display = 'block';
-        step.innerHTML = `<strong>Calculation Steps:</strong><br>CD % = [(${i} - ${fa}) ÷ ${i}] × 100 = <strong>${cd.toFixed(2)}%</strong>`;
+        step.innerHTML = stepsInfo.join('<br>');
     }
 
     function calcTDN() {
@@ -952,13 +1232,27 @@
     let currentQuizUnit = "%";
 
     const quizGenerators = [
-        // 1. CD%
+        // 1. CD% / True Digestibility Problem
         () => {
-            let intake = Math.floor(Math.random() * 800) + 1200;
-            let faeces = Math.floor(Math.random() * 400) + 300;
-            currentQuizCorrect = ((intake - faeces) / intake) * 100;
-            currentQuizUnit = "%";
-            return `Calculate the <strong>Digestibility Coefficient (CD %)</strong>:<br>Nutrient Intake = <strong>${intake} g</strong> | Faecal Nutrient = <strong>${faeces} g</strong>`;
+            let isTrue = Math.random() > 0.5;
+            let meal = 2000 + Math.floor(Math.random() * 1000);
+            let feedCp = 14 + Math.floor(Math.random() * 6);
+            let fecesWeight = 800 + Math.floor(Math.random() * 400);
+            let fecesCp = 4 + Math.floor(Math.random() * 3);
+
+            let intake = meal * (feedCp / 100);
+            let feces = fecesWeight * (fecesCp / 100);
+
+            if(isTrue) {
+                let mfn = (meal * 0.5) / 100;
+                currentQuizCorrect = ((intake - (feces - mfn)) / intake) * 100;
+                currentQuizUnit = "%";
+                return `Calculate <strong>True Digestibility (TD %)</strong>:<br>Feed Intake = <strong>${meal}g</strong> (${feedCp}% CP)<br>Feces Output = <strong>${fecesWeight}g</strong> (${fecesCp}% CP)<br>Metabolic Fecal Loss = <strong>0.5g / 100g meal intake</strong> (${mfn.toFixed(1)}g)`;
+            } else {
+                currentQuizCorrect = ((intake - feces) / intake) * 100;
+                currentQuizUnit = "%";
+                return `Calculate <strong>Apparent Digestibility (CD %)</strong>:<br>Feed Intake = <strong>${meal}g</strong> (${feedCp}% CP)<br>Feces Output = <strong>${fecesWeight}g</strong> (${fecesCp}% CP)`;
+            }
         },
         // 2. Gross Energy (GE)
         () => {
@@ -1046,13 +1340,16 @@
             fb.innerHTML = `⚠️ Please enter a valid numerical answer.`;
             return;
         }
-        // سماحية ±0.5 للفروق التقريبية
         if (Math.abs(userAns - currentQuizCorrect) < 0.6) {
             fb.innerHTML = `✅ <strong>Correct!</strong> Great job. The exact calculated value is <strong>${currentQuizCorrect.toFixed(2)}${currentQuizUnit}</strong>.`;
         } else {
             fb.innerHTML = `❌ <strong>Incorrect.</strong> The correct answer is <strong>${currentQuizCorrect.toFixed(2)}${currentQuizUnit}</strong>.`;
         }
     }
+
+    window.onload = function() {
+        calcCD();
+    };
 </script>
 
 </body>
