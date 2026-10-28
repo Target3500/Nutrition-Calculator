@@ -1,1 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutritional Lawyer - Calm Edition</title>
+    <!-- تضمين مكتبة html2canvas المتوافقة محلياً -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary: #3b82f6;      
+            --secondary: #2563eb;    
+            --accent: #93c5fd;       
+            --bg-color: #f8fafc;     
+            --card-bg: #ffffff;
+            --text-color: #334155;   
+            --border-color: #cbd5e1;
+            --input-bg: #f1f5f9;
+            
+            --color-fat: #dc2626;     
+            --color-cho: #d97706;     
+            --color-pro: #7c3aed;     
+            --color-intake: #0d9488;  
+            --color-faeces: #be185d;  
+            --color-dcp: #7c3aed;     
+            --color-dnfe: #d97706;    
+            --color-dcf: #16a34a;     
+            --color-dee: #dc2626;     
+            --color-vol: #ea580c;     
+            --color-wt: #475569;      
+            --color-tdn: #0284c7;     
+        }
 
+        [data-theme="dark"] {
+            --primary: #60a5fa;
+            --secondary: #3b82f6;
+            --accent: #1e293b;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #cbd5e1;
+            --border-color: #334155;
+            --input-bg: #0f172a;
+            
+            --color-fat: #f87171;
+            --color-cho: #fbbf24;
+            --color-pro: #c084fc;
+            --color-intake: #2dd4bf;
+            --color-faeces: #f472b6;
+            --color-dcp: #c084fc;
+            --color-dnfe: #fbbf24;
+            --color-dcf: #4ade80;
+            --color-dee: #f87171;
+            --color-vol: #fb923c;
+            --color-wt: #94a3b8;
+            --color-tdn: #38bdf8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+        header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: #ffffff;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .theme-toggle:hover { background: rgba(255,255,255,0.25); }
+        header h1 { margin: 0 0 8px 0; font-size: 2.3rem; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
+        .nav-menu { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 30px; }
+        .nav-btn {
+            background-color: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--border-color);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .section-card {
+            background: var(--card-bg);
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: none;
+            border-top: 4px solid var(--primary);
+        }
+        .section-card.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        h2 { color: var(--primary); margin-top: 0; font-size: 1.8rem; margin-bottom: 5px; }
+        .section-divider { border: 0; height: 1px; background: var(--border-color); margin-bottom: 25px; }
+
+        .law-box-preview {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 22px 18px;
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 6px;
+        }
+        .numerator {
+            border-bottom: 2px solid var(--text-color);
+            padding-bottom: 4px;
+            margin-bottom: 4px;
+        }
+        .denominator { padding-top: 2px; }
+        
+        .dynamic-slot {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            padding: 3px 8px;
+            margin: 0 3px;
+            font-weight: 800;
+            min-width: 48px;
+            vertical-align: middle;
+            background: rgba(255,255,255,0.03);
+        }
+        .slot-tag {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
+            margin-bottom: 2px;
+            opacity: 0.9;
+        }
+
+        .slot-fat { border: 2px solid var(--color-fat); color: var(--color-fat); }
+        .slot-cho { border: 2px solid var(--color-cho); color: var(--color-cho); }
+        .slot-pro { border: 2px solid var(--color-pro); color: var(--color-pro); }
+        .slot-intake { border: 2px solid var(--color-intake); color: var(--color-intake); }
+        .slot-faeces { border: 2px solid var(--color-faeces); color: var(--color-faeces); }
+        .slot-dcp { border: 2px solid var(--color-dcp); color: var(--color-dcp); }
+        .slot-dnfe { border: 2px solid var(--color-dnfe); color: var(--color-dnfe); }
+        .slot-dcf { border: 2px solid var(--color-dcf); color: var(--color-dcf); }
+        .slot-dee { border: 2px solid var(--color-dee); color: var(--color-dee); }
+        .slot-vol { border: 2px solid var(--color-vol); color: var(--color-vol); }
+        .slot-wt { border: 2px solid var(--color-wt); color: var(--color-wt); }
+        .slot-tdn { border: 2.5px solid var(--color-tdn); color: var(--color-tdn); }
+
+        .form-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 25px; }
+        .form-group { width: 100%; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-color); }
+        
+        input.input-fat { border: 2px solid var(--color-fat); }
+        input.input-cho { border: 2px solid var(--color-cho); }
+        input.input-pro { border: 2px solid var(--color-pro); }
+        input.input-intake { border: 2px solid var(--color-intake); }
+        input.input-faeces { border: 2px solid var(--color-faeces); }
+        input.input-dcp { border: 2px solid var(--color-dcp); }
+        input.input-dnfe { border: 2px solid var(--color-dnfe); }
+        input.input-dcf { border: 2px solid var(--color-dcf); }
+        input.input-dee { border: 2px solid var(--color-dee); }
+        input.input-vol { border: 2px solid var(--color-vol); }
+        input.input-wt { border: 2px solid var(--color-wt); }
+        input.input-tdn { border: 2.5px solid var(--color-tdn); }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        
+        .action-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .action-btn:hover { opacity: 0.9; }
+
+        .export-btn { background-color: #10b981; }
+        .export-btn:hover { background-color: #059669; }
+        
+        .result-box {
+            margin-top: 20px;
+            padding: 16px;
+            background-color: var(--input-bg);
+            border-left: 5px solid var(--primary);
+            border-radius: 6px;
+            font-size: 1.15rem;
+            font-weight: bold;
+            text-align: center;
+        }
+        .step-breakdown {
+            margin-top: 12px;
+            padding: 12px;
+            background: var(--input-bg);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            display: none;
+            text-align: left;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--card-bg); }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+        th { background-color: var(--primary); color: white; }
+        footer { text-align: center; padding: 25px; background-color: var(--card-bg); border-top: 1px solid var(--border-color); margin-top: 40px; }
+    </style>
+</head>
+<body data-theme="dark">
+
+<header>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Light / Dark</button>
+    <h1>Nutritional Lawyer</h1>
+    <p style="margin-top: 6px; font-size: 0.95rem; opacity: 0.9;">🛠️ Developer: Ayman Yousry</p>
+</header>
+
+<div class="container">
+
+    <div class="nav-menu">
+        <button class="nav-btn active" onclick="switchTab('t1')">1. Energy Evaluation</button>
+        <button class="nav-btn" onclick="switchTab('t2')">2. Digestibility & CD%</button>
+        <button class="nav-btn" onclick="switchTab('t3')">3. TDN Calculator</button>
+        <button class="nav-btn" onclick="switchTab('t4')">4. Crude Protein (Kjeldahl)</button>
+        <button class="nav-btn" onclick="switchTab('t5')">5. Nutritive Ratio (NR)</button>
+        <button class="nav-btn" onclick="switchTab('t6')">6. Dry Matter (DM)</button>
+        <button class="nav-btn" onclick="switchTab('t7')">7. Ash & OM</button>
+        <button class="nav-btn" onclick="switchTab('t8')">8. Crude Fiber Lab</button>
+        <button class="nav-btn" onclick="switchTab('t9')">9. NFE Calculator</button>
+        <button class="nav-btn" onclick="switchTab('t10')">10. Protein Equivalent (PE)</button>
+        <button class="nav-btn" onclick="switchTab('t11')">11. Glossary & Cheat Sheet</button>
+        <button class="nav-btn" onclick="switchTab('t12')">12. Interactive Quiz</button>
+    </div>
+
+    <!-- 1. Energy -->
+    <div id="t1" class="section-card active">
+        <h2>1. Gross, Digestible & Metabolizable Energy Visualizer</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            GE = (
+            <span class="dynamic-slot slot-fat">
+                <span class="slot-tag">Fat</span>
+                <span id="preview-fat">Fat</span>
+            </span> × 9.45) + (
+            <span class="dynamic-slot slot-cho">
+                <span class="slot-tag">Carbs</span>
+                <span id="preview-cho">Carbs</span>
+            </span> × 4.2) + (
+            <span class="dynamic-slot slot-pro">
+                <span class="slot-tag">Protein</span>
+                <span id="preview-pro">Protein</span>
+            </span> × 4.1)
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Ether Extract / Fat (g):</label><input type="number" id="e_fat" class="input-fat" oninput="calcEnergy()"></div>
+            <div class="form-group"><label>Carbohydrates / NFE (g):</label><input type="number" id="e_cho" class="input-cho" oninput="calcEnergy()"></div>
+            <div class="form-group"><label>Crude Protein (g):</label><input type="number" id="e_pro" class="input-pro" oninput="calcEnergy()"></div>
+            <div class="form-group"><label>Fecal Energy Loss (FE Kcal):</label><input type="number" id="e_fe" class="input-fat" oninput="calcEnergy()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcEnergy()">Calculate Energy Balance</button>
+        <div class="result-box" id="res_e">Result: --</div>
+        <div class="step-breakdown" id="step_e"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t1', 'Energy_Evaluation_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 2. CD% -->
+    <div id="t2" class="section-card">
+        <h2>2. Digestibility Coefficient (CD %) Law Visualizer</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            CD % = 
+            <div class="fraction">
+                <div class="numerator">(
+                    <span class="dynamic-slot slot-intake">
+                        <span class="slot-tag">Intake</span>
+                        <span id="preview-intake">Intake</span>
+                    </span> - 
+                    <span class="dynamic-slot slot-faeces">
+                        <span class="slot-tag">Faeces</span>
+                        <span id="preview-faeces">Faeces</span>
+                    </span>)
+                </div>
+                <div class="denominator">
+                    <span class="dynamic-slot slot-intake">
+                        <span class="slot-tag">Intake</span>
+                        <span id="preview-intake2">Intake</span>
+                    </span>
+                </div>
+            </div>
+            × 100
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Total Nutrient Intake:</label><input type="number" id="c_intake" class="input-intake" oninput="calcCD()"></div>
+            <div class="form-group"><label>Total Nutrient in Faeces:</label><input type="number" id="c_faeces" class="input-faeces" oninput="calcCD()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcCD()">Calculate Digestibility Coefficient</button>
+        <div class="result-box" id="res_c">Result: --</div>
+        <div class="step-breakdown" id="step_c"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t2', 'Digestibility_Coefficient_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 3. TDN% -->
+    <div id="t3" class="section-card">
+        <h2>3. Total Digestible Nutrients (TDN %) Law Visualizer</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            TDN % = 
+            <span class="dynamic-slot slot-dcp">
+                <span class="slot-tag">DCP</span>
+                <span id="preview-dcp">DCP</span>
+            </span> + 
+            <span class="dynamic-slot slot-dnfe">
+                <span class="slot-tag">DNFE</span>
+                <span id="preview-dnfe">DNFE</span>
+            </span> + 
+            <span class="dynamic-slot slot-dcf">
+                <span class="slot-tag">DCF</span>
+                <span id="preview-dcf">DCF</span>
+            </span> + (
+            <span class="dynamic-slot slot-dee">
+                <span class="slot-tag">DEE</span>
+                <span id="preview-dee">DEE</span>
+            </span> × 2.25)
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="t_dcp" class="input-dcp" oninput="calcTDN()"></div>
+            <div class="form-group"><label>Digestible Nitrogen Free Extract (DNFE %):</label><input type="number" id="t_dnfe" class="input-dnfe" oninput="calcTDN()"></div>
+            <div class="form-group"><label>Digestible Crude Fiber (DCF %):</label><input type="number" id="t_dcf" class="input-dcf" oninput="calcTDN()"></div>
+            <div class="form-group"><label>Digestible Ether Extract (DEE %):</label><input type="number" id="t_dee" class="input-dee" oninput="calcTDN()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcTDN()">Calculate Total Digestible Nutrients</button>
+        <div class="result-box" id="res_t">Result: --</div>
+        <div class="step-breakdown" id="step_t"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t3', 'TDN_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 4. Crude Protein -->
+    <div id="t4" class="section-card">
+        <h2>4. Crude Protein (CP %) - Kjeldahl Method Visualizer</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            N % = 
+            <div class="fraction">
+                <div class="numerator">(
+                    <span class="dynamic-slot slot-vol">
+                        <span class="slot-tag">Acid Vol</span>
+                        <span id="preview-vol">Vol</span>
+                    </span> × 0.0014)
+                </div>
+                <div class="denominator">
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Weight</span>
+                        <span id="preview-wt">Wt</span>
+                    </span>
+                </div>
+            </div>
+            × 100
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Volume of Acid Consumed (mL):</label><input type="number" id="p_vol" class="input-vol" oninput="calcCP()"></div>
+            <div class="form-group"><label>Sample Weight (g):</label><input type="number" id="p_wt" class="input-wt" oninput="calcCP()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcCP()">Calculate Crude Protein</button>
+        <div class="result-box" id="res_p">Result: --</div>
+        <div class="step-breakdown" id="step_p"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t4', 'Crude_Protein_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 5. Nutritive Ratio -->
+    <div id="t5" class="section-card">
+        <h2>5. Nutritive Ratio (NR) Law Visualizer</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            NR = 1 : 
+            <div class="fraction">
+                <div class="numerator">(
+                    <span class="dynamic-slot slot-tdn">
+                        <span class="slot-tag">TDN</span>
+                        <span id="preview-nr-tdn">TDN</span>
+                    </span> - 
+                    <span class="dynamic-slot slot-dcp">
+                        <span class="slot-tag">DCP</span>
+                        <span id="preview-nr-dcp">DCP</span>
+                    </span>)
+                </div>
+                <div class="denominator">
+                    <span class="dynamic-slot slot-dcp">
+                        <span class="slot-tag">DCP</span>
+                        <span id="preview-nr-dcp2">DCP</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Total Digestible Nutrients (TDN %):</label><input type="number" id="n_tdn" class="input-tdn" oninput="calcNR()"></div>
+            <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="n_dcp" class="input-dcp" oninput="calcNR()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcNR()">Calculate Nutritive Ratio</button>
+        <div class="result-box" id="res_n">Result: --</div>
+        <div class="step-breakdown" id="step_n"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t5', 'Nutritive_Ratio_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 6. Dry Matter (DM) -->
+    <div id="t6" class="section-card">
+        <h2>6. Dry Matter (DM %) & Moisture Calculator</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            DM % = 
+            <div class="fraction">
+                <div class="numerator">(
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">W0</span>
+                        <span id="preview-dm-w0">W0</span>
+                    </span> - 
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Wd</span>
+                        <span id="preview-dm-wd">Wd</span>
+                    </span>)
+                </div>
+                <div class="denominator">
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Ws</span>
+                        <span id="preview-dm-ws">Ws</span>
+                    </span>
+                </div>
+            </div>
+            × 100
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Dish + Dry Sample (W0):</label><input type="number" id="dm_w0" class="input-wt" oninput="calcDM()"></div>
+            <div class="form-group"><label>Dish Weight (Wd):</label><input type="number" id="dm_wd" class="input-wt" oninput="calcDM()"></div>
+            <div class="form-group"><label>Sample Weight (Ws):</label><input type="number" id="dm_ws" class="input-wt" oninput="calcDM()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcDM()">Calculate Dry Matter</button>
+        <div class="result-box" id="res_dm">Result: --</div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t6', 'Dry_Matter_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 7. Ash & OM -->
+    <div id="t7" class="section-card">
+        <h2>7. Ash & Organic Matter (OM %) Calculator</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            Ash % = 
+            <div class="fraction">
+                <div class="numerator">(
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Wa</span>
+                        <span id="preview-ash-wa">Wa</span>
+                    </span> - 
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Wc</span>
+                        <span id="preview-ash-wc">Wc</span>
+                    </span>)
+                </div>
+                <div class="denominator">
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Ws</span>
+                        <span id="preview-ash-ws">Ws</span>
+                    </span>
+                </div>
+            </div>
+            × 100
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Crucible + Ash (Wa):</label><input type="number" id="ash_wa" class="input-wt" oninput="calcAsh()"></div>
+            <div class="form-group"><label>Empty Crucible (Wc):</label><input type="number" id="ash_wc" class="input-wt" oninput="calcAsh()"></div>
+            <div class="form-group"><label>Sample Weight (Ws):</label><input type="number" id="ash_ws" class="input-wt" oninput="calcAsh()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcAsh()">Calculate Ash & Organic Matter</button>
+        <div class="result-box" id="res_ash">Result: --</div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t7', 'Ash_OM_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 8. Crude Fiber Lab -->
+    <div id="t8" class="section-card">
+        <h2>8. Crude Fiber (CF %) Lab Loss Calculator</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            CF % = 
+            <div class="fraction">
+                <div class="numerator">(
+                    <span class="dynamic-slot slot-dcf">
+                        <span class="slot-tag">Residue</span>
+                        <span id="preview-cf-d">Residue</span>
+                    </span> - 
+                    <span class="dynamic-slot slot-dcf">
+                        <span class="slot-tag">Ash</span>
+                        <span id="preview-cf-a">Ash</span>
+                    </span>)
+                </div>
+                <div class="denominator">
+                    <span class="dynamic-slot slot-wt">
+                        <span class="slot-tag">Sample</span>
+                        <span id="preview-cf-ws">Wt</span>
+                    </span>
+                </div>
+            </div>
+            × 100
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Dried Residue + Dish (g):</label><input type="number" id="cf_d" class="input-dcf" oninput="calcCF()"></div>
+            <div class="form-group"><label>Ignited Ash + Dish (g):</label><input type="number" id="cf_a" class="input-dcf" oninput="calcCF()"></div>
+            <div class="form-group"><label>Sample Weight (g):</label><input type="number" id="cf_ws" class="input-wt" oninput="calcCF()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcCF()">Calculate Crude Fiber</button>
+        <div class="result-box" id="res_cf">Result: --</div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t8', 'Crude_Fiber_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 9. NFE Calculator -->
+    <div id="t9" class="section-card">
+        <h2>9. Nitrogen Free Extract (NFE %) Calculator</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            NFE % = 100 - (
+            <span class="dynamic-slot slot-cho">
+                <span class="slot-tag">Water</span>
+                <span id="preview-nfe-w">Water</span>
+            </span> + 
+            <span class="dynamic-slot slot-pro">
+                <span class="slot-tag">CP</span>
+                <span id="preview-nfe-pro">CP</span>
+            </span> + 
+            <span class="dynamic-slot slot-dcf">
+                <span class="slot-tag">CF</span>
+                <span id="preview-nfe-dcf">CF</span>
+            </span> + 
+            <span class="dynamic-slot slot-fat">
+                <span class="slot-tag">EE</span>
+                <span id="preview-nfe-ee">EE</span>
+            </span> + 
+            <span class="dynamic-slot slot-wt">
+                <span class="slot-tag">Ash</span>
+                <span id="preview-nfe-ash">Ash</span>
+            </span>)
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Moisture %:</label><input type="number" id="nfe_w" class="input-cho" oninput="calcNFE()"></div>
+            <div class="form-group"><label>Crude Protein %:</label><input type="number" id="nfe_pro" class="input-pro" oninput="calcNFE()"></div>
+            <div class="form-group"><label>Crude Fiber %:</label><input type="number" id="nfe_dcf" class="input-dcf" oninput="calcNFE()"></div>
+            <div class="form-group"><label>Ether Extract %:</label><input type="number" id="nfe_ee" class="input-fat" oninput="calcNFE()"></div>
+            <div class="form-group"><label>Ash %:</label><input type="number" id="nfe_ash" class="input-wt" oninput="calcNFE()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcNFE()">Calculate Nitrogen Free Extract</button>
+        <div class="result-box" id="res_nfe">Result: --</div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t9', 'NFE_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 10. Protein Equivalent -->
+    <div id="t10" class="section-card">
+        <h2>10. Protein Equivalent (PE) for Ruminants</h2>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            PE = 
+            <span class="dynamic-slot slot-pro">
+                <span class="slot-tag">DTP</span>
+                <span id="preview-pe-dtp">DTP</span>
+            </span> + 
+            <div class="fraction">
+                <div class="numerator">
+                    <span class="dynamic-slot slot-dnfe">
+                        <span class="slot-tag">NPN</span>
+                        <span id="preview-pe-npn">NPN</span>
+                    </span>
+                </div>
+                <div class="denominator">2</div>
+            </div>
+        </div>
+        <div class="form-grid hide-on-export">
+            <div class="form-group"><label>Digestible True Protein (DTP %):</label><input type="number" id="pe_dtp" class="input-pro" oninput="calcPE()"></div>
+            <div class="form-group"><label>Digestible NPN (DNPN %):</label><input type="number" id="pe_npn" class="input-dnfe" oninput="calcPE()"></div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcPE()">Calculate Protein Equivalent</button>
+        <div class="result-box" id="res_pe">Result: --</div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t10', 'Protein_Equivalent_Result.png')">📸 Export Law & Steps as Image</button>
+    </div>
+
+    <!-- 11. Glossary & Cheat Sheet -->
+    <div id="t11" class="section-card">
+        <h2>11. Formula Glossary & Feed Evaluation Tables</h2>
+        <hr class="section-divider">
+        <input type="text" id="glossarySearch" placeholder="Search acronyms or terms (GE, TDN, SARA, Corn...)" onkeyup="filterGlossary()" style="margin-bottom: 20px;">
+        <table id="glossaryTable">
+            <thead>
+                <tr><th>Term / Parameter</th><th>Category / Formula</th><th>Clinical & Academic Description</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><strong>GE (Gross Energy)</strong></td><td>Energy Evaluation</td><td>Total chemical energy measured via bomb calorimeter (Fat × 9.45 + Carbs × 4.2 + Protein × 4.1).</td></tr>
+                <tr><td><strong>DE (Digestible Energy)</strong></td><td>Energy Evaluation</td><td>Energy remaining after fecal energy losses (GE - FE).</td></tr>
+                <tr><td><strong>TDN</strong></td><td>Total Digestible Nutrients</td><td>Sum of all digestible organic nutrients (DCP + DNFE + DCF + DEE × 2.25).</td></tr>
+                <tr><td><strong>CD%</strong></td><td>Digestibility Coefficient</td><td>Percentage of ingested nutrient absorbed [(Intake - Faeces) ÷ Intake] × 100.</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 12. Interactive Quiz -->
+    <div id="t12" class="section-card">
+        <h2>12. Interactive Quiz Generator</h2>
+        <hr class="section-divider">
+        <p>Test your skills with auto-generated animal nutrition problem parameters!</p>
+        <button class="action-btn" onclick="generateQuiz()" style="margin-bottom: 20px;">Generate New Problem</button>
+        <div id="quizContainer" style="font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; padding: 15px; background: var(--input-bg); border-radius: 8px;">Click 'Generate New Problem' to start!</div>
+        <div class="form-group"><input type="number" id="quizUserAnswer" class="input-tdn" placeholder="Enter your numerical answer here"></div>
+        <button class="action-btn" onclick="checkQuizAnswer()">Submit Quiz Answer</button>
+        <div class="result-box" id="quizFeedback" style="display:none; margin-top: 20px;"></div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Nutritional Lawyer &copy; 2026 | Developed by Ayman Yousry 🛠️</p>
+</footer>
+
+<script>
+    function toggleTheme() {
+        let body = document.body;
+        body.setAttribute("data-theme", body.getAttribute("data-theme") === "light" ? "dark" : "light");
+    }
+
+    function switchTab(tabId) {
+        document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+
+    function exportSection(sectionId, filename) {
+        const element = document.getElementById(sectionId);
+        const hideElements = element.querySelectorAll('.hide-on-export');
+        
+        hideElements.forEach(el => el.style.display = 'none');
+
+        const isDark = document.body.getAttribute('data-theme') === 'dark';
+        const solidBg = isDark ? '#1e293b' : '#ffffff';
+
+        html2canvas(element, { 
+            scale: 2,
+            useCORS: true,
+            backgroundColor: solidBg,
+            onclone: (clonedDoc) => {
+                const clonedEl = clonedDoc.getElementById(sectionId);
+                
+                clonedEl.style.animation = 'none';
+                clonedEl.style.opacity = '1';
+                clonedEl.style.backgroundColor = solidBg;
+
+                clonedEl.querySelectorAll('*').forEach(node => {
+                    node.style.animation = 'none';
+                    node.style.opacity = '1';
+                });
+            }
+        }).then(canvas => {
+            hideElements.forEach(el => el.style.display = '');
+
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        }).catch(err => {
+            hideElements.forEach(el => el.style.display = '');
+            console.error('Export error:', err);
+        });
+    }
+
+    function updatePreviews() {
+        let fat = document.getElementById('e_fat').value || '0';
+        let cho = document.getElementById('e_cho').value || '0';
+        let pro = document.getElementById('e_pro').value || '0';
+        if(document.getElementById('preview-fat')) {
+            document.getElementById('preview-fat').innerText = fat;
+            document.getElementById('preview-cho').innerText = cho;
+            document.getElementById('preview-pro').innerText = pro;
+        }
+
+        let intake = document.getElementById('c_intake').value || '0';
+        let faeces = document.getElementById('c_faeces').value || '0';
+        if(document.getElementById('preview-intake')) {
+            document.getElementById('preview-intake').innerText = intake;
+            document.getElementById('preview-faeces').innerText = faeces;
+            document.getElementById('preview-intake2').innerText = intake;
+        }
+
+        let dcp = document.getElementById('t_dcp').value || '0';
+        let dnfe = document.getElementById('t_dnfe').value || '0';
+        let dcf = document.getElementById('t_dcf').value || '0';
+        let dee = document.getElementById('t_dee').value || '0';
+        if(document.getElementById('preview-dcp')) {
+            document.getElementById('preview-dcp').innerText = dcp;
+            document.getElementById('preview-dnfe').innerText = dnfe;
+            document.getElementById('preview-dcf').innerText = dcf;
+            document.getElementById('preview-dee').innerText = dee;
+        }
+
+        let vol = document.getElementById('p_vol').value || '0';
+        let wt = document.getElementById('p_wt').value || '0';
+        if(document.getElementById('preview-vol')) {
+            document.getElementById('preview-vol').innerText = vol;
+            document.getElementById('preview-wt').innerText = wt;
+        }
+
+        let tdn = document.getElementById('n_tdn').value || '0';
+        let dcp_nr = document.getElementById('n_dcp').value || '0';
+        if(document.getElementById('preview-nr-tdn')) {
+            document.getElementById('preview-nr-tdn').innerText = tdn;
+            document.getElementById('preview-nr-dcp').innerText = dcp_nr;
+            document.getElementById('preview-nr-dcp2').innerText = dcp_nr;
+        }
+
+        let dm_w0 = document.getElementById('dm_w0').value || '0';
+        let dm_wd = document.getElementById('dm_wd').value || '0';
+        let dm_ws = document.getElementById('dm_ws').value || '0';
+        if(document.getElementById('preview-dm-w0')) {
+            document.getElementById('preview-dm-w0').innerText = dm_w0;
+            document.getElementById('preview-dm-wd').innerText = dm_wd;
+            document.getElementById('preview-dm-ws').innerText = dm_ws;
+        }
+
+        let ash_wa = document.getElementById('ash_wa').value || '0';
+        let ash_wc = document.getElementById('ash_wc').value || '0';
+        let ash_ws = document.getElementById('ash_ws').value || '0';
+        if(document.getElementById('preview-ash-wa')) {
+            document.getElementById('preview-ash-wa').innerText = ash_wa;
+            document.getElementById('preview-ash-wc').innerText = ash_wc;
+            document.getElementById('preview-ash-ws').innerText = ash_ws;
+        }
+
+        let cf_d = document.getElementById('cf_d').value || '0';
+        let cf_a = document.getElementById('cf_a').value || '0';
+        let cf_ws = document.getElementById('cf_ws').value || '0';
+        if(document.getElementById('preview-cf-d')) {
+            document.getElementById('preview-cf-d').innerText = cf_d;
+            document.getElementById('preview-cf-a').innerText = cf_a;
+            document.getElementById('preview-cf-ws').innerText = cf_ws;
+        }
+
+        let nfe_w = document.getElementById('nfe_w').value || '0';
+        let nfe_pro = document.getElementById('nfe_pro').value || '0';
+        let nfe_dcf = document.getElementById('nfe_dcf').value || '0';
+        let ee = document.getElementById('nfe_ee').value || '0';
+        let ash = document.getElementById('nfe_ash').value || '0';
+        if(document.getElementById('preview-nfe-w')) {
+            document.getElementById('preview-nfe-w').innerText = nfe_w;
+            document.getElementById('preview-nfe-pro').innerText = nfe_pro;
+            document.getElementById('preview-nfe-dcf').innerText = nfe_dcf;
+            document.getElementById('preview-nfe-ee').innerText = nfe_ee;
+            document.getElementById('preview-nfe-ash').innerText = nfe_ash;
+        }
+
+        let pe_dtp = document.getElementById('pe_dtp').value || '0';
+        let pe_npn = document.getElementById('pe_npn').value || '0';
+        if(document.getElementById('preview-pe-dtp')) {
+            document.getElementById('preview-pe-dtp').innerText = pe_dtp;
+            document.getElementById('preview-pe-npn').innerText = pe_npn;
+        }
+    }
+
+    function calcEnergy() {
+        updatePreviews();
+        let f = parseFloat(document.getElementById('e_fat').value) || 0;
+        let c = parseFloat(document.getElementById('e_cho').value) || 0;
+        let p = parseFloat(document.getElementById('e_pro').value) || 0;
+        let fe = parseFloat(document.getElementById('e_fe').value) || 0;
+        let ge = (f * 9.45) + (c * 4.2) + (p * 4.1);
+        let de = ge - fe;
+        document.getElementById('res_e').innerHTML = `Gross Energy (GE) = <strong>${ge.toFixed(2)} Kcal</strong> | Digestible Energy (DE) = <strong>${de.toFixed(2)} Kcal</strong>`;
+        let step = document.getElementById('step_e');
+        step.style.display = 'block';
+        step.innerHTML = `<strong>Calculation Steps:</strong><br>1. GE = (${f} × 9.45) + (${c} × 4.2) + (${p} × 4.1) = ${ge.toFixed(2)} Kcal<br>2. DE = GE (${ge.toFixed(2)}) - Fecal Energy (${fe}) = ${de.toFixed(2)} Kcal`;
+    }
+
+    function calcCD() {
+        updatePreviews();
+        let i = parseFloat(document.getElementById('c_intake').value) || 0;
+        let fa = parseFloat(document.getElementById('c_faeces').value) || 0;
+        if(i <= 0) { document.getElementById('res_c').innerText = "Error: Intake must be greater than zero."; return; }
+        let cd = ((i - fa) / i) * 100;
+        document.getElementById('res_c').innerHTML = `Digestibility Coefficient (CD %) = <strong>${cd.toFixed(2)}%</strong>`;
+        let step = document.getElementById('step_c');
+        step.style.display = 'block';
+        step.innerHTML = `<strong>Calculation Steps:</strong><br>CD % = [(${i} - ${fa}) ÷ ${i}] × 100 = <strong>${cd.toFixed(2)}%</strong>`;
+    }
+
+    function calcTDN() {
+        updatePreviews();
+        let dcp = parseFloat(document.getElementById('t_dcp').value) || 0;
+        let dnfe = parseFloat(document.getElementById('t_dnfe').value) || 0;
+        let dcf = parseFloat(document.getElementById('t_dcf').value) || 0;
+        let dee = parseFloat(document.getElementById('t_dee').value) || 0;
+        let tdn = dcp + dnfe + dcf + (dee * 2.25);
+        document.getElementById('res_t').innerHTML = `Total Digestible Nutrients (TDN %) = <strong>${tdn.toFixed(2)}%</strong>`;
+        let step = document.getElementById('step_t');
+        step.style.display = 'block';
+        step.innerHTML = `<strong>Calculation Steps:</strong><br>TDN % = ${dcp} + ${dnfe} + ${dcf} + (${dee} × 2.25) = <strong>${tdn.toFixed(2)}%</strong>`;
+    }
+
+    function calcCP() {
+        updatePreviews();
+        let v = parseFloat(document.getElementById('p_vol').value) || 0;
+        let w = parseFloat(document.getElementById('p_wt').value) || 1;
+        let np = (v * 0.0014 / w) * 100;
+        let cp = np * 6.25;
+        document.getElementById('res_p').innerHTML = `Nitrogen (N %) = <strong>${np.toFixed(3)}%</strong> | Crude Protein (CP %) = <strong>${cp.toFixed(2)}%</strong>`;
+        let step = document.getElementById('step_p');
+        step.style.display = 'block';
+        step.innerHTML = `<strong>Calculation Steps:</strong><br>1. N % = [(${v} × 0.0014) ÷ ${w}] × 100 = ${np.toFixed(3)}%<br>2. CP % = ${np.toFixed(3)} × 6.25 = <strong>${cp.toFixed(2)}%</strong>`;
+    }
+
+    function calcNR() {
+        updatePreviews();
+        let tdn = parseFloat(document.getElementById('n_tdn').value) || 0;
+        let dcp = parseFloat(document.getElementById('n_dcp').value) || 0;
+        if(dcp <= 0) { document.getElementById('res_n').innerText = "Error: DCP must be greater than zero."; return; }
+        let r = (tdn - dcp) / dcp;
+        document.getElementById('res_n').innerHTML = `Nutritive Ratio (NR) = <strong>1 : ${r.toFixed(2)}</strong>`;
+        let step = document.getElementById('step_n');
+        step.style.display = 'block';
+        step.innerHTML = `<strong>Calculation Steps:</strong><br>NR = 1 : [(${tdn} - ${dcp}) ÷ ${dcp}] = <strong>1 : ${r.toFixed(2)}</strong>`;
+    }
+
+    function calcDM() {
+        updatePreviews();
+        let w0 = parseFloat(document.getElementById('dm_w0').value) || 0;
+        let wd = parseFloat(document.getElementById('dm_wd').value) || 0;
+        let ws = parseFloat(document.getElementById('dm_ws').value) || 1;
+        let dm = ((w0 - wd) / ws) * 100;
+        let m = 100 - dm;
+        document.getElementById('res_dm').innerHTML = `Dry Matter (DM %) = <strong>${dm.toFixed(2)}%</strong> | Moisture % = <strong>${m.toFixed(2)}%</strong>`;
+    }
+
+    function calcAsh() {
+        updatePreviews();
+        let wa = parseFloat(document.getElementById('ash_wa').value) || 0;
+        let wc = parseFloat(document.getElementById('ash_wc').value) || 0;
+        let ws = parseFloat(document.getElementById('ash_ws').value) || 1;
+        let ash = ((wa - wc) / ws) * 100;
+        let om = 100 - ash;
+        document.getElementById('res_ash').innerHTML = `Ash % = <strong>${ash.toFixed(2)}%</strong> | Organic Matter (OM %) = <strong>${om.toFixed(2)}%</strong>`;
+    }
+
+    function calcCF() {
+        updatePreviews();
+        let d = parseFloat(document.getElementById('cf_d').value) || 0;
+        let a = parseFloat(document.getElementById('cf_a').value) || 0;
+        let ws = parseFloat(document.getElementById('cf_ws').value) || 1;
+        let cf = ((d - a) / ws) * 100;
+        document.getElementById('res_cf').innerHTML = `Crude Fiber (CF %) = <strong>${cf.toFixed(2)}%</strong>`;
+    }
+
+    function calcNFE() {
+        updatePreviews();
+        let w = parseFloat(document.getElementById('nfe_w').value) || 0;
+        let cp = parseFloat(document.getElementById('nfe_pro').value) || 0;
+        let cf = parseFloat(document.getElementById('nfe_dcf').value) || 0;
+        let ee = parseFloat(document.getElementById('nfe_ee').value) || 0;
+        let ash = parseFloat(document.getElementById('nfe_ash').value) || 0;
+        let nfe = 100 - (w + cp + cf + ee + ash);
+        document.getElementById('res_nfe').innerHTML = `Nitrogen Free Extract (NFE %) = <strong>${nfe.toFixed(2)}%</strong>`;
+    }
+
+    function calcPE() {
+        updatePreviews();
+        let dtp = parseFloat(document.getElementById('pe_dtp').value) || 0;
+        let npn = parseFloat(document.getElementById('pe_npn').value) || 0;
+        let pe = dtp + (npn / 2);
+        document.getElementById('res_pe').innerHTML = `Protein Equivalent (PE) = <strong>${pe.toFixed(2)}%</strong>`;
+    }
+
+    function filterGlossary() {
+        let input = document.getElementById('glossarySearch').value.toUpperCase();
+        let tr = document.getElementById('glossaryTable').getElementsByTagName('tr');
+        for (let i = 1; i < tr.length; i++) {
+            let rowText = tr[i].textContent || tr[i].innerText;
+            tr[i].style.display = rowText.toUpperCase().indexOf(input) > -1 ? "" : "none";
+        }
+    }
+
+    let currentQuizCorrect = 0;
+    let currentQuizUnit = "%";
+
+    const quizGenerators = [
+        // 1. CD%
+        () => {
+            let intake = Math.floor(Math.random() * 800) + 1200;
+            let faeces = Math.floor(Math.random() * 400) + 300;
+            currentQuizCorrect = ((intake - faeces) / intake) * 100;
+            currentQuizUnit = "%";
+            return `Calculate the <strong>Digestibility Coefficient (CD %)</strong>:<br>Nutrient Intake = <strong>${intake} g</strong> | Faecal Nutrient = <strong>${faeces} g</strong>`;
+        },
+        // 2. Gross Energy (GE)
+        () => {
+            let fat = Math.floor(Math.random() * 20) + 5;
+            let carbs = Math.floor(Math.random() * 40) + 20;
+            let pro = Math.floor(Math.random() * 30) + 10;
+            currentQuizCorrect = (fat * 9.45) + (carbs * 4.2) + (pro * 4.1);
+            currentQuizUnit = "Kcal";
+            return `Calculate the <strong>Gross Energy (GE in Kcal)</strong>:<br>Fat = <strong>${fat} g</strong> | Carbs = <strong>${carbs} g</strong> | Protein = <strong>${pro} g</strong>`;
+        },
+        // 3. TDN %
+        () => {
+            let dcp = Math.floor(Math.random() * 15) + 8;
+            let dnfe = Math.floor(Math.random() * 25) + 35;
+            let dcf = Math.floor(Math.random() * 15) + 10;
+            let dee = Math.floor(Math.random() * 6) + 2;
+            currentQuizCorrect = dcp + dnfe + dcf + (dee * 2.25);
+            currentQuizUnit = "%";
+            return `Calculate the <strong>Total Digestible Nutrients (TDN %)</strong>:<br>DCP = <strong>${dcp}%</strong> | DNFE = <strong>${dnfe}%</strong> | DCF = <strong>${dcf}%</strong> | DEE = <strong>${dee}%</strong>`;
+        },
+        // 4. Nutritive Ratio (NR)
+        () => {
+            let tdn = Math.floor(Math.random() * 20) + 60;
+            let dcp = Math.floor(Math.random() * 8) + 8;
+            currentQuizCorrect = (tdn - dcp) / dcp;
+            currentQuizUnit = " (1 : X)";
+            return `Calculate the second value (X) of the <strong>Nutritive Ratio (1 : X)</strong>:<br>TDN = <strong>${tdn}%</strong> | DCP = <strong>${dcp}%</strong>`;
+        },
+        // 5. Crude Protein %
+        () => {
+            let vol = Math.floor(Math.random() * 30) + 15;
+            let wt = (Math.random() * 1 + 1).toFixed(2);
+            let n = (vol * 0.0014 / wt) * 100;
+            currentQuizCorrect = n * 6.25;
+            currentQuizUnit = "%";
+            return `Calculate <strong>Crude Protein (CP %)</strong> via Kjeldahl:<br>Acid Consumed = <strong>${vol} mL</strong> | Sample Weight = <strong>${wt} g</strong>`;
+        },
+        // 6. Dry Matter (DM %)
+        () => {
+            let wd = 20;
+            let ws = 5;
+            let w0 = (wd + (ws * (Math.random() * 0.2 + 0.75))).toFixed(2);
+            currentQuizCorrect = ((w0 - wd) / ws) * 100;
+            currentQuizUnit = "%";
+            return `Calculate <strong>Dry Matter (DM %)</strong>:<br>Dish Weight (Wd) = <strong>${wd} g</strong> | Fresh Sample (Ws) = <strong>${ws} g</strong> | Dish + Dry Sample (W0) = <strong>${w0} g</strong>`;
+        },
+        // 7. NFE %
+        () => {
+            let water = 10;
+            let cp = Math.floor(Math.random() * 10) + 12;
+            let cf = Math.floor(Math.random() * 8) + 6;
+            let ee = Math.floor(Math.random() * 4) + 3;
+            let ash = Math.floor(Math.random() * 4) + 5;
+            currentQuizCorrect = 100 - (water + cp + cf + ee + ash);
+            currentQuizUnit = "%";
+            return `Calculate <strong>Nitrogen Free Extract (NFE %)</strong>:<br>Moisture = <strong>${water}%</strong> | CP = <strong>${cp}%</strong> | CF = <strong>${cf}%</strong> | EE = <strong>${ee}%</strong> | Ash = <strong>${ash}%</strong>`;
+        },
+        // 8. Protein Equivalent (PE)
+        () => {
+            let dtp = Math.floor(Math.random() * 10) + 8;
+            let npn = Math.floor(Math.random() * 6) + 4;
+            currentQuizCorrect = dtp + (npn / 2);
+            currentQuizUnit = "%";
+            return `Calculate <strong>Protein Equivalent (PE)</strong> for ruminants:<br>Digestible True Protein (DTP) = <strong>${dtp}%</strong> | Digestible NPN = <strong>${npn}%</strong>`;
+        }
+    ];
+
+    function generateQuiz() {
+        let randomIndex = Math.floor(Math.random() * quizGenerators.length);
+        let questionHtml = quizGenerators[randomIndex]();
+        
+        document.getElementById('quizContainer').innerHTML = questionHtml;
+        let fb = document.getElementById('quizFeedback');
+        fb.style.display = 'none';
+        let input = document.getElementById('quizUserAnswer');
+        input.value = '';
+        input.placeholder = `Enter numerical answer (${currentQuizUnit})`;
+    }
+
+    function checkQuizAnswer() {
+        let userAns = parseFloat(document.getElementById('quizUserAnswer').value);
+        let fb = document.getElementById('quizFeedback');
+        fb.style.display = 'block';
+        if (isNaN(userAns)) {
+            fb.innerHTML = `⚠️ Please enter a valid numerical answer.`;
+            return;
+        }
+        if (Math.abs(userAns - currentQuizCorrect) < 0.6) {
+            fb.innerHTML = `✅ <strong>Correct!</strong> Great job. The exact calculated value is <strong>${currentQuizCorrect.toFixed(2)}${currentQuizUnit}</strong>.`;
+        } else {
+            fb.innerHTML = `❌ <strong>Incorrect.</strong> The correct answer is <strong>${currentQuizCorrect.toFixed(2)}${currentQuizUnit}</strong>.`;
+        }
+    }
+</script>
+
+</body>
+</html>
