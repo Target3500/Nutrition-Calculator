@@ -151,6 +151,7 @@
         }
         .denominator { padding-top: 2px; }
         
+        /* الصناديق الصغيرة مع العنوان الصغير الأنيق بدون زيادة ارتفاع */
         .dynamic-slot {
             display: inline-flex;
             flex-direction: column;
@@ -637,10 +638,28 @@
                 <tr><th>Term / Parameter</th><th>Category / Formula</th><th>Clinical & Academic Description</th></tr>
             </thead>
             <tbody>
-                <tr><td><strong>GE (Gross Energy)</strong></td><td>Energy Evaluation</td><td>Total chemical energy measured via bomb calorimeter (Fat × 9.45 + Carbs × 4.2 + Protein × 4.1).</td></tr>
-                <tr><td><strong>DE (Digestible Energy)</strong></td><td>Energy Evaluation</td><td>Energy remaining after fecal energy losses (GE - FE).</td></tr>
-                <tr><td><strong>TDN</strong></td><td>Total Digestible Nutrients</td><td>Sum of all digestible organic nutrients (DCP + DNFE + DCF + DEE × 2.25).</td></tr>
-                <tr><td><strong>CD%</strong></td><td>Digestibility Coefficient</td><td>Percentage of ingested nutrient absorbed [(Intake - Faeces) ÷ Intake] × 100.</td></tr>
+                <tr><td><strong>GE (Gross Energy)</strong></td><td>Energy Evaluation</td><td>Total chemical energy liberated upon complete combustion in a bomb calorimeter: (Fat × 9.45) + (Carbs × 4.2) + (Protein × 4.1) Kcal/g.</td></tr>
+                <tr><td><strong>DE (Digestible Energy)</strong></td><td>Energy Evaluation</td><td>Apparent absorbed energy after subtracting fecal energy loss from gross energy: DE = GE − FE.</td></tr>
+                <tr><td><strong>ME (Metabolizable Energy)</strong></td><td>Energy Evaluation</td><td>Energy available for tissue metabolism after subtracting urinary energy (UE) and methane/gas energy (GaE): ME = DE − (UE + GaE).</td></tr>
+                <tr><td><strong>NE (Net Energy)</strong></td><td>Energy Evaluation</td><td>Energy actually retained for maintenance (NEm) and production (NEp: milk, meat, wool) after heat increment loss: NE = ME − HI.</td></tr>
+                <tr><td><strong>CD% (Digestibility Coefficient)</strong></td><td>Digestibility</td><td>Percentage of ingested nutrient absorbed through digestive tract: [ (Intake − Faecal Output) ÷ Intake ] × 100.</td></tr>
+                <tr><td><strong>TDN (Total Digestible Nutrients)</strong></td><td>Energy Index</td><td>Standard measure of energy density: TDN % = DCP + DNFE + DCF + (DEE × 2.25). DEE multiplied by 2.25 due to fat's higher caloric density.</td></tr>
+                <tr><td><strong>CP (Crude Protein)</strong></td><td>Proximate Analysis</td><td>Total nitrogen determined via Kjeldahl method multiplied by standard factor 6.25: CP % = N % × 6.25. (Assumes 16% average N in protein).</td></tr>
+                <tr><td><strong>DCP (Digestible Crude Protein)</strong></td><td>Protein Evaluation</td><td>The fraction of crude protein digested and absorbed: DCP % = CP % × Digestion Coefficient of Protein.</td></tr>
+                <tr><td><strong>NR (Nutritive Ratio)</strong></td><td>Dietary Balance</td><td>Ratio of digestible protein to digestible non-protein energy: NR = 1 : [ (TDN − DCP) ÷ DCP ]. Narrow (<1:5) for growth/lactation, Wide (>1:8) for maintenance.</td></tr>
+                <tr><td><strong>DM (Dry Matter)</strong></td><td>Moisture Lab</td><td>Feed mass remaining after oven-drying at 100–105°C: DM % = [ (W0 − Wd) ÷ Ws ] × 100. Moisture % = 100 − DM %.</td></tr>
+                <tr><td><strong>Ash & OM (Organic Matter)</strong></td><td>Proximate Analysis</td><td>Ash is inorganic mineral residue after ignition at 550–600°C: Ash % = [ (Wa − Wc) ÷ Ws ] × 100. Organic Matter: OM % = 100 − Ash %.</td></tr>
+                <tr><td><strong>CF (Crude Fiber)</strong></td><td>Fiber Chemistry</td><td>Insoluble structural carbohydrate residue after successive boiling in weak acid (1.25% H2SO4) and weak alkali (1.25% NaOH): CF % = [ (Dry Residue − Ash) ÷ Ws ] × 100.</td></tr>
+                <tr><td><strong>EE (Ether Extract / Crude Fat)</strong></td><td>Fat Chemistry</td><td>Lipids, plant pigments, and fat-soluble vitamins extracted using petroleum ether or diethyl ether in a Soxhlet apparatus. Energy density = 9.45 Kcal/g.</td></tr>
+                <tr><td><strong>NFE (Nitrogen Free Extract)</strong></td><td>Soluble Carbs</td><td>Easily digestible non-structural carbohydrates (starches, simple sugars) determined by subtraction: NFE % = 100 − (Moisture + CP + CF + EE + Ash).</td></tr>
+                <tr><td><strong>PE (Protein Equivalent)</strong></td><td>Ruminant Nutrition</td><td>Measures total nitrogen value for ruminants accounting for true protein and NPN: PE = DTP + (Digestible NPN ÷ 2).</td></tr>
+                <tr><td><strong>NPN (Non-Protein Nitrogen)</strong></td><td>Ruminant Feed</td><td>Nitrogen compounds not bound in proteins (e.g., urea, biuret, ammonium salts) converted into microbial crude protein in the rumen.</td></tr>
+                <tr><td><strong>DTP (Digestible True Protein)</strong></td><td>Protein Quality</td><td>Digestible intact amino acid peptide chains excluding non-protein nitrogen fractions.</td></tr>
+                <tr><td><strong>Corn (Yellow Maize Grain)</strong></td><td>Feedstuff Profile</td><td>High-energy cereal grain: DM ~88%, CP ~8.5–9.0%, TDN ~88–90%, CF ~2.2%, EE ~3.8%. Primary source of starch and metabolizable energy.</td></tr>
+                <tr><td><strong>Soybean Meal (SBM 44/48%)</strong></td><td>Feedstuff Profile</td><td>Premier plant protein concentrate: DM ~89%, CP ~44–48%, TDN ~78–82%, CF ~3.5–6.0%, EE ~1.5%. Balanced essential amino acid profile (rich in lysine).</td></tr>
+                <tr><td><strong>Wheat Bran</strong></td><td>Feedstuff Profile</td><td>Milling byproduct rich in digestible fiber and phosphorus: DM ~89%, CP ~14–16%, TDN ~65–70%, CF ~10–12%. Mild laxative diet balancer.</td></tr>
+                <tr><td><strong>Alfalfa Hay (Lucerne)</strong></td><td>Feedstuff Profile</td><td>High-quality leguminous forage: DM ~90%, CP ~16–20%, TDN ~58–62%, CF ~24–28%. Excellent natural source of calcium, carotene, and structural fiber.</td></tr>
+                <tr><td><strong>SARA (Subacute Ruminal Acidosis)</strong></td><td>Clinical Pathology</td><td>Metabolic disorder occurring when ruminal pH drops below 5.6 for prolonged periods, typically caused by excess rapidly fermentable starch (grain) and insufficient effective fiber (eNDF).</td></tr>
             </tbody>
         </table>
     </div>
@@ -676,10 +695,12 @@
         event.currentTarget.classList.add('active');
     }
 
+    // دالة تصدير محسنة: تلغي أنميشن الـ fadeIn وتمنع الشفافية وتعمل على المسارات المحلية file:///
     function exportSection(sectionId, filename) {
         const element = document.getElementById(sectionId);
         const hideElements = element.querySelectorAll('.hide-on-export');
         
+        // إخفاء حقول الإدخال والأزرار مؤقتاً
         hideElements.forEach(el => el.style.display = 'none');
 
         const isDark = document.body.getAttribute('data-theme') === 'dark';
@@ -692,6 +713,7 @@
             onclone: (clonedDoc) => {
                 const clonedEl = clonedDoc.getElementById(sectionId);
                 
+                // إلغاء تشغيل الأنميشن فوراً في النسخة المستنسخة لمنع شفافية الـ 10%
                 clonedEl.style.animation = 'none';
                 clonedEl.style.opacity = '1';
                 clonedEl.style.backgroundColor = solidBg;
@@ -788,8 +810,8 @@
         let nfe_w = document.getElementById('nfe_w').value || '0';
         let nfe_pro = document.getElementById('nfe_pro').value || '0';
         let nfe_dcf = document.getElementById('nfe_dcf').value || '0';
-        let ee = document.getElementById('nfe_ee').value || '0';
-        let ash = document.getElementById('nfe_ash').value || '0';
+        let nfe_ee = document.getElementById('nfe_ee').value || '0';
+        let nfe_ash = document.getElementById('nfe_ash').value || '0';
         if(document.getElementById('preview-nfe-w')) {
             document.getElementById('preview-nfe-w').innerText = nfe_w;
             document.getElementById('preview-nfe-pro').innerText = nfe_pro;
@@ -1024,6 +1046,7 @@
             fb.innerHTML = `⚠️ Please enter a valid numerical answer.`;
             return;
         }
+        // سماحية ±0.5 للفروق التقريبية
         if (Math.abs(userAns - currentQuizCorrect) < 0.6) {
             fb.innerHTML = `✅ <strong>Correct!</strong> Great job. The exact calculated value is <strong>${currentQuizCorrect.toFixed(2)}${currentQuizUnit}</strong>.`;
         } else {
