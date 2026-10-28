@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nutritional Lawyer - Complete Edition</title>
-    <!-- html2canvas library for screenshot & study card export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -382,7 +381,7 @@
         <button class="nav-btn" onclick="switchTab('t13')">13. Interactive Quiz</button>
     </div>
 
-    <!-- 1. Digestible Energy (Exact Lecture Slide) -->
+    <!-- 1. Digestible Energy -->
     <div id="t1" class="section-card active">
         <h2>1. Digestible Energy (DE) & Apparent Energy Digestibility</h2>
         <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Calculates Energy Intake, Fecal Energy Output, Daily DE, Apparent Energy Digestibility (%), and DE per gram DM.</p>
@@ -392,11 +391,11 @@
             DE (Kcal/day) = 
             <span class="dynamic-slot slot-intake">
                 <span class="slot-tag">Energy In</span>
-                <span id="preview-de-in">7009</span>
+                <span id="preview-de-in">--</span>
             </span> - 
             <span class="dynamic-slot slot-faeces">
                 <span class="slot-tag">Energy Out</span>
-                <span id="preview-de-out">3405</span>
+                <span id="preview-de-out">--</span>
             </span>
             &nbsp;|&nbsp;
             Apparent Digestibility % = 
@@ -410,22 +409,22 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Feed Intake (Kg DM eaten):</label>
-                    <input type="number" step="0.01" id="de_feed_kg" class="input-intake" value="1.63" oninput="calcDE_Slide()">
+                    <input type="number" step="0.01" id="de_feed_kg" class="input-intake" placeholder="e.g. 1.63" oninput="calcDE_Slide()">
                 </div>
                 <div class="form-group">
                     <label>Feed Energy Content (Kcal/g):</label>
-                    <input type="number" step="0.01" id="de_feed_kcal" class="input-intake" value="4.30" oninput="calcDE_Slide()">
+                    <input type="number" step="0.01" id="de_feed_kcal" class="input-intake" placeholder="e.g. 4.30" oninput="calcDE_Slide()">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label>Faeces Excreted (Kg DM):</label>
-                    <input type="number" step="0.01" id="de_feces_kg" class="input-faeces" value="0.76" oninput="calcDE_Slide()">
+                    <input type="number" step="0.01" id="de_feces_kg" class="input-faeces" placeholder="e.g. 0.76" oninput="calcDE_Slide()">
                 </div>
                 <div class="form-group">
                     <label>Faeces Energy Content (Kcal/g):</label>
-                    <input type="number" step="0.01" id="de_feces_kcal" class="input-faeces" value="4.48" oninput="calcDE_Slide()">
+                    <input type="number" step="0.01" id="de_feces_kcal" class="input-faeces" placeholder="e.g. 4.48" oninput="calcDE_Slide()">
                 </div>
             </div>
         </div>
@@ -436,7 +435,7 @@
         <button class="action-btn export-btn hide-on-export" onclick="exportSection('t1', 'Digestible_Energy_Slide_Result.png')">📸 Export Law & Steps as Image</button>
     </div>
 
-    <!-- 2. Digestibility & Trials (Apparent, True Digestibility, Indicator Method & Feed Efficiency) -->
+    <!-- 2. Digestibility & Trials -->
     <div id="t2" class="section-card">
         <h2>2. Digestibility Coefficients & Feeding Trial Methods</h2>
         <hr class="section-divider">
@@ -495,8 +494,8 @@
 
                 <!-- Direct Mode -->
                 <div id="cd-direct-fields">
-                    <div class="form-group"><label>Total Nutrient Intake (g):</label><input type="number" id="c_intake" class="input-intake" value="400" oninput="calcCD()"></div>
-                    <div class="form-group" style="margin-top:12px;"><label>Total Nutrient in Faeces (g):</label><input type="number" id="c_faeces" class="input-faeces" value="80" oninput="calcCD()"></div>
+                    <div class="form-group"><label>Total Nutrient Intake (g):</label><input type="number" id="c_intake" class="input-intake" placeholder="e.g. 400" oninput="calcCD()"></div>
+                    <div class="form-group" style="margin-top:12px;"><label>Total Nutrient in Faeces (g):</label><input type="number" id="c_faeces" class="input-faeces" placeholder="e.g. 80" oninput="calcCD()"></div>
                 </div>
 
                 <!-- Percentage Mode -->
@@ -584,12 +583,12 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="t_dcp" class="input-dcp" oninput="calcTDN()"></div>
-                <div class="form-group"><label>Digestible Nitrogen Free Extract (DNFE %):</label><input type="number" id="t_dnfe" class="input-dnfe" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="t_dcp" class="input-dcp" placeholder="e.g. 12" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible Nitrogen Free Extract (DNFE %):</label><input type="number" id="t_dnfe" class="input-dnfe" placeholder="e.g. 45" oninput="calcTDN()"></div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label>Digestible Crude Fiber (DCF %):</label><input type="number" id="t_dcf" class="input-dcf" oninput="calcTDN()"></div>
-                <div class="form-group"><label>Digestible Ether Extract (DEE %):</label><input type="number" id="t_dee" class="input-dee" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible Crude Fiber (DCF %):</label><input type="number" id="t_dcf" class="input-dcf" placeholder="e.g. 15" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible Ether Extract (DEE %):</label><input type="number" id="t_dee" class="input-dee" placeholder="e.g. 3.5" oninput="calcTDN()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcTDN()">Calculate Total Digestible Nutrients</button>
@@ -616,8 +615,8 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Volume of N/10 Acid Consumed (mL):</label><input type="number" id="p_vol" class="input-vol" oninput="calcCP()"></div>
-                <div class="form-group"><label>Sample Weight (g):</label><input type="number" id="p_wt" class="input-wt" oninput="calcCP()"></div>
+                <div class="form-group"><label>Volume of N/10 Acid Consumed (mL):</label><input type="number" id="p_vol" class="input-vol" placeholder="e.g. 20" oninput="calcCP()"></div>
+                <div class="form-group"><label>Sample Weight (g):</label><input type="number" id="p_wt" class="input-wt" placeholder="e.g. 1.0" oninput="calcCP()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcCP()">Calculate Crude Protein</button>
@@ -644,8 +643,8 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Total Digestible Nutrients (TDN %):</label><input type="number" id="n_tdn" class="input-tdn" oninput="calcNR()"></div>
-                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="n_dcp" class="input-dcp" oninput="calcNR()"></div>
+                <div class="form-group"><label>Total Digestible Nutrients (TDN %):</label><input type="number" id="n_tdn" class="input-tdn" placeholder="e.g. 70" oninput="calcNR()"></div>
+                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="n_dcp" class="input-dcp" placeholder="e.g. 10" oninput="calcNR()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcNR()">Calculate Nutritive Ratio</button>
@@ -673,9 +672,9 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Dish + Dry Sample (W0):</label><input type="number" id="dm_w0" class="input-wt" oninput="calcDM()"></div>
-                <div class="form-group"><label>Dish Weight (Wd):</label><input type="number" id="dm_wd" class="input-wt" oninput="calcDM()"></div>
-                <div class="form-group"><label>Fresh Sample Weight (Ws):</label><input type="number" id="dm_ws" class="input-wt" oninput="calcDM()"></div>
+                <div class="form-group"><label>Dish + Dry Sample (W0):</label><input type="number" id="dm_w0" class="input-wt" placeholder="e.g. 24.5" oninput="calcDM()"></div>
+                <div class="form-group"><label>Dish Weight (Wd):</label><input type="number" id="dm_wd" class="input-wt" placeholder="e.g. 20.0" oninput="calcDM()"></div>
+                <div class="form-group"><label>Fresh Sample Weight (Ws):</label><input type="number" id="dm_ws" class="input-wt" placeholder="e.g. 5.0" oninput="calcDM()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcDM()">Calculate Dry Matter</button>
@@ -702,9 +701,9 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Crucible + Ash (Wa):</label><input type="number" id="ash_wa" class="input-wt" oninput="calcAsh()"></div>
-                <div class="form-group"><label>Empty Crucible (Wc):</label><input type="number" id="ash_wc" class="input-wt" oninput="calcAsh()"></div>
-                <div class="form-group"><label>Sample Weight (Ws):</label><input type="number" id="ash_ws" class="input-wt" oninput="calcAsh()"></div>
+                <div class="form-group"><label>Crucible + Ash (Wa):</label><input type="number" id="ash_wa" class="input-wt" placeholder="e.g. 15.3" oninput="calcAsh()"></div>
+                <div class="form-group"><label>Empty Crucible (Wc):</label><input type="number" id="ash_wc" class="input-wt" placeholder="e.g. 15.0" oninput="calcAsh()"></div>
+                <div class="form-group"><label>Sample Weight (Ws):</label><input type="number" id="ash_ws" class="input-wt" placeholder="e.g. 5.0" oninput="calcAsh()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcAsh()">Calculate Ash & Organic Matter</button>
@@ -741,9 +740,9 @@
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
-                    <div class="form-group"><label>Dried Residue + Dish (g):</label><input type="number" id="cf_d" class="input-dcf" oninput="calcCF()"></div>
-                    <div class="form-group"><label>Ignited Ash + Dish (g):</label><input type="number" id="cf_a" class="input-dcf" oninput="calcCF()"></div>
-                    <div class="form-group"><label>Sample Weight (g):</label><input type="number" id="cf_ws" class="input-wt" oninput="calcCF()"></div>
+                    <div class="form-group"><label>Dried Residue + Dish (g):</label><input type="number" id="cf_d" class="input-dcf" placeholder="e.g. 21.2" oninput="calcCF()"></div>
+                    <div class="form-group"><label>Ignited Ash + Dish (g):</label><input type="number" id="cf_a" class="input-dcf" placeholder="e.g. 20.8" oninput="calcCF()"></div>
+                    <div class="form-group"><label>Sample Weight (g):</label><input type="number" id="cf_ws" class="input-wt" placeholder="e.g. 2.0" oninput="calcCF()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcCF()">Calculate Crude Fiber</button>
@@ -762,9 +761,9 @@
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
-                    <div class="form-group"><label>Flask + Extracted Fat (Wa):</label><input type="number" step="0.001" id="ee_wa" class="input-fat" oninput="calcEE()"></div>
-                    <div class="form-group"><label>Empty Oven-Dry Flask (Wc):</label><input type="number" step="0.001" id="ee_wc" class="input-fat" oninput="calcEE()"></div>
-                    <div class="form-group"><label>Sample Weight (Ws):</label><input type="number" step="0.01" id="ee_ws" class="input-wt" oninput="calcEE()"></div>
+                    <div class="form-group"><label>Flask + Extracted Fat (Wa):</label><input type="number" step="0.001" id="ee_wa" class="input-fat" placeholder="e.g. 50.15" oninput="calcEE()"></div>
+                    <div class="form-group"><label>Empty Oven-Dry Flask (Wc):</label><input type="number" step="0.001" id="ee_wc" class="input-fat" placeholder="e.g. 50.00" oninput="calcEE()"></div>
+                    <div class="form-group"><label>Sample Weight (Ws):</label><input type="number" step="0.01" id="ee_ws" class="input-wt" placeholder="e.g. 3.0" oninput="calcEE()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcEE()">Calculate Ether Extract (EE %)</button>
@@ -789,13 +788,13 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Moisture %:</label><input type="number" id="nfe_w" class="input-cho" oninput="calcNFE()"></div>
-                <div class="form-group"><label>Crude Protein %:</label><input type="number" id="nfe_pro" class="input-pro" oninput="calcNFE()"></div>
-                <div class="form-group"><label>Crude Fiber %:</label><input type="number" id="nfe_dcf" class="input-dcf" oninput="calcNFE()"></div>
+                <div class="form-group"><label>Moisture %:</label><input type="number" id="nfe_w" class="input-cho" placeholder="e.g. 10" oninput="calcNFE()"></div>
+                <div class="form-group"><label>Crude Protein %:</label><input type="number" id="nfe_pro" class="input-pro" placeholder="e.g. 15" oninput="calcNFE()"></div>
+                <div class="form-group"><label>Crude Fiber %:</label><input type="number" id="nfe_dcf" class="input-dcf" placeholder="e.g. 8" oninput="calcNFE()"></div>
             </div>
             <div class="form-row">
-                <div class="form-group"><label>Ether Extract %:</label><input type="number" id="nfe_ee" class="input-fat" oninput="calcNFE()"></div>
-                <div class="form-group"><label>Ash %:</label><input type="number" id="nfe_ash" class="input-wt" oninput="calcNFE()"></div>
+                <div class="form-group"><label>Ether Extract %:</label><input type="number" id="nfe_ee" class="input-fat" placeholder="e.g. 3" oninput="calcNFE()"></div>
+                <div class="form-group"><label>Ash %:</label><input type="number" id="nfe_ash" class="input-wt" placeholder="e.g. 6" oninput="calcNFE()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcNFE()">Calculate Nitrogen Free Extract</button>
@@ -803,7 +802,7 @@
         <button class="action-btn export-btn hide-on-export" onclick="exportSection('t9', 'NFE_Result.png')">📸 Export Section as Image</button>
     </div>
 
-    <!-- 10. Protein Quality & Evaluation Suite (PE, PER, BV, CS, GPV) -->
+    <!-- 10. Protein Quality Suite -->
     <div id="t10" class="section-card">
         <h2>10. Protein Quality & Biological Evaluation Suite</h2>
         <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Includes Protein Equivalent (PE), Protein Efficiency Ratio (PER), Biological Value (BV), Chemical Score (CS) & Gross Protein Value (GPV).</p>
@@ -835,8 +834,8 @@
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
-                    <div class="form-group"><label>Digestible True Protein (DTP %):</label><input type="number" id="pe_dtp" class="input-pro" oninput="calcPE()"></div>
-                    <div class="form-group"><label>Digestible NPN (DNPN %):</label><input type="number" id="pe_npn" class="input-dnfe" oninput="calcPE()"></div>
+                    <div class="form-group"><label>Digestible True Protein (DTP %):</label><input type="number" id="pe_dtp" class="input-pro" placeholder="e.g. 10" oninput="calcPE()"></div>
+                    <div class="form-group"><label>Digestible NPN (DNPN %):</label><input type="number" id="pe_npn" class="input-dnfe" placeholder="e.g. 4" oninput="calcPE()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcPE()">Calculate Protein Equivalent</button>
@@ -983,6 +982,7 @@
                 <tr><td><strong>GPV (Gross Protein Value)</strong></td><td>Weight gain per g test protein (A) ÷ Weight gain per g Casein (⁰A)</td><td>Relative biological assay referencing casein as the gold standard (1.0).</td></tr>
                 <tr><td><strong>Starch Equivalent (SE)</strong></td><td>(Fat stored per unit food ÷ Fat stored per unit starch [0.248]) × 100</td><td>Kellner's energy evaluation system expressing feeding value relative to 100kg starch.</td></tr>
                 <tr><td><strong>ME & NE</strong></td><td>ME = DE − (UE + Gas) | Net Energy (NE) = ME − HI</td><td>Energy available after urinary and combustible methane gas, minus heat increment.</td></tr>
+                <tr><td><strong>SARA (Subacute Ruminal Acidosis)</strong></td><td>Clinical Pathology</td><td>A metabolic disorder occurring when ruminal pH drops below 5.6 for prolonged periods, typically caused by excess rapidly fermentable grains and insufficient effective fiber (eNDF).</td></tr>
             </tbody>
         </table>
     </div>
@@ -1087,7 +1087,6 @@
             fieldsDirect.style.display = 'none';
             fieldsPercent.style.display = 'block';
         }
-        calcCD();
     }
 
     function toggleTrueDigestibility() {
@@ -1105,7 +1104,6 @@
             mfnBlock.style.display = 'none';
             formulaLabel.innerText = "Apparent CD %";
         }
-        calcCD();
     }
 
     function exportSection(sectionId, filename) {
@@ -1143,25 +1141,28 @@
         });
     }
 
-    // 1. Digestible Energy (Exact Lecture Slide Method)
+    // 1. Digestible Energy
     function calcDE_Slide() {
-        let feedKg = parseFloat(document.getElementById('de_feed_kg').value) || 0;
-        let feedKcal = parseFloat(document.getElementById('de_feed_kcal').value) || 0;
-        let fecesKg = parseFloat(document.getElementById('de_feces_kg').value) || 0;
-        let fecesKcal = parseFloat(document.getElementById('de_feces_kcal').value) || 0;
+        let feedKg = parseFloat(document.getElementById('de_feed_kg').value);
+        let feedKcal = parseFloat(document.getElementById('de_feed_kcal').value);
+        let fecesKg = parseFloat(document.getElementById('de_feces_kg').value);
+        let fecesKcal = parseFloat(document.getElementById('de_feces_kcal').value);
+
+        if (isNaN(feedKg) || isNaN(feedKcal) || isNaN(fecesKg) || isNaN(fecesKcal)) {
+            document.getElementById('res_de_slide').innerHTML = "Please fill in all 4 inputs.";
+            document.getElementById('step_de_slide').style.display = 'none';
+            return;
+        }
 
         let energyIn = feedKg * 1000 * feedKcal;
         let energyOut = fecesKg * 1000 * fecesKcal;
         let deAmount = energyIn - energyOut;
 
-        let prevIn = document.getElementById('preview-de-in');
-        let prevOut = document.getElementById('preview-de-out');
-        if (prevIn) prevIn.innerText = energyIn.toFixed(0);
-        if (prevOut) prevOut.innerText = energyOut.toFixed(0);
+        document.getElementById('preview-de-in').innerText = energyIn.toFixed(0);
+        document.getElementById('preview-de-out').innerText = energyOut.toFixed(0);
 
         if (energyIn <= 0) {
-            document.getElementById('res_de_slide').innerHTML = "Please enter valid positive values for feed DM and energy content.";
-            document.getElementById('step_de_slide').style.display = 'none';
+            document.getElementById('res_de_slide').innerHTML = "Feed energy intake must be greater than zero.";
             return;
         }
 
@@ -1177,7 +1178,7 @@
         let step = document.getElementById('step_de_slide');
         step.style.display = 'block';
         step.innerHTML = `
-            <strong>Step-by-Step Calculation (Matching Lecture Example):</strong><br>
+            <strong>Step-by-Step Calculation:</strong><br>
             1. <strong>Energy intake</strong> = ${feedKg} Kg × 1000 × ${feedKcal} Kcal/g = <strong>${energyIn.toFixed(0)} Kcal/day</strong><br>
             2. <strong>Energy output</strong> = ${fecesKg} Kg × 1000 × ${fecesKcal} Kcal/g = <strong>${energyOut.toFixed(0)} Kcal/day</strong><br>
             3. <strong>DE amount of feed / day</strong> = ${energyIn.toFixed(0)} − ${energyOut.toFixed(0)} = <strong>${deAmount.toFixed(0)} Kcal/day</strong><br>
@@ -1195,15 +1196,27 @@
         const isTrueDig = document.getElementById('c_toggle_true').checked;
 
         if (currentCDMode === 'direct') {
-            intake = parseFloat(document.getElementById('c_intake').value) || 0;
-            feces = parseFloat(document.getElementById('c_faeces').value) || 0;
+            intake = parseFloat(document.getElementById('c_intake').value);
+            feces = parseFloat(document.getElementById('c_faeces').value);
             mealWeight = parseFloat(document.getElementById('c_mfn_feed_base').value) || intake;
+            
+            if (isNaN(intake) || isNaN(feces)) {
+                document.getElementById('res_c').innerText = "Please fill in Intake and Faeces values.";
+                document.getElementById('step_c').style.display = 'none';
+                return;
+            }
             stepsInfo.push(`<strong>Mode:</strong> Direct Nutrient Quantities (Intake = ${intake}g, Feces = ${feces}g)`);
         } else {
-            let totalMeal = parseFloat(document.getElementById('c_total_meal').value) || 0;
-            let feedPct = parseFloat(document.getElementById('c_feed_pct').value) || 0;
-            let totalFeces = parseFloat(document.getElementById('c_total_feces').value) || 0;
-            let fecesPct = parseFloat(document.getElementById('c_feces_pct').value) || 0;
+            let totalMeal = parseFloat(document.getElementById('c_total_meal').value);
+            let feedPct = parseFloat(document.getElementById('c_feed_pct').value);
+            let totalFeces = parseFloat(document.getElementById('c_total_feces').value);
+            let fecesPct = parseFloat(document.getElementById('c_feces_pct').value);
+
+            if (isNaN(totalMeal) || isNaN(feedPct) || isNaN(totalFeces) || isNaN(fecesPct)) {
+                document.getElementById('res_c').innerText = "Please fill in all meal & feces percentage inputs.";
+                document.getElementById('step_c').style.display = 'none';
+                return;
+            }
 
             mealWeight = totalMeal;
             intake = totalMeal * (feedPct / 100);
@@ -1214,14 +1227,9 @@
             stepsInfo.push(`• Nutrient in Feces = ${totalFeces}g × ${fecesPct}% = <strong>${feces.toFixed(2)}g</strong>`);
         }
 
-        const prevIntake = document.getElementById('preview-intake');
-        const prevFaeces = document.getElementById('preview-faeces');
-        const prevIntake2 = document.getElementById('preview-intake2');
-        const prevMfn = document.getElementById('preview-mfn');
-
-        if (prevIntake) prevIntake.innerText = intake > 0 ? intake.toFixed(1) : 'Intake';
-        if (prevFaeces) prevFaeces.innerText = feces > 0 ? feces.toFixed(1) : 'Faeces';
-        if (prevIntake2) prevIntake2.innerText = intake > 0 ? intake.toFixed(1) : 'Intake';
+        document.getElementById('preview-intake').innerText = intake.toFixed(1);
+        document.getElementById('preview-faeces').innerText = feces.toFixed(1);
+        document.getElementById('preview-intake2').innerText = intake.toFixed(1);
 
         if (intake <= 0) {
             document.getElementById('res_c').innerText = "Please specify a positive Nutrient Intake amount.";
@@ -1236,7 +1244,7 @@
             if (isNaN(mfnRate)) mfnRate = 0.5;
 
             let mfn = (effectiveFeedBase * mfnRate) / 100;
-            if (prevMfn) prevMfn.innerText = mfn.toFixed(2);
+            document.getElementById('preview-mfn').innerText = mfn.toFixed(2);
 
             let trueCd = ((intake - (feces - mfn)) / intake) * 100;
             let apparentCd = ((intake - feces) / intake) * 100;
@@ -1263,10 +1271,11 @@
     }
 
     function calcIndicator() {
-        let f = parseFloat(document.getElementById('ind_food').value) || 0;
-        let fa = parseFloat(document.getElementById('ind_faeces').value) || 0;
-        if(fa <= 0) {
-            document.getElementById('res_indicator').innerText = "Faeces indicator amount must be greater than zero.";
+        let f = parseFloat(document.getElementById('ind_food').value);
+        let fa = parseFloat(document.getElementById('ind_faeces').value);
+        if(isNaN(f) || isNaN(fa) || fa <= 0) {
+            document.getElementById('res_indicator').innerText = "Please enter valid indicator amounts (Faeces > 0).";
+            document.getElementById('step_indicator').style.display = 'none';
             return;
         }
         let dig = (fa - f) / fa;
@@ -1278,10 +1287,11 @@
     }
 
     function calcFE() {
-        let gain = parseFloat(document.getElementById('fe_gain').value) || 0;
-        let feed = parseFloat(document.getElementById('fe_feed').value) || 0;
-        if(feed <= 0) {
-            document.getElementById('res_fe').innerText = "Total feed consumed must be greater than zero.";
+        let gain = parseFloat(document.getElementById('fe_gain').value);
+        let feed = parseFloat(document.getElementById('fe_feed').value);
+        if(isNaN(gain) || isNaN(feed) || feed <= 0) {
+            document.getElementById('res_fe').innerText = "Please enter valid gain and feed intake values.";
+            document.getElementById('step_fe').style.display = 'none';
             return;
         }
         let fe = gain / feed;
@@ -1294,10 +1304,16 @@
 
     // 3. TDN %
     function calcTDN() {
-        let dcp = parseFloat(document.getElementById('t_dcp').value) || 0;
-        let dnfe = parseFloat(document.getElementById('t_dnfe').value) || 0;
-        let dcf = parseFloat(document.getElementById('t_dcf').value) || 0;
-        let dee = parseFloat(document.getElementById('t_dee').value) || 0;
+        let dcp = parseFloat(document.getElementById('t_dcp').value);
+        let dnfe = parseFloat(document.getElementById('t_dnfe').value);
+        let dcf = parseFloat(document.getElementById('t_dcf').value);
+        let dee = parseFloat(document.getElementById('t_dee').value);
+
+        if(isNaN(dcp) || isNaN(dnfe) || isNaN(dcf) || isNaN(dee)) {
+            document.getElementById('res_t').innerText = "Please fill in all digestible nutrient percentages.";
+            document.getElementById('step_t').style.display = 'none';
+            return;
+        }
 
         document.getElementById('preview-dcp').innerText = dcp;
         document.getElementById('preview-dnfe').innerText = dnfe;
@@ -1313,8 +1329,15 @@
 
     // 4. Crude Protein
     function calcCP() {
-        let v = parseFloat(document.getElementById('p_vol').value) || 0;
-        let w = parseFloat(document.getElementById('p_wt').value) || 1;
+        let v = parseFloat(document.getElementById('p_vol').value);
+        let w = parseFloat(document.getElementById('p_wt').value);
+
+        if(isNaN(v) || isNaN(w) || w <= 0) {
+            document.getElementById('res_p').innerText = "Please enter acid volume and sample weight.";
+            document.getElementById('step_p').style.display = 'none';
+            return;
+        }
+
         document.getElementById('preview-vol').innerText = v;
         document.getElementById('preview-wt').innerText = w;
 
@@ -1328,13 +1351,19 @@
 
     // 5. Nutritive Ratio
     function calcNR() {
-        let tdn = parseFloat(document.getElementById('n_tdn').value) || 0;
-        let dcp = parseFloat(document.getElementById('n_dcp').value) || 0;
+        let tdn = parseFloat(document.getElementById('n_tdn').value);
+        let dcp = parseFloat(document.getElementById('n_dcp').value);
+
+        if(isNaN(tdn) || isNaN(dcp) || dcp <= 0) {
+            document.getElementById('res_n').innerText = "Please enter valid TDN and DCP values (DCP > 0).";
+            document.getElementById('step_n').style.display = 'none';
+            return;
+        }
+
         document.getElementById('preview-nr-tdn').innerText = tdn;
         document.getElementById('preview-nr-dcp').innerText = dcp;
         document.getElementById('preview-nr-dcp2').innerText = dcp;
 
-        if(dcp <= 0) { document.getElementById('res_n').innerText = "Error: DCP must be greater than zero."; return; }
         let r = (tdn - dcp) / dcp;
         let cls = r <= 6 ? "Narrow (Growth / Lactation)" : (r <= 7 ? "Medium" : "Wide (Maintenance)");
         document.getElementById('res_n').innerHTML = `Nutritive Ratio (NR) = <strong>1 : ${r.toFixed(2)}</strong><br><span style="font-size:0.9rem; opacity:0.85;">Classification: <strong>${cls}</strong></span>`;
@@ -1345,9 +1374,15 @@
 
     // 6. Dry Matter
     function calcDM() {
-        let w0 = parseFloat(document.getElementById('dm_w0').value) || 0;
-        let wd = parseFloat(document.getElementById('dm_wd').value) || 0;
-        let ws = parseFloat(document.getElementById('dm_ws').value) || 1;
+        let w0 = parseFloat(document.getElementById('dm_w0').value);
+        let wd = parseFloat(document.getElementById('dm_wd').value);
+        let ws = parseFloat(document.getElementById('dm_ws').value);
+
+        if(isNaN(w0) || isNaN(wd) || isNaN(ws) || ws <= 0) {
+            document.getElementById('res_dm').innerText = "Please enter W0, Wd, and Ws.";
+            return;
+        }
+
         document.getElementById('preview-dm-w0').innerText = w0;
         document.getElementById('preview-dm-wd').innerText = wd;
         document.getElementById('preview-dm-ws').innerText = ws;
@@ -1359,9 +1394,15 @@
 
     // 7. Ash & OM
     function calcAsh() {
-        let wa = parseFloat(document.getElementById('ash_wa').value) || 0;
-        let wc = parseFloat(document.getElementById('ash_wc').value) || 0;
-        let ws = parseFloat(document.getElementById('ash_ws').value) || 1;
+        let wa = parseFloat(document.getElementById('ash_wa').value);
+        let wc = parseFloat(document.getElementById('ash_wc').value);
+        let ws = parseFloat(document.getElementById('ash_ws').value);
+
+        if(isNaN(wa) || isNaN(wc) || isNaN(ws) || ws <= 0) {
+            document.getElementById('res_ash').innerText = "Please enter Wa, Wc, and Ws.";
+            return;
+        }
+
         document.getElementById('preview-ash-wa').innerText = wa;
         document.getElementById('preview-ash-wc').innerText = wc;
         document.getElementById('preview-ash-ws').innerText = ws;
@@ -1373,9 +1414,15 @@
 
     // 8. Crude Fiber & Ether Extract (EE)
     function calcCF() {
-        let d = parseFloat(document.getElementById('cf_d').value) || 0;
-        let a = parseFloat(document.getElementById('cf_a').value) || 0;
-        let ws = parseFloat(document.getElementById('cf_ws').value) || 1;
+        let d = parseFloat(document.getElementById('cf_d').value);
+        let a = parseFloat(document.getElementById('cf_a').value);
+        let ws = parseFloat(document.getElementById('cf_ws').value);
+
+        if(isNaN(d) || isNaN(a) || isNaN(ws) || ws <= 0) {
+            document.getElementById('res_cf').innerText = "Please enter residue, ash, and sample weight.";
+            return;
+        }
+
         document.getElementById('preview-cf-d').innerText = d;
         document.getElementById('preview-cf-a').innerText = a;
         document.getElementById('preview-cf-ws').innerText = ws;
@@ -1385,9 +1432,16 @@
     }
 
     function calcEE() {
-        let wa = parseFloat(document.getElementById('ee_wa').value) || 0;
-        let wc = parseFloat(document.getElementById('ee_wc').value) || 0;
-        let ws = parseFloat(document.getElementById('ee_ws').value) || 1;
+        let wa = parseFloat(document.getElementById('ee_wa').value);
+        let wc = parseFloat(document.getElementById('ee_wc').value);
+        let ws = parseFloat(document.getElementById('ee_ws').value);
+
+        if(isNaN(wa) || isNaN(wc) || isNaN(ws) || ws <= 0) {
+            document.getElementById('res_ee').innerText = "Please enter Wa, Wc, and Ws.";
+            document.getElementById('step_ee').style.display = 'none';
+            return;
+        }
+
         let ee = ((wa - wc) / ws) * 100;
         document.getElementById('res_ee').innerHTML = `Ether Extract (EE / Crude Fat %) = <strong>${ee.toFixed(2)}%</strong>`;
         let step = document.getElementById('step_ee');
@@ -1397,11 +1451,16 @@
 
     // 9. NFE
     function calcNFE() {
-        let w = parseFloat(document.getElementById('nfe_w').value) || 0;
-        let cp = parseFloat(document.getElementById('nfe_pro').value) || 0;
-        let cf = parseFloat(document.getElementById('nfe_dcf').value) || 0;
-        let ee = parseFloat(document.getElementById('nfe_ee').value) || 0;
-        let ash = parseFloat(document.getElementById('nfe_ash').value) || 0;
+        let w = parseFloat(document.getElementById('nfe_w').value);
+        let cp = parseFloat(document.getElementById('nfe_pro').value);
+        let cf = parseFloat(document.getElementById('nfe_dcf').value);
+        let ee = parseFloat(document.getElementById('nfe_ee').value);
+        let ash = parseFloat(document.getElementById('nfe_ash').value);
+
+        if(isNaN(w) || isNaN(cp) || isNaN(cf) || isNaN(ee) || isNaN(ash)) {
+            document.getElementById('res_nfe').innerText = "Please fill in all 5 proximate fractions.";
+            return;
+        }
 
         document.getElementById('preview-nfe-w').innerText = w;
         document.getElementById('preview-nfe-pro').innerText = cp;
@@ -1415,8 +1474,15 @@
 
     // 10. Protein Quality
     function calcPE() {
-        let dtp = parseFloat(document.getElementById('pe_dtp').value) || 0;
-        let npn = parseFloat(document.getElementById('pe_npn').value) || 0;
+        let dtp = parseFloat(document.getElementById('pe_dtp').value);
+        let npn = parseFloat(document.getElementById('pe_npn').value);
+
+        if(isNaN(dtp) || isNaN(npn)) {
+            document.getElementById('res_pe').innerText = "Please enter DTP and DNPN values.";
+            document.getElementById('step_pe').style.display = 'none';
+            return;
+        }
+
         document.getElementById('preview-pe-dtp').innerText = dtp;
         document.getElementById('preview-pe-npn').innerText = npn;
 
@@ -1431,9 +1497,13 @@
     }
 
     function calcPER() {
-        let gain = parseFloat(document.getElementById('per_gain').value) || 0;
-        let intake = parseFloat(document.getElementById('per_intake').value) || 0;
-        if(intake <= 0) { document.getElementById('res_per').innerText = "Protein intake must be greater than zero."; return; }
+        let gain = parseFloat(document.getElementById('per_gain').value);
+        let intake = parseFloat(document.getElementById('per_intake').value);
+        if(isNaN(gain) || isNaN(intake) || intake <= 0) {
+            document.getElementById('res_per').innerText = "Protein intake must be greater than zero.";
+            document.getElementById('step_per').style.display = 'none';
+            return;
+        }
         let per = gain / intake;
         document.getElementById('res_per').innerHTML = `Protein Efficiency Ratio (PER) = <strong>${per.toFixed(2)}</strong>`;
         let step = document.getElementById('step_per');
@@ -1442,13 +1512,17 @@
     }
 
     function calcBV() {
-        let ni = parseFloat(document.getElementById('bv_ni').value) || 0;
-        let fn = parseFloat(document.getElementById('bv_fn').value) || 0;
-        let un = parseFloat(document.getElementById('bv_un').value) || 0;
+        let ni = parseFloat(document.getElementById('bv_ni').value);
+        let fn = parseFloat(document.getElementById('bv_fn').value);
+        let un = parseFloat(document.getElementById('bv_un').value);
         let mfn = parseFloat(document.getElementById('bv_mfn').value) || 0;
         let eun = parseFloat(document.getElementById('bv_eun').value) || 0;
 
-        if((ni - fn) <= 0) { document.getElementById('res_bv').innerText = "Absorbed Nitrogen (N intake - Faecal N) must be positive."; return; }
+        if(isNaN(ni) || isNaN(fn) || isNaN(un) || (ni - fn) <= 0) {
+            document.getElementById('res_bv').innerText = "Absorbed Nitrogen (N intake - Faecal N) must be positive.";
+            document.getElementById('step_bv').style.display = 'none';
+            return;
+        }
 
         let appBV = ((ni - (fn + un)) / (ni - fn)) * 100;
         let resText = `Apparent BV = <strong>${appBV.toFixed(2)}%</strong>`;
@@ -1469,20 +1543,20 @@
     }
 
     function calcCS() {
-        let feedAA = parseFloat(document.getElementById('cs_feed').value) || 0;
-        let eggAA = parseFloat(document.getElementById('cs_egg').value) || 0;
-        let a = parseFloat(document.getElementById('gpv_a').value) || 0;
-        let casein = parseFloat(document.getElementById('gpv_casein').value) || 0;
+        let feedAA = parseFloat(document.getElementById('cs_feed').value);
+        let eggAA = parseFloat(document.getElementById('cs_egg').value);
+        let a = parseFloat(document.getElementById('gpv_a').value);
+        let casein = parseFloat(document.getElementById('gpv_casein').value);
 
         let out = [];
         let steps = [];
 
-        if(eggAA > 0) {
+        if(!isNaN(feedAA) && !isNaN(eggAA) && eggAA > 0) {
             let cs = (feedAA / eggAA) * 100;
             out.push(`Chemical Score (CS) = <strong>${cs.toFixed(2)}%</strong>`);
             steps.push(`• Chemical Score = (${feedAA} ÷ ${eggAA}) × 100 = <strong>${cs.toFixed(2)}%</strong>`);
         }
-        if(casein > 0) {
+        if(!isNaN(a) && !isNaN(casein) && casein > 0) {
             let gpv = a / casein;
             out.push(`Gross Protein Value (GPV) = <strong>${gpv.toFixed(3)}</strong>`);
             steps.push(`• Gross Protein Value (GPV) = ${a} ÷ ${casein} = <strong>${gpv.toFixed(3)}</strong>`);
@@ -1496,7 +1570,7 @@
 
     // 11. Starch Equivalent & Energy Systems
     function calcEnergySystems() {
-        let fatFeed = parseFloat(document.getElementById('se_feed_fat').value) || 0;
+        let fatFeed = parseFloat(document.getElementById('se_feed_fat').value);
         let fatStarch = parseFloat(document.getElementById('se_starch_fat').value) || 0.248;
         let de = parseFloat(document.getElementById('es_de').value) || 0;
         let ue = parseFloat(document.getElementById('es_ue').value) || 0;
@@ -1506,7 +1580,7 @@
         let steps = [];
         let seText = "--";
 
-        if(fatFeed > 0 && fatStarch > 0) {
+        if(!isNaN(fatFeed) && fatFeed > 0 && fatStarch > 0) {
             let se = (fatFeed / fatStarch) * 100;
             seText = `Starch Equivalent (SE) = <strong>${se.toFixed(2)} units</strong>`;
             steps.push(`1. Starch Equivalent = (${fatFeed} ÷ ${fatStarch}) × 100 = <strong>${se.toFixed(2)}</strong>`);
@@ -1536,7 +1610,6 @@
     let currentQuizUnit = "%";
 
     const quizGenerators = [
-        // 1. Lecture Slide DE Problem
         () => {
             let feedKg = (1.5 + Math.random() * 0.5).toFixed(2);
             let feedKcal = (4.0 + Math.random() * 0.5).toFixed(2);
@@ -1550,7 +1623,6 @@
             currentQuizUnit = "%";
             return `A sheep ate <strong>${feedKg} Kg</strong> of hay DM (${feedKcal} Kcal/g) and excreted <strong>${fecesKg} Kg</strong> of faeces DM (${fecesKcal} Kcal/g).<br>Calculate the <strong>Apparent Digestibility of Energy (%)</strong>:`;
         },
-        // 2. TDN %
         () => {
             let dcp = Math.floor(Math.random() * 10) + 10;
             let dnfe = Math.floor(Math.random() * 20) + 40;
@@ -1560,7 +1632,6 @@
             currentQuizUnit = "%";
             return `Calculate <strong>Total Digestible Nutrients (TDN %)</strong>:<br>DCP = <strong>${dcp}%</strong> | DNFE = <strong>${dnfe}%</strong> | DCF = <strong>${dcf}%</strong> | DEE = <strong>${dee}%</strong>`;
         },
-        // 3. Protein Efficiency Ratio (PER)
         () => {
             let gain = Math.floor(Math.random() * 30) + 40;
             let intake = Math.floor(Math.random() * 10) + 15;
@@ -1568,7 +1639,6 @@
             currentQuizUnit = "";
             return `Calculate the <strong>Protein Efficiency Ratio (PER)</strong>:<br>Animal Weight Gain = <strong>${gain} g</strong> | Protein Intake = <strong>${intake} g</strong>`;
         },
-        // 4. Indicator Digestibility
         () => {
             let foodInd = 2.0;
             let fecesInd = 8.0;
@@ -1576,7 +1646,6 @@
             currentQuizUnit = "%";
             return `Calculate digestibility (%) using the <strong>Indicator Method</strong>:<br>Indicator in food DM = <strong>${foodInd} g/Kg</strong> | Indicator in faeces DM = <strong>${fecesInd} g/Kg</strong>`;
         },
-        // 5. Nutritive Ratio (NR)
         () => {
             let tdn = Math.floor(Math.random() * 15) + 65;
             let dcp = Math.floor(Math.random() * 5) + 10;
@@ -1611,11 +1680,6 @@
             fb.innerHTML = `❌ <strong>Incorrect.</strong> The correct answer is <strong>${currentQuizCorrect.toFixed(2)}${currentQuizUnit}</strong>.`;
         }
     }
-
-    window.onload = function() {
-        calcDE_Slide();
-        calcCD();
-    };
 </script>
 
 </body>
