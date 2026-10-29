@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutritional Lawyer - Complete Edition</title>
+    <title>Nutritional Lawyer - TgT Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -104,12 +104,26 @@
             font-size: 13.5px;
             font-weight: 600;
             transition: all 0.25s ease;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            line-height: 1.3;
+        }
+        .nav-btn span.sub-tag {
+            font-size: 0.75rem;
+            opacity: 0.85;
+            font-weight: normal;
+            margin-top: 2px;
         }
         .nav-btn:hover, .nav-btn.active {
             background-color: var(--primary);
             color: white;
             border-color: var(--primary);
             transform: translateY(-2px);
+        }
+        .nav-btn.active span.sub-tag {
+            color: #dbeafe;
         }
 
         .section-card {
@@ -124,7 +138,31 @@
         .section-card.active { display: block; animation: fadeIn 0.35s ease-in-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         
-        h2 { color: var(--primary); margin-top: 0; font-size: 1.7rem; margin-bottom: 6px; }
+        h2 { color: var(--primary); margin-top: 0; font-size: 1.65rem; margin-bottom: 6px; }
+        .calc-scope-badge {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 14px;
+            align-items: center;
+        }
+        .calc-scope-badge span.scope-title {
+            font-weight: bold;
+            font-size: 0.82rem;
+            color: var(--text-color);
+            opacity: 0.85;
+            margin-right: 2px;
+        }
+        .calc-tag {
+            background: rgba(37, 99, 235, 0.12);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
         .section-divider { border: 0; height: 1px; background: var(--border-color); margin-bottom: 22px; }
 
         .law-box-preview {
@@ -197,7 +235,7 @@
 
         .form-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 22px; }
         .form-row { display: flex; flex-direction: column; gap: 14px; }
-		.form-row.keep-inline { flex-direction: row; flex-wrap: wrap; }
+        .form-row.keep-inline { flex-direction: row; flex-wrap: wrap; }
         .form-row .form-group { flex: 1; min-width: 220px; }
         .form-group { width: 100%; }
         label { display: block; margin-bottom: 7px; font-weight: 600; font-size: 0.95rem; color: var(--text-color); }
@@ -367,38 +405,81 @@
 <div class="container">
 
     <div class="nav-menu">
-        <button class="nav-btn active" onclick="switchTab('t1')">1. Digestible Energy (DE)</button>
-        <button class="nav-btn" onclick="switchTab('t2')">2. Digestibility & Trials</button>
-        <button class="nav-btn" onclick="switchTab('t3')">3. TDN Calculator</button>
-        <button class="nav-btn" onclick="switchTab('t4')">4. Crude Protein (Kjeldahl)</button>
-        <button class="nav-btn" onclick="switchTab('t5')">5. Nutritive Ratio (NR)</button>
-        <button class="nav-btn" onclick="switchTab('t6')">6. Dry Matter (DM)</button>
-        <button class="nav-btn" onclick="switchTab('t7')">7. Ash & OM</button>
-        <button class="nav-btn" onclick="switchTab('t8')">8. Crude Fiber & EE Lab</button>
-        <button class="nav-btn" onclick="switchTab('t9')">9. NFE Calculator</button>
-        <button class="nav-btn" onclick="switchTab('t10')">10. Protein Quality (PE, PER, BV)</button>
-        <button class="nav-btn" onclick="switchTab('t11')">11. Starch Equivalent & Energy</button>
-        <button class="nav-btn" onclick="switchTab('t_body')">12. Body Composition (Q8)</button>
-        <button class="nav-btn" onclick="switchTab('t12')">13. Formula Glossary</button>
-        <button class="nav-btn" onclick="switchTab('t13')">14. Interactive Quiz</button>
+        <button class="nav-btn active" onclick="switchTab('t1')">
+            1. Digestible Energy (DE)
+            <span class="sub-tag">DE • GE • FE • Energy Dig%</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t2')">
+            2. Digestibility & Trials
+            <span class="sub-tag">DN • DC% • TD% • FCR • Marker</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t3')">
+            3. TDN Calculator
+            <span class="sub-tag">TDN (Ready & Raw Nutrients)</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t4')">
+            4. Crude Protein (Kjeldahl)
+            <span class="sub-tag">N% • CP% (N × 6.25)</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t5')">
+            5. Nutritive Ratio (NR)
+            <span class="sub-tag">NR (1 : X) • Classification</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t6')">
+            6. Dry Matter (DM)
+            <span class="sub-tag">DM% • Moisture%</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t7')">
+            7. Ash & OM
+            <span class="sub-tag">Ash% • Organic Matter (OM%)</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t8')">
+            8. Crude Fiber & EE Lab
+            <span class="sub-tag">CF% • Ether Extract (EE%)</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t9')">
+            9. NFE Calculator
+            <span class="sub-tag">NFE% (Soluble CHO)</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t10')">
+            10. Protein Quality Suite
+            <span class="sub-tag">PE • PER • Apparent/True BV • CS • GPV</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t11')">
+            11. Starch Eq. & Energy
+            <span class="sub-tag">ME • NE • HI • SE units</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t_body')">
+            12. Body Composition
+            <span class="sub-tag">Muscle% • Fat% • Protein% • Ash%</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t12')">
+            13. Formula Glossary
+            <span class="sub-tag">Curriculum Terms & SARA</span>
+        </button>
+        <button class="nav-btn" onclick="switchTab('t13')">
+            14. Interactive Quiz
+            <span class="sub-tag">MCQ & Numerical Generator</span>
+        </button>
     </div>
 
     <!-- 1. Digestible Energy -->
     <div id="t1" class="section-card active">
         <h2>1. Digestible Energy (DE) & Apparent Energy Digestibility</h2>
-        <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Calculates Energy Intake, Fecal Energy Output, Daily DE, Apparent Energy Digestibility (%), and DE per gram DM.</p>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Energy Intake (GE)</span>
+            <span class="calc-tag">Fecal Energy Output (FE)</span>
+            <span class="calc-tag">Daily DE (Kcal/day)</span>
+            <span class="calc-tag">Apparent Energy Digestibility (%)</span>
+            <span class="calc-tag">DE per gram DM</span>
+        </div>
         <hr class="section-divider">
         
         <div class="law-box-preview">
             DE (Kcal/day) = 
-            <span class="dynamic-slot slot-intake">
-                <span class="slot-tag">Energy In</span>
-                <span id="preview-de-in">--</span>
-            </span> - 
-            <span class="dynamic-slot slot-faeces">
-                <span class="slot-tag">Energy Out</span>
-                <span id="preview-de-out">--</span>
-            </span>
+            <span class="dynamic-slot slot-intake"><span class="slot-tag">Energy In</span><span id="preview-de-in">--</span></span> - 
+            <span class="dynamic-slot slot-faeces"><span class="slot-tag">Energy Out</span><span id="preview-de-out">--</span></span>
             &nbsp;|&nbsp;
             Apparent Digestibility % = 
             <div class="fraction">
@@ -417,9 +498,6 @@
                     <label>Feed Energy Content (Kcal/g):</label>
                     <input type="number" step="0.01" id="de_feed_kcal" class="input-intake" placeholder="e.g. 4.30" oninput="calcDE_Slide()">
                 </div>
-            </div>
-
-            <div class="form-row">
                 <div class="form-group">
                     <label>Faeces Excreted (Kg DM):</label>
                     <input type="number" step="0.01" id="de_feces_kg" class="input-faeces" placeholder="e.g. 0.76" oninput="calcDE_Slide()">
@@ -440,15 +518,25 @@
     <!-- 2. Digestibility & Trials -->
     <div id="t2" class="section-card">
         <h2>2. Digestibility Coefficients & Feeding Trial Methods</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">DN (Digestible Nutrients)</span>
+            <span class="calc-tag">Apparent CD %</span>
+            <span class="calc-tag">True Digestibility (TD %)</span>
+            <span class="calc-tag">MFN Endogenous Loss</span>
+            <span class="calc-tag">Indicator Method Digestibility</span>
+            <span class="calc-tag">Feed Efficiency</span>
+            <span class="calc-tag">FCR (Feed Conversion Ratio)</span>
+        </div>
         <hr class="section-divider">
 
         <div class="option-panel hide-on-export">
             <div>
                 <label style="margin-bottom:6px;">Calculation Method:</label>
                 <div class="segmented-control">
-                    <button type="button" class="segment-btn active" id="btn-sub-cd" onclick="switchDigSubTab('cd')">CD% & True Digestibility</button>
+                    <button type="button" class="segment-btn active" id="btn-sub-cd" onclick="switchDigSubTab('cd')">CD%, DN & True Digestibility</button>
                     <button type="button" class="segment-btn" id="btn-sub-indicator" onclick="switchDigSubTab('indicator')">Indicator Method</button>
-                    <button type="button" class="segment-btn" id="btn-sub-fe" onclick="switchDigSubTab('fe')">Feed Efficiency</button>
+                    <button type="button" class="segment-btn" id="btn-sub-fe" onclick="switchDigSubTab('fe')">Feed Efficiency & FCR</button>
                 </div>
             </div>
 
@@ -483,32 +571,31 @@
                     </div>
                 </div>
                 × 100
+                &nbsp;|&nbsp; DN = Intake − Faeces
             </div>
 
             <div class="form-grid hide-on-export">
                 <div style="margin-bottom: 8px;">
                     <label>Input Mode:</label>
                     <div class="segmented-control">
-                        <button type="button" class="segment-btn active" id="btn-mode-direct" onclick="setCDInputMode('direct')">Direct Nutrient (g)</button>
+                        <button type="button" class="segment-btn active" id="btn-mode-direct" onclick="setCDInputMode('direct')">Direct Nutrient (g or kg)</button>
                         <button type="button" class="segment-btn" id="btn-mode-percent" onclick="setCDInputMode('percent')">Meal & Feces Percentage (%)</button>
                     </div>
                 </div>
 
                 <!-- Direct Mode -->
                 <div id="cd-direct-fields">
-                    <div class="form-group"><label>Total Nutrient Intake (g):</label><input type="number" id="c_intake" class="input-intake" placeholder="e.g. 400" oninput="calcCD()"></div>
-                    <div class="form-group" style="margin-top:12px;"><label>Total Nutrient in Faeces (g):</label><input type="number" id="c_faeces" class="input-faeces" placeholder="e.g. 80" oninput="calcCD()"></div>
+                    <div class="form-group"><label>Total Nutrient Intake (g or kg):</label><input type="number" id="c_intake" class="input-intake" placeholder="e.g. 500" oninput="calcCD()"></div>
+                    <div class="form-group" style="margin-top:12px;"><label>Total Nutrient in Faeces (g or kg):</label><input type="number" id="c_faeces" class="input-faeces" placeholder="e.g. 120" oninput="calcCD()"></div>
                 </div>
 
                 <!-- Percentage Mode -->
                 <div id="cd-percent-fields" style="display:none;">
                     <div class="form-row">
-                        <div class="form-group"><label>Total Meal / Feed Intake (g):</label><input type="number" id="c_total_meal" class="input-intake" placeholder="e.g. 2500" oninput="calcCD()"></div>
-                        <div class="form-group"><label>Nutrient in Feed (% e.g. CP):</label><input type="number" id="c_feed_pct" class="input-intake" placeholder="e.g. 16" oninput="calcCD()"></div>
-                    </div>
-                    <div class="form-row" style="margin-top:12px;">
-                        <div class="form-group"><label>Total Feces Output (g):</label><input type="number" id="c_total_feces" class="input-faeces" placeholder="e.g. 1000" oninput="calcCD()"></div>
-                        <div class="form-group"><label>Nutrient in Feces (% e.g. CP):</label><input type="number" id="c_feces_pct" class="input-faeces" placeholder="e.g. 5" oninput="calcCD()"></div>
+                        <div class="form-group"><label>Total Meal / Feed Intake (g or kg):</label><input type="number" id="c_total_meal" class="input-intake" placeholder="e.g. 2500" oninput="calcCD()"></div>
+                        <div class="form-group"><label>Nutrient in Feed (% e.g. CP or DM):</label><input type="number" id="c_feed_pct" class="input-intake" placeholder="e.g. 16" oninput="calcCD()"></div>
+                        <div class="form-group"><label>Total Feces Output (g or kg):</label><input type="number" id="c_total_feces" class="input-faeces" placeholder="e.g. 800" oninput="calcCD()"></div>
+                        <div class="form-group"><label>Nutrient in Feces (% e.g. CP or DM):</label><input type="number" id="c_feces_pct" class="input-faeces" placeholder="e.g. 20" oninput="calcCD()"></div>
                     </div>
                 </div>
 
@@ -528,7 +615,7 @@
                 </div>
             </div>
 
-            <button class="action-btn hide-on-export" onclick="calcCD()">Calculate Digestibility Coefficient</button>
+            <button class="action-btn hide-on-export" onclick="calcCD()">Calculate DN & Digestibility Coefficient</button>
             <div class="result-box" id="res_c">Result: --</div>
             <div class="step-breakdown" id="step_c"></div>
         </div>
@@ -543,7 +630,7 @@
                 </div>
             </div>
             <div class="form-grid hide-on-export">
-                <div class="form-group"><label>g indicator / Kg DM Food:</label><input type="number" step="0.01" id="ind_food" class="input-intake" placeholder="e.g. 2.5" oninput="calcIndicator()"></div>
+                <div class="form-group"><label>g indicator / Kg DM Food:</label><input type="number" step="0.01" id="ind_food" class="input-intake" placeholder="e.g. 2.0" oninput="calcIndicator()"></div>
                 <div class="form-group"><label>g indicator / Kg DM Faeces:</label><input type="number" step="0.01" id="ind_faeces" class="input-faeces" placeholder="e.g. 10.0" oninput="calcIndicator()"></div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcIndicator()">Calculate Indicator Digestibility</button>
@@ -554,17 +641,13 @@
         <!-- Sub 3: Feed Efficiency -->
         <div id="box-sub-fe" style="display:none;">
             <div class="law-box-preview">
-                Feed Efficiency = 
-                <div class="fraction">
-                    <div class="numerator">Total Weight Gain (g or Kg)</div>
-                    <div class="denominator">Total Feed Consumed (g or Kg)</div>
-                </div>
+                Feed Efficiency = Weight Gain ÷ Feed Consumed &nbsp;|&nbsp; FCR = 1 ÷ Feed Efficiency
             </div>
             <div class="form-grid hide-on-export">
-                <div class="form-group"><label>Total Weight Gain:</label><input type="number" step="0.01" id="fe_gain" class="input-pro" placeholder="e.g. 350" oninput="calcFE()"></div>
-                <div class="form-group"><label>Total Feed Consumed:</label><input type="number" step="0.01" id="fe_feed" class="input-cho" placeholder="e.g. 1000" oninput="calcFE()"></div>
+                <div class="form-group"><label>Total Weight Gain (g or Kg):</label><input type="number" step="0.01" id="fe_gain" class="input-pro" placeholder="e.g. 20" oninput="calcFE()"></div>
+                <div class="form-group"><label>Total Feed Consumed (g or Kg):</label><input type="number" step="0.01" id="fe_feed" class="input-cho" placeholder="e.g. 150" oninput="calcFE()"></div>
             </div>
-            <button class="action-btn hide-on-export" onclick="calcFE()">Calculate Feed Efficiency</button>
+            <button class="action-btn hide-on-export" onclick="calcFE()">Calculate Feed Efficiency & FCR</button>
             <div class="result-box" id="res_fe">Result: --</div>
             <div class="step-breakdown" id="step_fe"></div>
         </div>
@@ -573,56 +656,68 @@
     </div>
 
     <!-- 3. TDN% -->
-        <div id="t3" class="section-card">
-            <h2>3. Total Digestible Nutrients (TDN) Law Visualizer</h2>
-            <hr class="section-divider">
-            <div class="law-box-preview">
-                TDN = 
-                <span class="dynamic-slot slot-dcp"><span class="slot-tag">DCP</span><span id="preview-dcp">DCP</span></span> + 
-                <span class="dynamic-slot slot-dnfe"><span class="slot-tag">DNFE</span><span id="preview-dnfe">DNFE</span></span> + 
-                <span class="dynamic-slot slot-dcf"><span class="slot-tag">DCF</span><span id="preview-dcf">DCF</span></span> + (
-                <span class="dynamic-slot slot-dee"><span class="slot-tag">DEE</span><span id="preview-dee">DEE</span></span> × 2.25)
-            </div>
-            <div class="form-grid hide-on-export">
-                <div style="font-weight: bold; color: var(--primary);">Method 1: Direct Digestible Nutrients (e.g. Q4)</div>
-                <div class="form-row">
-                    <div class="form-group"><label>Digestible Crude Protein (DCP):</label><input type="number" id="t_dcp" class="input-dcp" placeholder="e.g. 180" oninput="calcTDN()"></div>
-                    <div class="form-group"><label>Digestible NFE (DNFE):</label><input type="number" id="t_dnfe" class="input-dnfe" placeholder="e.g. 600" oninput="calcTDN()"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Digestible Crude Fiber (DCF):</label><input type="number" id="t_dcf" class="input-dcf" placeholder="e.g. 250" oninput="calcTDN()"></div>
-                    <div class="form-group"><label>Digestible Ether Extract (DEE):</label><input type="number" id="t_dee" class="input-dee" placeholder="e.g. 60" oninput="calcTDN()"></div>
-                </div>
-
-                <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 10px 0;">
-
-                <div style="font-weight: bold; color: var(--primary);">Method 2: Raw Nutrients with Digestibility % (e.g. Q5)</div>
-                <div class="form-row keep-inline">
-                    <div class="form-group"><label>Crude Protein (g):</label><input type="number" id="raw_cp" placeholder="e.g. 200" oninput="calcTDN()"></div>
-                    <div class="form-group"><label>CP Digestibility (%):</label><input type="number" id="raw_cp_dc" placeholder="e.g. 75" oninput="calcTDN()"></div>
-                </div>
-                <div class="form-row keep-inline">
-                    <div class="form-group"><label>Crude Fiber (g):</label><input type="number" id="raw_cf" placeholder="e.g. 300" oninput="calcTDN()"></div>
-                    <div class="form-group"><label>CF Digestibility (%):</label><input type="number" id="raw_cf_dc" placeholder="e.g. 60" oninput="calcTDN()"></div>
-                </div>
-                <div class="form-row keep-inline">
-                    <div class="form-group"><label>NFE (g):</label><input type="number" id="raw_nfe" placeholder="e.g. 500" oninput="calcTDN()"></div>
-                    <div class="form-group"><label>NFE Digestibility (%):</label><input type="number" id="raw_nfe_dc" placeholder="e.g. 80" oninput="calcTDN()"></div>
-                </div>
-                <div class="form-row keep-inline">
-                    <div class="form-group"><label>Ether Extract (g):</label><input type="number" id="raw_ee" placeholder="e.g. 40" oninput="calcTDN()"></div>
-                    <div class="form-group"><label>EE Digestibility (%):</label><input type="number" id="raw_ee_dc" placeholder="e.g. 75" oninput="calcTDN()"></div>
-                </div>
-            </div>
-            <button class="action-btn hide-on-export" onclick="calcTDN()">Calculate Total Digestible Nutrients</button>
-            <div class="result-box" id="res_t">Result: --</div>
-            <div class="step-breakdown" id="step_t"></div>
-            <button class="action-btn export-btn hide-on-export" onclick="exportSection('t3', 'TDN_Result.png')">📸 Export Section as Image</button>
+    <div id="t3" class="section-card">
+        <h2>3. Total Digestible Nutrients (TDN) Law Visualizer</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">TDN % / TDN (g)</span>
+            <span class="calc-tag">DCP</span>
+            <span class="calc-tag">DCF</span>
+            <span class="calc-tag">DNFE</span>
+            <span class="calc-tag">DEE × 2.25</span>
         </div>
+        <hr class="section-divider">
+        <div class="law-box-preview">
+            TDN = 
+            <span class="dynamic-slot slot-dcp"><span class="slot-tag">DCP</span><span id="preview-dcp">DCP</span></span> + 
+            <span class="dynamic-slot slot-dnfe"><span class="slot-tag">DNFE</span><span id="preview-dnfe">DNFE</span></span> + 
+            <span class="dynamic-slot slot-dcf"><span class="slot-tag">DCF</span><span id="preview-dcf">DCF</span></span> + (
+            <span class="dynamic-slot slot-dee"><span class="slot-tag">DEE</span><span id="preview-dee">DEE</span></span> × 2.25)
+        </div>
+        <div class="form-grid hide-on-export">
+            <div style="font-weight: bold; color: var(--primary);">Method 1: Direct Digestible Nutrients (e.g. Q4)</div>
+            <div class="form-row">
+                <div class="form-group"><label>Digestible Crude Protein (DCP):</label><input type="number" id="t_dcp" class="input-dcp" placeholder="e.g. 180" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible NFE (DNFE):</label><input type="number" id="t_dnfe" class="input-dnfe" placeholder="e.g. 600" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible Crude Fiber (DCF):</label><input type="number" id="t_dcf" class="input-dcf" placeholder="e.g. 250" oninput="calcTDN()"></div>
+                <div class="form-group"><label>Digestible Ether Extract (DEE):</label><input type="number" id="t_dee" class="input-dee" placeholder="e.g. 60" oninput="calcTDN()"></div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 10px 0;">
+
+            <div style="font-weight: bold; color: var(--primary);">Method 2: Raw Nutrients with Digestibility % (e.g. Q5)</div>
+            <div class="form-row keep-inline">
+                <div class="form-group"><label>Crude Protein (g):</label><input type="number" id="raw_cp" placeholder="e.g. 200" oninput="calcTDN()"></div>
+                <div class="form-group"><label>CP Digestibility (%):</label><input type="number" id="raw_cp_dc" placeholder="e.g. 75" oninput="calcTDN()"></div>
+            </div>
+            <div class="form-row keep-inline">
+                <div class="form-group"><label>Crude Fiber (g):</label><input type="number" id="raw_cf" placeholder="e.g. 300" oninput="calcTDN()"></div>
+                <div class="form-group"><label>CF Digestibility (%):</label><input type="number" id="raw_cf_dc" placeholder="e.g. 60" oninput="calcTDN()"></div>
+            </div>
+            <div class="form-row keep-inline">
+                <div class="form-group"><label>NFE (g):</label><input type="number" id="raw_nfe" placeholder="e.g. 500" oninput="calcTDN()"></div>
+                <div class="form-group"><label>NFE Digestibility (%):</label><input type="number" id="raw_nfe_dc" placeholder="e.g. 80" oninput="calcTDN()"></div>
+            </div>
+            <div class="form-row keep-inline">
+                <div class="form-group"><label>Ether Extract (g):</label><input type="number" id="raw_ee" placeholder="e.g. 40" oninput="calcTDN()"></div>
+                <div class="form-group"><label>EE Digestibility (%):</label><input type="number" id="raw_ee_dc" placeholder="e.g. 75" oninput="calcTDN()"></div>
+            </div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcTDN()">Calculate Total Digestible Nutrients</button>
+        <div class="result-box" id="res_t">Result: --</div>
+        <div class="step-breakdown" id="step_t"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t3', 'TDN_Result.png')">📸 Export Section as Image</button>
+    </div>
 
     <!-- 4. Crude Protein -->
     <div id="t4" class="section-card">
         <h2>4. Crude Protein (CP %) - Kjeldahl Method Visualizer</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Nitrogen (N %)</span>
+            <span class="calc-tag">Crude Protein (CP % = N × 6.25)</span>
+            <span class="calc-tag">Acid Titration Balance</span>
+        </div>
         <hr class="section-divider">
         <div class="law-box-preview">
             N % = 
@@ -651,6 +746,11 @@
     <!-- 5. Nutritive Ratio -->
     <div id="t5" class="section-card">
         <h2>5. Nutritive Ratio (NR) Law Visualizer</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Nutritive Ratio (1 : X)</span>
+            <span class="calc-tag">NR Classification (Narrow / Medium / Wide)</span>
+        </div>
         <hr class="section-divider">
         <div class="law-box-preview">
             NR = 1 : 
@@ -666,8 +766,8 @@
         </div>
         <div class="form-grid hide-on-export">
             <div class="form-row">
-                <div class="form-group"><label>Total Digestible Nutrients (TDN %):</label><input type="number" id="n_tdn" class="input-tdn" placeholder="e.g. 70" oninput="calcNR()"></div>
-                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="n_dcp" class="input-dcp" placeholder="e.g. 10" oninput="calcNR()"></div>
+                <div class="form-group"><label>Total Digestible Nutrients (TDN %):</label><input type="number" id="n_tdn" class="input-tdn" placeholder="e.g. 85.65" oninput="calcNR()"></div>
+                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="n_dcp" class="input-dcp" placeholder="e.g. 7.5" oninput="calcNR()"></div>
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcNR()">Calculate Nutritive Ratio</button>
@@ -679,6 +779,11 @@
     <!-- 6. Dry Matter (DM) -->
     <div id="t6" class="section-card">
         <h2>6. Dry Matter (DM %) & Moisture Calculator</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Dry Matter (DM %)</span>
+            <span class="calc-tag">Moisture % (100 - DM)</span>
+        </div>
         <hr class="section-divider">
         <div class="law-box-preview">
             DM % = 
@@ -708,6 +813,11 @@
     <!-- 7. Ash & OM -->
     <div id="t7" class="section-card">
         <h2>7. Ash & Organic Matter (OM %) Calculator</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Inorganic Ash %</span>
+            <span class="calc-tag">Organic Matter (OM % = 100 - Ash)</span>
+        </div>
         <hr class="section-divider">
         <div class="law-box-preview">
             Ash % = 
@@ -737,6 +847,11 @@
     <!-- 8. Crude Fiber & Ether Extract (EE) Lab -->
     <div id="t8" class="section-card">
         <h2>8. Proximate Analysis Lab: Crude Fiber (CF %) & Ether Extract (EE %)</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Crude Fiber (CF %)</span>
+            <span class="calc-tag">Ether Extract (EE / Crude Fat %)</span>
+        </div>
         <hr class="section-divider">
 
         <div style="margin-bottom:14px;" class="hide-on-export">
@@ -800,6 +915,11 @@
     <!-- 9. NFE Calculator -->
     <div id="t9" class="section-card">
         <h2>9. Nitrogen Free Extract (NFE %) Calculator</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Soluble Carbohydrates (NFE %)</span>
+            <span class="calc-tag">Proximate Sum Difference</span>
+        </div>
         <hr class="section-divider">
         <div class="law-box-preview">
             NFE % = 100 - (
@@ -814,8 +934,6 @@
                 <div class="form-group"><label>Moisture %:</label><input type="number" id="nfe_w" class="input-cho" placeholder="e.g. 10" oninput="calcNFE()"></div>
                 <div class="form-group"><label>Crude Protein %:</label><input type="number" id="nfe_pro" class="input-pro" placeholder="e.g. 15" oninput="calcNFE()"></div>
                 <div class="form-group"><label>Crude Fiber %:</label><input type="number" id="nfe_dcf" class="input-dcf" placeholder="e.g. 8" oninput="calcNFE()"></div>
-            </div>
-            <div class="form-row">
                 <div class="form-group"><label>Ether Extract %:</label><input type="number" id="nfe_ee" class="input-fat" placeholder="e.g. 3" oninput="calcNFE()"></div>
                 <div class="form-group"><label>Ash %:</label><input type="number" id="nfe_ash" class="input-wt" placeholder="e.g. 6" oninput="calcNFE()"></div>
             </div>
@@ -828,7 +946,15 @@
     <!-- 10. Protein Quality Suite -->
     <div id="t10" class="section-card">
         <h2>10. Protein Quality & Biological Evaluation Suite</h2>
-        <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Includes Protein Equivalent (PE), Protein Efficiency Ratio (PER), Biological Value (BV), Chemical Score (CS) & Gross Protein Value (GPV).</p>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Protein Equivalent (PE)</span>
+            <span class="calc-tag">PER (Protein Efficiency Ratio)</span>
+            <span class="calc-tag">Apparent Biological Value (BV %)</span>
+            <span class="calc-tag">True Biological Value (BV %)</span>
+            <span class="calc-tag">Chemical Score (CS %)</span>
+            <span class="calc-tag">Gross Protein Value (GPV)</span>
+        </div>
         <hr class="section-divider">
 
         <div class="option-panel hide-on-export">
@@ -836,7 +962,7 @@
                 <button type="button" class="segment-btn active" id="btn-pq-pe" onclick="switchProteinTab('pe')">Protein Equivalent (PE)</button>
                 <button type="button" class="segment-btn" id="btn-pq-per" onclick="switchProteinTab('per')">Protein Efficiency Ratio (PER)</button>
                 <button type="button" class="segment-btn" id="btn-pq-bv" onclick="switchProteinTab('bv')">Biological Value (BV)</button>
-                <button type="button" class="segment-btn" id="btn-pq-cs" onclick="switchProteinTab('cs')">Chemical Score (CS)</button>
+                <button type="button" class="segment-btn" id="btn-pq-cs" onclick="switchProteinTab('cs')">Chemical Score (CS) & GPV</button>
             </div>
         </div>
 
@@ -858,7 +984,7 @@
             <div class="form-grid hide-on-export">
                 <div class="form-row">
                     <div class="form-group"><label>Digestible True Protein (DTP %):</label><input type="number" id="pe_dtp" class="input-pro" placeholder="e.g. 10" oninput="calcPE()"></div>
-                    <div class="form-group"><label>Digestible NPN (DNPN %):</label><input type="number" id="pe_npn" class="input-dnfe" placeholder="e.g. 4" oninput="calcPE()"></div>
+                    <div class="form-group"><label>Digestible NPN (DNPN %):</label><input type="number" id="pe_npn" class="input-dnfe" placeholder="e.g. 6 (or DCP - DTP)" oninput="calcPE()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcPE()">Calculate Protein Equivalent</button>
@@ -877,8 +1003,8 @@
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
-                    <div class="form-group"><label>Animal Weight Gain (g):</label><input type="number" id="per_gain" class="input-pro" placeholder="e.g. 50" oninput="calcPER()"></div>
-                    <div class="form-group"><label>Crude Protein Intake (g):</label><input type="number" id="per_intake" class="input-intake" placeholder="e.g. 20" oninput="calcPER()"></div>
+                    <div class="form-group"><label>Animal Weight Gain (g):</label><input type="number" id="per_gain" class="input-pro" placeholder="e.g. 600" oninput="calcPER()"></div>
+                    <div class="form-group"><label>Crude Protein Intake (g):</label><input type="number" id="per_intake" class="input-intake" placeholder="e.g. 120" oninput="calcPER()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcPER()">Calculate Protein Efficiency Ratio</button>
@@ -897,13 +1023,11 @@
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
-                    <div class="form-group"><label>Nitrogen Intake (g):</label><input type="number" step="0.01" id="bv_ni" class="input-intake" placeholder="e.g. 15.0" oninput="calcBV()"></div>
-                    <div class="form-group"><label>Faecal Nitrogen (g):</label><input type="number" step="0.01" id="bv_fn" class="input-faeces" placeholder="e.g. 4.0" oninput="calcBV()"></div>
-                    <div class="form-group"><label>Urinary Nitrogen (g):</label><input type="number" step="0.01" id="bv_un" class="input-vol" placeholder="e.g. 3.0" oninput="calcBV()"></div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group"><label>Metabolic Faecal N (MFN g) [Optional for True BV]:</label><input type="number" step="0.01" id="bv_mfn" class="input-mfn" placeholder="e.g. 0.8" oninput="calcBV()"></div>
-                    <div class="form-group"><label>Endogenous Urinary N (EUN g) [Optional for True BV]:</label><input type="number" step="0.01" id="bv_eun" class="input-mfn" placeholder="e.g. 0.5" oninput="calcBV()"></div>
+                    <div class="form-group"><label>Nitrogen Intake (g):</label><input type="number" step="0.01" id="bv_ni" class="input-intake" placeholder="e.g. 100" oninput="calcBV()"></div>
+                    <div class="form-group"><label>Faecal Nitrogen (g):</label><input type="number" step="0.01" id="bv_fn" class="input-faeces" placeholder="e.g. 30" oninput="calcBV()"></div>
+                    <div class="form-group"><label>Urinary Nitrogen (g):</label><input type="number" step="0.01" id="bv_un" class="input-vol" placeholder="e.g. 10" oninput="calcBV()"></div>
+                    <div class="form-group"><label>Metabolic Faecal N (MFN g) [Optional for True BV]:</label><input type="number" step="0.01" id="bv_mfn" class="input-mfn" placeholder="e.g. 5" oninput="calcBV()"></div>
+                    <div class="form-group"><label>Endogenous Urinary N (EUN g) [Optional for True BV]:</label><input type="number" step="0.01" id="bv_eun" class="input-mfn" placeholder="e.g. 2" oninput="calcBV()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcBV()">Calculate Biological Value</button>
@@ -917,18 +1041,16 @@
                 CS % = 
                 <div class="fraction">
                     <div class="numerator">Limiting Amino Acid in Feed</div>
-                    <div class="denominator">Same Amino Acid in Egg Protein</div>
+                    <div class="denominator">Same Amino Acid in Egg Protein (Lysine 7.2)</div>
                 </div> × 100
                 &nbsp;|&nbsp; GPV = A / ⁰A
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
-                    <div class="form-group"><label>Limiting Amino Acid in Test Protein (g/16g N):</label><input type="number" step="0.01" id="cs_feed" class="input-pro" placeholder="e.g. 3.2" oninput="calcCS()"></div>
-                    <div class="form-group"><label>Same Amino Acid in Whole Egg Protein (g/16g N):</label><input type="number" step="0.01" id="cs_egg" class="input-cho" placeholder="e.g. 5.5" oninput="calcCS()"></div>
-                </div>
-                <div class="form-row">
+                    <div class="form-group"><label>Limiting Amino Acid in Test Protein (% or g/16g N):</label><input type="number" step="0.01" id="cs_feed" class="input-pro" placeholder="e.g. 3.6" oninput="calcCS()"></div>
+                    <div class="form-group"><label>Egg Reference Amino Acid (default 7.2 for Lysine):</label><input type="number" step="0.01" id="cs_egg" class="input-cho" value="7.2" oninput="calcCS()"></div>
                     <div class="form-group"><label>Weight gain/g Test Protein (A) [for GPV]:</label><input type="number" step="0.01" id="gpv_a" class="input-dcp" placeholder="e.g. 2.1" oninput="calcCS()"></div>
-                    <div class="form-group"><label>Weight gain/g Casein (⁰A) [for GPV]:</label><input type="number" step="0.01" id="gpv_casein" class="input-dcp" placeholder="e.g. 2.5" oninput="calcCS()"></div>
+                    <div class="form-group"><label>Weight gain/g Casein (⁰A) [for GPV]:</label><input type="number" step="0.01" id="gpv_casein" class="input-dcp" placeholder="e.g. 2.8" oninput="calcCS()"></div>
                 </div>
             </div>
             <button class="action-btn hide-on-export" onclick="calcCS()">Calculate Chemical Score & GPV</button>
@@ -942,7 +1064,13 @@
     <!-- 11. Energy Partition & Starch Equivalent -->
     <div id="t11" class="section-card">
         <h2>11. Metabolizable (ME) & Net Energy (NE) Partition</h2>
-        <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Calculates Metabolizable Energy (ME), Net Energy (NE), Heat Increment (HI), and Starch Equivalent (SE).</p>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Metabolizable Energy (ME)</span>
+            <span class="calc-tag">Net Energy (NE)</span>
+            <span class="calc-tag">Heat Increment (HI = ME - NE)</span>
+            <span class="calc-tag">Starch Equivalent (SE)</span>
+        </div>
         <hr class="section-divider">
 
         <div class="law-box-preview">
@@ -975,6 +1103,13 @@
     <!-- 12. Body Composition (Q8) -->
     <div id="t_body" class="section-card">
         <h2>Animal Body Composition Dynamics (Q8)</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Muscle Mass % (Water ÷ 0.73)</span>
+            <span class="calc-tag">Body Fat % (100 - Muscle)</span>
+            <span class="calc-tag">Protein % (80% of Remainder)</span>
+            <span class="calc-tag">Ash % (20% of Remainder)</span>
+        </div>
         <hr class="section-divider">
         <div class="form-grid hide-on-export">
             <div class="form-group">
@@ -991,6 +1126,12 @@
     <!-- 13. Formula Glossary -->
     <div id="t12" class="section-card">
         <h2>13. Complete Nutrition Laws & Notebook LM Master Glossary</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Reference:</span>
+            <span class="calc-tag">All Curriculum Formulas</span>
+            <span class="calc-tag">Clinical Definitions</span>
+            <span class="calc-tag">SARA Diagnostic Criteria</span>
+        </div>
         <hr class="section-divider">
         <input type="text" id="glossarySearch" placeholder="Search laws & terms (DE, TDN, PER, BV, SE, Kjeldahl, SARA...)" onkeyup="filterGlossary()" style="margin-bottom: 20px;">
         <table id="glossaryTable">
@@ -999,6 +1140,7 @@
             </thead>
             <tbody>
                 <tr><td><strong>DE (Digestible Energy)</strong></td><td>DE = Intake Energy (Kcal/day) − Fecal Energy (Kcal/day)</td><td>The gross caloric intake minus total energy excreted in faeces. Energy digestibility % = (DE / Intake Energy) × 100.</td></tr>
+                <tr><td><strong>DN (Digestible Nutrients)</strong></td><td>DN = Nutrient Consumed (Intake) − Nutrient Excreted (Faeces)</td><td>Total absolute quantity (g or kg) of nutrient absorbed by the animal.</td></tr>
                 <tr><td><strong>Apparent CD %</strong></td><td>[ (Nutrient in feed − Nutrient in faeces) ÷ Nutrient in feed ] × 100</td><td>Apparent digestion coefficient; treats all fecal excretion as unabsorbed feed residue.</td></tr>
                 <tr><td><strong>True Digestibility (TD %)</strong></td><td>[ (Nutrient in feed − (Faecal Nutrient − MFN)) ÷ Nutrient in feed ] × 100</td><td>Corrects for endogenous metabolic fecal loss (MFN: ~0.5g / 100g meal intake).</td></tr>
                 <tr><td><strong>Indicator Method</strong></td><td>[ (g ind/Kg DM faeces − g ind/Kg DM food) ÷ g ind/Kg DM faeces ]</td><td>Used in digestion trials without complete collection using indigestible markers (e.g. Chromic oxide Cr2O3).</td></tr>
@@ -1027,6 +1169,12 @@
     <!-- 14. Interactive Quiz -->
     <div id="t13" class="section-card">
         <h2>14. Interactive Practice Quiz Generator</h2>
+        <div class="calc-scope-badge">
+            <span class="scope-title">Features:</span>
+            <span class="calc-tag">Direct Numerical Input</span>
+            <span class="calc-tag">4-Choice Multiple Choice (MCQ)</span>
+            <span class="calc-tag">Instant Scoring & Feedback</span>
+        </div>
         <hr class="section-divider">
         <p>Test your animal nutrition calculations with auto-generated problems matching your curriculum!</p>
         
@@ -1063,7 +1211,7 @@
 </div>
 
 <footer>
-    <p>Nutritional Lawyer &copy; 2026 | Complete Curriculum Edition | Developed by Ayman Yousry 🛠️</p>
+    <p>Nutritional Lawyer &copy; 2026 | TgT Edition | Developed by Ayman Yousry 🛠️</p>
 </footer>
 
 <script>
