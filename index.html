@@ -628,8 +628,13 @@
             <div class="law-box-preview">
                 Digestibility = 
                 <div class="fraction">
-                    <div class="numerator">(Indicator/Kg DM Faeces - Indicator/Kg DM Food)</div>
-                    <div class="denominator">Indicator/Kg DM Faeces</div>
+                    <div class="numerator">(
+                        <span class="dynamic-slot slot-faeces"><span class="slot-tag">Faeces Ind</span><span id="preview-ind-faeces">Faeces</span></span> - 
+                        <span class="dynamic-slot slot-intake"><span class="slot-tag">Food Ind</span><span id="preview-ind-food">Food</span></span>)
+                    </div>
+                    <div class="denominator">
+                        <span class="dynamic-slot slot-faeces"><span class="slot-tag">Faeces Ind</span><span id="preview-ind-faeces2">Faeces</span></span>
+                    </div>
                 </div>
             </div>
             <div class="form-grid hide-on-export">
@@ -644,7 +649,10 @@
         <!-- Sub 3: Feed Efficiency -->
         <div id="box-sub-fe" style="display:none;">
             <div class="law-box-preview">
-                Feed Efficiency = Weight Gain ÷ Feed Consumed &nbsp;|&nbsp; FCR = 1 ÷ Feed Efficiency
+                Feed Efficiency = 
+                <span class="dynamic-slot slot-pro"><span class="slot-tag">Gain</span><span id="preview-fe-gain">Gain</span></span> ÷ 
+                <span class="dynamic-slot slot-cho"><span class="slot-tag">Feed</span><span id="preview-fe-feed">Feed</span></span> 
+                &nbsp;|&nbsp; FCR = 1 ÷ Feed Efficiency
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-group"><label>Total Weight Gain (g or Kg):</label><input type="number" step="0.01" id="fe_gain" class="input-pro" placeholder="e.g. 20" oninput="calcFE()"></div>
@@ -1005,8 +1013,8 @@
             <div class="law-box-preview">
                 PER = 
                 <div class="fraction">
-                    <div class="numerator">Weight Gain (g)</div>
-                    <div class="denominator">Protein Intake (g)</div>
+                    <div class="numerator"><span class="dynamic-slot slot-pro"><span class="slot-tag">Weight Gain</span><span id="preview-per-gain">Gain</span></span></div>
+                    <div class="denominator"><span class="dynamic-slot slot-intake"><span class="slot-tag">Protein Intake</span><span id="preview-per-intake">Intake</span></span></div>
                 </div>
             </div>
             <div class="form-grid hide-on-export">
@@ -1025,8 +1033,15 @@
             <div class="law-box-preview">
                 Apparent BV = 
                 <div class="fraction">
-                    <div class="numerator">N Intake - (Faecal N + Urinary N)</div>
-                    <div class="denominator">N Intake - Faecal N</div>
+                    <div class="numerator">
+                        <span class="dynamic-slot slot-intake"><span class="slot-tag">N Intake</span><span id="preview-bv-ni">Intake</span></span> - (
+                        <span class="dynamic-slot slot-faeces"><span class="slot-tag">Faecal N</span><span id="preview-bv-fn">Faecal</span></span> + 
+                        <span class="dynamic-slot slot-vol"><span class="slot-tag">Urinary N</span><span id="preview-bv-un">Urinary</span></span>)
+                    </div>
+                    <div class="denominator">
+                        <span class="dynamic-slot slot-intake"><span class="slot-tag">N Intake</span><span id="preview-bv-ni2">Intake</span></span> - 
+                        <span class="dynamic-slot slot-faeces"><span class="slot-tag">Faecal N</span><span id="preview-bv-fn2">Faecal</span></span>
+                    </div>
                 </div> × 100
             </div>
             <div class="form-grid hide-on-export">
@@ -1766,8 +1781,16 @@
     }
 
     function calcIndicator() {
-        let f = parseFloat(document.getElementById('ind_food').value);
-        let fa = parseFloat(document.getElementById('ind_faeces').value);
+        let fVal = document.getElementById('ind_food').value;
+        let faVal = document.getElementById('ind_faeces').value;
+
+        // تحديث فوري لحظة الكتابة
+        document.getElementById('preview-ind-food').innerText = fVal !== "" ? fVal : "Food";
+        document.getElementById('preview-ind-faeces').innerText = faVal !== "" ? faVal : "Faeces";
+        document.getElementById('preview-ind-faeces2').innerText = faVal !== "" ? faVal : "Faeces";
+
+        let f = parseFloat(fVal);
+        let fa = parseFloat(faVal);
         if(isNaN(f) || isNaN(fa) || fa <= 0) {
             document.getElementById('res_indicator').innerText = "Please enter valid indicator amounts (Faeces > 0).";
             document.getElementById('step_indicator').style.display = 'none';
@@ -1782,8 +1805,15 @@
     }
 
     function calcFE() {
-        let gain = parseFloat(document.getElementById('fe_gain').value);
-        let feed = parseFloat(document.getElementById('fe_feed').value);
+        let gainVal = document.getElementById('fe_gain').value;
+        let feedVal = document.getElementById('fe_feed').value;
+
+        // تحديث فوري لحظة الكتابة
+        document.getElementById('preview-fe-gain').innerText = gainVal !== "" ? gainVal : "Gain";
+        document.getElementById('preview-fe-feed').innerText = feedVal !== "" ? feedVal : "Feed";
+
+        let gain = parseFloat(gainVal);
+        let feed = parseFloat(feedVal);
         if(isNaN(gain) || isNaN(feed) || feed <= 0) {
             document.getElementById('res_fe').innerText = "Please enter valid gain and feed intake values.";
             document.getElementById('step_fe').style.display = 'none';
@@ -2121,8 +2151,15 @@
     }
 
     function calcPER() {
-        let gain = parseFloat(document.getElementById('per_gain').value);
-        let intake = parseFloat(document.getElementById('per_intake').value);
+        let gainVal = document.getElementById('per_gain').value;
+        let intakeVal = document.getElementById('per_intake').value;
+
+        // تحديث القانون فورياً أثناء الكتابة
+        document.getElementById('preview-per-gain').innerText = gainVal !== "" ? gainVal : "Gain";
+        document.getElementById('preview-per-intake').innerText = intakeVal !== "" ? intakeVal : "Intake";
+
+        let gain = parseFloat(gainVal);
+        let intake = parseFloat(intakeVal);
         if(isNaN(gain) || isNaN(intake) || intake <= 0) {
             document.getElementById('res_per').innerText = "Protein intake must be greater than zero.";
             document.getElementById('step_per').style.display = 'none';
@@ -2136,9 +2173,20 @@
     }
 
     function calcBV() {
-        let ni = parseFloat(document.getElementById('bv_ni').value);
-        let fn = parseFloat(document.getElementById('bv_fn').value);
-        let un = parseFloat(document.getElementById('bv_un').value);
+        let niVal = document.getElementById('bv_ni').value;
+        let fnVal = document.getElementById('bv_fn').value;
+        let unVal = document.getElementById('bv_un').value;
+
+        // تحديث القانون فورياً بمجرد بدء الكتابة
+        document.getElementById('preview-bv-ni').innerText = niVal !== "" ? niVal : "Intake";
+        document.getElementById('preview-bv-ni2').innerText = niVal !== "" ? niVal : "Intake";
+        document.getElementById('preview-bv-fn').innerText = fnVal !== "" ? fnVal : "Faecal";
+        document.getElementById('preview-bv-fn2').innerText = fnVal !== "" ? fnVal : "Faecal";
+        document.getElementById('preview-bv-un').innerText = unVal !== "" ? unVal : "Urinary";
+
+        let ni = parseFloat(niVal);
+        let fn = parseFloat(fnVal);
+        let un = parseFloat(unVal);
         let mfn = parseFloat(document.getElementById('bv_mfn').value) || 0;
         let eun = parseFloat(document.getElementById('bv_eun').value) || 0;
 
