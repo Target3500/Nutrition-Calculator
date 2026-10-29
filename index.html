@@ -196,7 +196,8 @@
         .slot-tdn { border: 2.5px solid var(--color-tdn); color: var(--color-tdn); }
 
         .form-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 22px; }
-        .form-row { display: flex; gap: 14px; flex-wrap: wrap; }
+        .form-row { display: flex; flex-direction: column; gap: 14px; }
+		.form-row.keep-inline { flex-direction: row; flex-wrap: wrap; }
         .form-row .form-group { flex: 1; min-width: 220px; }
         .form-group { width: 100%; }
         label { display: block; margin-bottom: 7px; font-weight: 600; font-size: 0.95rem; color: var(--text-color); }
@@ -377,8 +378,9 @@
         <button class="nav-btn" onclick="switchTab('t9')">9. NFE Calculator</button>
         <button class="nav-btn" onclick="switchTab('t10')">10. Protein Quality (PE, PER, BV)</button>
         <button class="nav-btn" onclick="switchTab('t11')">11. Starch Equivalent & Energy</button>
-        <button class="nav-btn" onclick="switchTab('t12')">12. Formula Glossary</button>
-        <button class="nav-btn" onclick="switchTab('t13')">13. Interactive Quiz</button>
+        <button class="nav-btn" onclick="switchTab('t_body')">12. Body Composition (Q8)</button>
+        <button class="nav-btn" onclick="switchTab('t12')">13. Formula Glossary</button>
+        <button class="nav-btn" onclick="switchTab('t13')">14. Interactive Quiz</button>
     </div>
 
     <!-- 1. Digestible Energy -->
@@ -571,31 +573,52 @@
     </div>
 
     <!-- 3. TDN% -->
-    <div id="t3" class="section-card">
-        <h2>3. Total Digestible Nutrients (TDN %) Law Visualizer</h2>
-        <hr class="section-divider">
-        <div class="law-box-preview">
-            TDN % = 
-            <span class="dynamic-slot slot-dcp"><span class="slot-tag">DCP</span><span id="preview-dcp">DCP</span></span> + 
-            <span class="dynamic-slot slot-dnfe"><span class="slot-tag">DNFE</span><span id="preview-dnfe">DNFE</span></span> + 
-            <span class="dynamic-slot slot-dcf"><span class="slot-tag">DCF</span><span id="preview-dcf">DCF</span></span> + (
-            <span class="dynamic-slot slot-dee"><span class="slot-tag">DEE</span><span id="preview-dee">DEE</span></span> × 2.25)
-        </div>
-        <div class="form-grid hide-on-export">
-            <div class="form-row">
-                <div class="form-group"><label>Digestible Crude Protein (DCP %):</label><input type="number" id="t_dcp" class="input-dcp" placeholder="e.g. 12" oninput="calcTDN()"></div>
-                <div class="form-group"><label>Digestible Nitrogen Free Extract (DNFE %):</label><input type="number" id="t_dnfe" class="input-dnfe" placeholder="e.g. 45" oninput="calcTDN()"></div>
+        <div id="t3" class="section-card">
+            <h2>3. Total Digestible Nutrients (TDN) Law Visualizer</h2>
+            <hr class="section-divider">
+            <div class="law-box-preview">
+                TDN = 
+                <span class="dynamic-slot slot-dcp"><span class="slot-tag">DCP</span><span id="preview-dcp">DCP</span></span> + 
+                <span class="dynamic-slot slot-dnfe"><span class="slot-tag">DNFE</span><span id="preview-dnfe">DNFE</span></span> + 
+                <span class="dynamic-slot slot-dcf"><span class="slot-tag">DCF</span><span id="preview-dcf">DCF</span></span> + (
+                <span class="dynamic-slot slot-dee"><span class="slot-tag">DEE</span><span id="preview-dee">DEE</span></span> × 2.25)
             </div>
-            <div class="form-row">
-                <div class="form-group"><label>Digestible Crude Fiber (DCF %):</label><input type="number" id="t_dcf" class="input-dcf" placeholder="e.g. 15" oninput="calcTDN()"></div>
-                <div class="form-group"><label>Digestible Ether Extract (DEE %):</label><input type="number" id="t_dee" class="input-dee" placeholder="e.g. 3.5" oninput="calcTDN()"></div>
+            <div class="form-grid hide-on-export">
+                <div style="font-weight: bold; color: var(--primary);">Method 1: Direct Digestible Nutrients (e.g. Q4)</div>
+                <div class="form-row">
+                    <div class="form-group"><label>Digestible Crude Protein (DCP):</label><input type="number" id="t_dcp" class="input-dcp" placeholder="e.g. 180" oninput="calcTDN()"></div>
+                    <div class="form-group"><label>Digestible NFE (DNFE):</label><input type="number" id="t_dnfe" class="input-dnfe" placeholder="e.g. 600" oninput="calcTDN()"></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Digestible Crude Fiber (DCF):</label><input type="number" id="t_dcf" class="input-dcf" placeholder="e.g. 250" oninput="calcTDN()"></div>
+                    <div class="form-group"><label>Digestible Ether Extract (DEE):</label><input type="number" id="t_dee" class="input-dee" placeholder="e.g. 60" oninput="calcTDN()"></div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 10px 0;">
+
+                <div style="font-weight: bold; color: var(--primary);">Method 2: Raw Nutrients with Digestibility % (e.g. Q5)</div>
+                <div class="form-row keep-inline">
+                    <div class="form-group"><label>Crude Protein (g):</label><input type="number" id="raw_cp" placeholder="e.g. 200" oninput="calcTDN()"></div>
+                    <div class="form-group"><label>CP Digestibility (%):</label><input type="number" id="raw_cp_dc" placeholder="e.g. 75" oninput="calcTDN()"></div>
+                </div>
+                <div class="form-row keep-inline">
+                    <div class="form-group"><label>Crude Fiber (g):</label><input type="number" id="raw_cf" placeholder="e.g. 300" oninput="calcTDN()"></div>
+                    <div class="form-group"><label>CF Digestibility (%):</label><input type="number" id="raw_cf_dc" placeholder="e.g. 60" oninput="calcTDN()"></div>
+                </div>
+                <div class="form-row keep-inline">
+                    <div class="form-group"><label>NFE (g):</label><input type="number" id="raw_nfe" placeholder="e.g. 500" oninput="calcTDN()"></div>
+                    <div class="form-group"><label>NFE Digestibility (%):</label><input type="number" id="raw_nfe_dc" placeholder="e.g. 80" oninput="calcTDN()"></div>
+                </div>
+                <div class="form-row keep-inline">
+                    <div class="form-group"><label>Ether Extract (g):</label><input type="number" id="raw_ee" placeholder="e.g. 40" oninput="calcTDN()"></div>
+                    <div class="form-group"><label>EE Digestibility (%):</label><input type="number" id="raw_ee_dc" placeholder="e.g. 75" oninput="calcTDN()"></div>
+                </div>
             </div>
+            <button class="action-btn hide-on-export" onclick="calcTDN()">Calculate Total Digestible Nutrients</button>
+            <div class="result-box" id="res_t">Result: --</div>
+            <div class="step-breakdown" id="step_t"></div>
+            <button class="action-btn export-btn hide-on-export" onclick="exportSection('t3', 'TDN_Result.png')">📸 Export Section as Image</button>
         </div>
-        <button class="action-btn hide-on-export" onclick="calcTDN()">Calculate Total Digestible Nutrients</button>
-        <div class="result-box" id="res_t">Result: --</div>
-        <div class="step-breakdown" id="step_t"></div>
-        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t3', 'TDN_Result.png')">📸 Export Section as Image</button>
-    </div>
 
     <!-- 4. Crude Protein -->
     <div id="t4" class="section-card">
@@ -916,44 +939,58 @@
         <button class="action-btn export-btn hide-on-export" style="margin-top:14px;" onclick="exportSection('t10', 'Protein_Quality_Result.png')">📸 Export Section as Image</button>
     </div>
 
-    <!-- 11. Starch Equivalent (SE) & Energy Systems -->
+    <!-- 11. Energy Partition & Starch Equivalent -->
     <div id="t11" class="section-card">
-        <h2>11. Starch Equivalent (SE) & Energy Partition Systems</h2>
-        <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Evaluates relative fat deposition value (Kellner's Starch Equivalent) and partitions energy down to Net Energy (NE).</p>
+        <h2>11. Metabolizable (ME) & Net Energy (NE) Partition</h2>
+        <p style="font-size:0.9rem; opacity:0.85; margin-bottom:14px;">Calculates Metabolizable Energy (ME), Net Energy (NE), Heat Increment (HI), and Starch Equivalent (SE).</p>
         <hr class="section-divider">
 
         <div class="law-box-preview">
-            SE = 
-            <div class="fraction">
-                <div class="numerator">Fat Stored per Unit Weight Feed</div>
-                <div class="denominator">Fat Stored per Unit Weight Starch (0.248)</div>
-            </div> × 100
+            ME = DE − (UE + Combustible Gases)
             &nbsp;|&nbsp;
-            NE = ME - HI
+            NE = ME − HI
         </div>
 
         <div class="form-grid hide-on-export">
-            <div class="form-row">
-                <div class="form-group"><label>Fat stored per unit weight of food:</label><input type="number" step="0.001" id="se_feed_fat" class="input-fat" placeholder="e.g. 0.200" oninput="calcEnergySystems()"></div>
-                <div class="form-group"><label>Fat stored per unit starch (default 0.248):</label><input type="number" step="0.001" id="se_starch_fat" class="input-cho" value="0.248" oninput="calcEnergySystems()"></div>
-            </div>
-            <div class="form-row">
-                <div class="form-group"><label>Digestible Energy (DE Kcal):</label><input type="number" id="es_de" class="input-energy" placeholder="e.g. 3604" oninput="calcEnergySystems()"></div>
-                <div class="form-group"><label>Urinary Energy Loss (UE Kcal):</label><input type="number" id="es_ue" class="input-vol" placeholder="e.g. 250" oninput="calcEnergySystems()"></div>
-                <div class="form-group"><label>Methane / Combustible Gas Energy (Kcal):</label><input type="number" id="es_gae" class="input-vol" placeholder="e.g. 300" oninput="calcEnergySystems()"></div>
-                <div class="form-group"><label>Heat Increment (HI Kcal):</label><input type="number" id="es_hi" class="input-fat" placeholder="e.g. 800" oninput="calcEnergySystems()"></div>
-            </div>
+            <div style="font-weight: bold; color: var(--primary);">1. Energy Partition System (ME & NE):</div>
+            <div class="form-group"><label>Digestible Energy (DE Kcal/day):</label><input type="number" id="es_de" class="input-energy" placeholder="e.g. 8700" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Urinary Energy (UE Kcal/day):</label><input type="number" id="es_ue" class="input-vol" placeholder="e.g. 800 (or g × Kcal/g)" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Combustible Gases Energy (Kcal/day):</label><input type="number" id="es_gae" class="input-vol" placeholder="e.g. 700" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Heat Increment (HI Kcal/day) [Optional for NE]:</label><input type="number" id="es_hi" class="input-fat" placeholder="e.g. 2800" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Direct Metabolizable Energy (ME Kcal/day) [Optional if DE not given]:</label><input type="number" id="es_me_direct" class="input-energy" placeholder="e.g. 8500" oninput="calcEnergySystems()"></div>
+
+            <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 10px 0;">
+
+            <div style="font-weight: bold; color: var(--primary);">2. Starch Equivalent (SE):</div>
+            <div class="form-group"><label>Fat stored per unit weight of food:</label><input type="number" step="0.001" id="se_feed_fat" class="input-fat" placeholder="e.g. 0.145" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Fat stored per unit starch (default 0.248):</label><input type="number" step="0.001" id="se_starch_fat" class="input-cho" value="0.248" oninput="calcEnergySystems()"></div>
         </div>
 
-        <button class="action-btn hide-on-export" onclick="calcEnergySystems()">Calculate SE & Net Energy Partition</button>
+        <button class="action-btn hide-on-export" onclick="calcEnergySystems()">Calculate Energy Partition & SE</button>
         <div class="result-box" id="res_energy_sys">Result: --</div>
         <div class="step-breakdown" id="step_energy_sys"></div>
         <button class="action-btn export-btn hide-on-export" onclick="exportSection('t11', 'Energy_Systems_Result.png')">📸 Export Section as Image</button>
     </div>
 
-    <!-- 12. Formula Glossary -->
+    <!-- 12. Body Composition (Q8) -->
+    <div id="t_body" class="section-card">
+        <h2>Animal Body Composition Dynamics (Q8)</h2>
+        <hr class="section-divider">
+        <div class="form-grid hide-on-export">
+            <div class="form-group">
+                <label>Total Body Water (%):</label>
+                <input type="number" step="0.01" id="bc_water" placeholder="e.g. 60" oninput="calcBodyComp()">
+            </div>
+        </div>
+        <button class="action-btn hide-on-export" onclick="calcBodyComp()">Calculate Body Composition</button>
+        <div class="result-box" id="res_body">Result: --</div>
+        <div class="step-breakdown" id="step_body"></div>
+        <button class="action-btn export-btn hide-on-export" onclick="exportSection('t_body', 'Body_Composition_Result.png')">📸 Export Section as Image</button>
+    </div>
+
+    <!-- 13. Formula Glossary -->
     <div id="t12" class="section-card">
-        <h2>12. Complete Nutrition Laws & Notebook LM Master Glossary</h2>
+        <h2>13. Complete Nutrition Laws & Notebook LM Master Glossary</h2>
         <hr class="section-divider">
         <input type="text" id="glossarySearch" placeholder="Search laws & terms (DE, TDN, PER, BV, SE, Kjeldahl, SARA...)" onkeyup="filterGlossary()" style="margin-bottom: 20px;">
         <table id="glossaryTable">
@@ -987,9 +1024,9 @@
         </table>
     </div>
 
-    <!-- 13. Interactive Quiz -->
+    <!-- 14. Interactive Quiz -->
     <div id="t13" class="section-card">
-        <h2>13. Interactive Practice Quiz Generator</h2>
+        <h2>14. Interactive Practice Quiz Generator</h2>
         <hr class="section-divider">
         <p>Test your animal nutrition calculations with auto-generated problems matching your curriculum!</p>
         <button class="action-btn" onclick="generateQuiz()" style="margin-bottom: 20px;">Generate New Problem</button>
@@ -1021,7 +1058,26 @@
             event.currentTarget.classList.add('active');
         }
     }
+	
+    function switchTDNMode(mode) {
+        const btnReady = document.getElementById('btn-tdn-ready');
+        const btnRaw = document.getElementById('btn-tdn-raw');
+        const fieldsReady = document.getElementById('tdn-ready-fields');
+        const fieldsRaw = document.getElementById('tdn-raw-fields');
 
+        if (mode === 'ready') {
+            btnReady.classList.add('active');
+            btnRaw.classList.remove('active');
+            if (fieldsReady) fieldsReady.style.display = 'flex';
+            if (fieldsRaw) fieldsRaw.style.display = 'none';
+        } else {
+            btnRaw.classList.add('active');
+            btnReady.classList.remove('active');
+            if (fieldsReady) fieldsReady.style.display = 'none';
+            if (fieldsRaw) fieldsRaw.style.display = 'flex';
+        }
+    }
+	
     function switchDigSubTab(sub) {
         document.getElementById('btn-sub-cd').classList.remove('active');
         document.getElementById('btn-sub-indicator').classList.remove('active');
@@ -1259,8 +1315,9 @@
             stepsInfo.push(`2. True Undigested Nutrient = Feces (${feces.toFixed(2)}g) - MFN (${mfn.toFixed(2)}g) = <strong>${(feces - mfn).toFixed(2)}g</strong>`);
             stepsInfo.push(`3. TD % = [(${intake.toFixed(2)} - ${(feces - mfn).toFixed(2)}) ÷ ${intake.toFixed(2)}] × 100 = <strong>${trueCd.toFixed(2)}%</strong>`);
         } else {
-            let apparentCd = ((intake - feces) / intake) * 100;
-            document.getElementById('res_c').innerHTML = `Digestibility Coefficient (CD %) = <strong>${apparentCd.toFixed(2)}%</strong>`;
+			let dn = intake - feces;
+			let apparentCd = (dn / intake) * 100;
+			document.getElementById('res_c').innerHTML = `Digestible Nutrients (DN) = <strong>${dn.toFixed(2)} g</strong> | Digestibility Coefficient (CD %) = <strong>${apparentCd.toFixed(2)}%</strong>`;
             stepsInfo.push(`<strong>Apparent CD Calculation:</strong>`);
             stepsInfo.push(`CD % = [(${intake.toFixed(2)} - ${feces.toFixed(2)}) ÷ ${intake.toFixed(2)}] × 100 = <strong>${apparentCd.toFixed(2)}%</strong>`);
         }
@@ -1304,13 +1361,52 @@
 
     // 3. TDN %
     function calcTDN() {
+        // التحقق أولاً إذا كان المستخدم يُدخل بيانات الطريقة الثانية (مسألة 5)
+        let r_cp = parseFloat(document.getElementById('raw_cp')?.value);
+        let r_cp_dc = parseFloat(document.getElementById('raw_cp_dc')?.value);
+
+        if (!isNaN(r_cp) && !isNaN(r_cp_dc)) {
+            let r_cf = parseFloat(document.getElementById('raw_cf')?.value) || 0;
+            let r_cf_dc = parseFloat(document.getElementById('raw_cf_dc')?.value) || 0;
+            let r_nfe = parseFloat(document.getElementById('raw_nfe')?.value) || 0;
+            let r_nfe_dc = parseFloat(document.getElementById('raw_nfe_dc')?.value) || 0;
+            let r_ee = parseFloat(document.getElementById('raw_ee')?.value) || 0;
+            let r_ee_dc = parseFloat(document.getElementById('raw_ee_dc')?.value) || 0;
+
+            let dcp = r_cp * (r_cp_dc / 100);
+            let dcf = r_cf * (r_cf_dc / 100);
+            let dnfe = r_nfe * (r_nfe_dc / 100);
+            let dee = r_ee * (r_ee_dc / 100);
+
+            let tdn = dcp + dcf + dnfe + (dee * 2.25);
+
+            document.getElementById('preview-dcp').innerText = dcp.toFixed(1);
+            document.getElementById('preview-dnfe').innerText = dnfe.toFixed(1);
+            document.getElementById('preview-dcf').innerText = dcf.toFixed(1);
+            document.getElementById('preview-dee').innerText = dee.toFixed(1);
+
+            document.getElementById('res_t').innerHTML = `TDN = <strong>${tdn.toFixed(2)} g</strong>`;
+            let step = document.getElementById('step_t');
+            step.style.display = 'block';
+            step.innerHTML = `
+                <strong>Steps (Raw Nutrients × DC%):</strong><br>
+                1. DCP = ${r_cp} × ${r_cp_dc}% = <strong>${dcp.toFixed(2)} g</strong><br>
+                2. DCF = ${r_cf} × ${r_cf_dc}% = <strong>${dcf.toFixed(2)} g</strong><br>
+                3. DNFE = ${r_nfe} × ${r_nfe_dc}% = <strong>${dnfe.toFixed(2)} g</strong><br>
+                4. DEE = ${r_ee} × ${r_ee_dc}% = <strong>${dee.toFixed(2)} g</strong><br>
+                5. TDN = ${dcp.toFixed(2)} + ${dcf.toFixed(2)} + ${dnfe.toFixed(2)} + (${dee.toFixed(2)} × 2.25) = <strong>${tdn.toFixed(2)} g</strong>
+            `;
+            return;
+        }
+
+        // الطريقة الأولى (القيم جاهزة - مسألة 4)
         let dcp = parseFloat(document.getElementById('t_dcp').value);
         let dnfe = parseFloat(document.getElementById('t_dnfe').value);
         let dcf = parseFloat(document.getElementById('t_dcf').value);
         let dee = parseFloat(document.getElementById('t_dee').value);
 
         if(isNaN(dcp) || isNaN(dnfe) || isNaN(dcf) || isNaN(dee)) {
-            document.getElementById('res_t').innerText = "Please fill in all digestible nutrient percentages.";
+            document.getElementById('res_t').innerText = "Please fill in the nutrient fields.";
             document.getElementById('step_t').style.display = 'none';
             return;
         }
@@ -1321,10 +1417,41 @@
         document.getElementById('preview-dee').innerText = dee;
 
         let tdn = dcp + dnfe + dcf + (dee * 2.25);
-        document.getElementById('res_t').innerHTML = `Total Digestible Nutrients (TDN %) = <strong>${tdn.toFixed(2)}%</strong>`;
+        document.getElementById('res_t').innerHTML = `Total Digestible Nutrients (TDN) = <strong>${tdn.toFixed(2)}</strong>`;
         let step = document.getElementById('step_t');
         step.style.display = 'block';
-        step.innerHTML = `<strong>Calculation Steps:</strong><br>TDN % = ${dcp} + ${dnfe} + ${dcf} + (${dee} × 2.25) = <strong>${tdn.toFixed(2)}%</strong>`;
+        step.innerHTML = `<strong>Calculation Steps:</strong><br>TDN = ${dcp} + ${dnfe} + ${dcf} + (${dee} × 2.25) = <strong>${tdn.toFixed(2)}</strong>`;
+    }
+
+    // دالة مسألة 8: حساب ديناميكية كتلة الجسم
+    function calcBodyComp() {
+        let water = parseFloat(document.getElementById('bc_water').value);
+        if (isNaN(water) || water <= 0) {
+            document.getElementById('res_body').innerText = "Please enter a valid body water percentage.";
+            document.getElementById('step_body').style.display = 'none';
+            return;
+        }
+
+        let muscle = water / 0.73;
+        let fat = 100 - muscle;
+        let remainder = 100 - (water + fat);
+        let protein = remainder * 0.80;
+        let ash = remainder * 0.20;
+
+        document.getElementById('res_body').innerHTML = `
+            Muscle Mass: <strong>${muscle.toFixed(2)}%</strong> | Body Fat: <strong>${fat.toFixed(2)}%</strong><br>
+            Protein: <strong>${protein.toFixed(2)}%</strong> | Ash: <strong>${ash.toFixed(2)}%</strong>
+        `;
+        let step = document.getElementById('step_body');
+        step.style.display = 'block';
+        step.innerHTML = `
+            <strong>Step-by-Step Calculation (Q8):</strong><br>
+            1. <strong>Muscle Mass %</strong> = Water (${water}%) ÷ 73% = <strong>${muscle.toFixed(2)}%</strong><br>
+            2. <strong>Body Fat %</strong> = 100 - Muscle Mass (${muscle.toFixed(2)}%) = <strong>${fat.toFixed(2)}%</strong><br>
+            3. <strong>Remainder (Protein + Ash)</strong> = 100 - (Water ${water}% + Fat ${fat.toFixed(2)}%) = <strong>${remainder.toFixed(2)}%</strong><br>
+            4. <strong>Protein %</strong> = 80% of remainder = 80% × ${remainder.toFixed(2)}% = <strong>${protein.toFixed(2)}%</strong><br>
+            5. <strong>Ash %</strong> = 20% of remainder = 20% × ${remainder.toFixed(2)}% = <strong>${ash.toFixed(2)}%</strong>
+        `;
     }
 
     // 4. Crude Protein
@@ -1570,28 +1697,51 @@
 
     // 11. Starch Equivalent & Energy Systems
     function calcEnergySystems() {
-        let fatFeed = parseFloat(document.getElementById('se_feed_fat').value);
-        let fatStarch = parseFloat(document.getElementById('se_starch_fat').value) || 0.248;
-        let de = parseFloat(document.getElementById('es_de').value) || 0;
+        let de = parseFloat(document.getElementById('es_de').value);
         let ue = parseFloat(document.getElementById('es_ue').value) || 0;
         let gae = parseFloat(document.getElementById('es_gae').value) || 0;
-        let hi = parseFloat(document.getElementById('es_hi').value) || 0;
+        let hi = parseFloat(document.getElementById('es_hi').value);
+        let meDirect = parseFloat(document.getElementById('es_me_direct').value);
 
+        let fatFeed = parseFloat(document.getElementById('se_feed_fat').value);
+        let fatStarch = parseFloat(document.getElementById('se_starch_fat').value) || 0.248;
+
+        let resList = [];
         let steps = [];
-        let seText = "--";
 
-        if(!isNaN(fatFeed) && fatFeed > 0 && fatStarch > 0) {
-            let se = (fatFeed / fatStarch) * 100;
-            seText = `Starch Equivalent (SE) = <strong>${se.toFixed(2)} units</strong>`;
-            steps.push(`1. Starch Equivalent = (${fatFeed} ÷ ${fatStarch}) × 100 = <strong>${se.toFixed(2)}</strong>`);
+        // حساب ME
+        let me = 0;
+        if (!isNaN(meDirect) && meDirect > 0) {
+            me = meDirect;
+            resList.push(`ME = <strong>${me.toFixed(0)} Kcal/day</strong>`);
+            steps.push(`• Metabolizable Energy (ME) given directly = <strong>${me.toFixed(0)} Kcal/day</strong>`);
+        } else if (!isNaN(de) && de > 0) {
+            me = de - (ue + gae);
+            resList.push(`ME = <strong>${me.toFixed(0)} Kcal/day</strong>`);
+            steps.push(`• <strong>ME</strong> = DE (${de}) − [UE (${ue}) + Gases (${gae})] = <strong>${me.toFixed(0)} Kcal/day</strong>`);
         }
 
-        let me = de - (ue + gae);
-        let ne = me - hi;
-        steps.push(`2. Metabolizable Energy (ME) = DE (${de}) − [UE (${ue}) + Gas (${gae})] = <strong>${me.toFixed(2)} Kcal</strong>`);
-        steps.push(`3. Net Energy (NE) = ME (${me.toFixed(2)}) − Heat Increment (${hi}) = <strong>${ne.toFixed(2)} Kcal</strong>`);
+        // حساب NE
+        if (me > 0 && !isNaN(hi)) {
+            let ne = me - hi;
+            resList.push(`NE = <strong>${ne.toFixed(0)} Kcal/day</strong>`);
+            steps.push(`• <strong>NE</strong> = ME (${me.toFixed(0)}) − Heat Increment (${hi}) = <strong>${ne.toFixed(0)} Kcal/day</strong>`);
+        }
 
-        document.getElementById('res_energy_sys').innerHTML = `${seText} | ME = <strong>${me.toFixed(2)} Kcal</strong> | NE = <strong>${ne.toFixed(2)} Kcal</strong>`;
+        // حساب SE
+        if (!isNaN(fatFeed) && fatFeed > 0 && fatStarch > 0) {
+            let se = (fatFeed / fatStarch) * 100;
+            resList.push(`SE = <strong>${se.toFixed(2)} units</strong>`);
+            steps.push(`• <strong>SE</strong> = (${fatFeed} ÷ ${fatStarch}) × 100 = <strong>${se.toFixed(2)} units</strong>`);
+        }
+
+        if (resList.length === 0) {
+            document.getElementById('res_energy_sys').innerText = "Please enter values to calculate.";
+            document.getElementById('step_energy_sys').style.display = 'none';
+            return;
+        }
+
+        document.getElementById('res_energy_sys').innerHTML = resList.join(' &nbsp;|&nbsp; ');
         let step = document.getElementById('step_energy_sys');
         step.style.display = 'block';
         step.innerHTML = steps.join('<br>');
