@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutritional Lawyer - TgT Edition</title>
+    <title>Nutritional Lawyer - Complete Edition</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -1074,17 +1074,17 @@
         <hr class="section-divider">
 
         <div class="law-box-preview">
-            ME = DE − (UE + Combustible Gases)
-            &nbsp;|&nbsp;
-            NE = ME − HI
+            NE = 
+            <span class="dynamic-slot slot-energy"><span class="slot-tag">ME</span><span id="preview-ne-me">ME</span></span> − 
+            <span class="dynamic-slot slot-fat"><span class="slot-tag">HI</span><span id="preview-ne-hi">HI</span></span>
         </div>
 
         <div class="form-grid hide-on-export">
             <div style="font-weight: bold; color: var(--primary);">1. Energy Partition System (ME & NE):</div>
             <div class="form-group"><label>Digestible Energy (DE Kcal/day):</label><input type="number" id="es_de" class="input-energy" placeholder="e.g. 8700" oninput="calcEnergySystems()"></div>
-            <div class="form-group"><label>Urinary Energy (UE Kcal/day):</label><input type="number" id="es_ue" class="input-vol" placeholder="e.g. 800 (or g × Kcal/g)" oninput="calcEnergySystems()"></div>
-            <div class="form-group"><label>Combustible Gases Energy (Kcal/day):</label><input type="number" id="es_gae" class="input-vol" placeholder="e.g. 700" oninput="calcEnergySystems()"></div>
-            <div class="form-group"><label>Heat Increment (HI Kcal/day) [Optional for NE]:</label><input type="number" id="es_hi" class="input-fat" placeholder="e.g. 2800" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Urinary Energy (UE Kcal/day):</label><input type="number" id="es_ue" class="input-energy" placeholder="e.g. 800 (or g × Kcal/g)" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Combustible Gases Energy (Kcal/day):</label><input type="number" id="es_gae" class="input-energy" placeholder="e.g. 700" oninput="calcEnergySystems()"></div>
+            <div class="form-group"><label>Heat Increment (HI Kcal/day):</label><input type="number" id="es_hi" class="input-fat" placeholder="e.g. 2800" oninput="calcEnergySystems()"></div>
             <div class="form-group"><label>Direct Metabolizable Energy (ME Kcal/day) [Optional if DE not given]:</label><input type="number" id="es_me_direct" class="input-energy" placeholder="e.g. 8500" oninput="calcEnergySystems()"></div>
 
             <hr style="border: 0; border-top: 1px dashed var(--border-color); margin: 10px 0;">
@@ -1211,7 +1211,7 @@
 </div>
 
 <footer>
-    <p>Nutritional Lawyer &copy; 2026 | TgT Edition | Developed by Ayman Yousry 🛠️</p>
+    <p>Nutritional Lawyer &copy; 2026 | Complete Curriculum Edition | Developed by Ayman Yousry 🛠️</p>
 </footer>
 
 <script>
@@ -1892,6 +1892,10 @@
             resList.push(`ME = <strong>${me.toFixed(0)} Kcal/day</strong>`);
             steps.push(`• <strong>ME</strong> = DE (${de}) − [UE (${ue}) + Gases (${gae})] = <strong>${me.toFixed(0)} Kcal/day</strong>`);
         }
+
+        // تحديث قيم القانون التفاعلي لحظياً
+        document.getElementById('preview-ne-me').innerText = me > 0 ? me.toFixed(0) : (!isNaN(meDirect) ? meDirect : "ME");
+        document.getElementById('preview-ne-hi').innerText = !isNaN(hi) ? hi : "HI";
 
         // حساب NE
         if (me > 0 && !isNaN(hi)) {
