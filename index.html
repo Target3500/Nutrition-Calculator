@@ -895,8 +895,13 @@
             <div class="law-box-preview">
                 EE % = 
                 <div class="fraction">
-                    <div class="numerator">(Flask + Extracted Fat [Wa] - Empty Oven-dry Flask [Wc])</div>
-                    <div class="denominator">Sample Weight [Ws]</div>
+                    <div class="numerator">(
+                        <span class="dynamic-slot slot-fat"><span class="slot-tag">Wa</span><span id="preview-ee-wa">Wa</span></span> - 
+                        <span class="dynamic-slot slot-fat"><span class="slot-tag">Wc</span><span id="preview-ee-wc">Wc</span></span>)
+                    </div>
+                    <div class="denominator">
+                        <span class="dynamic-slot slot-wt"><span class="slot-tag">Ws</span><span id="preview-ee-ws">Ws</span></span>
+                    </div>
                 </div>
                 × 100
             </div>
@@ -1043,10 +1048,12 @@
             <div class="law-box-preview">
                 CS % = 
                 <div class="fraction">
-                    <div class="numerator">Limiting Amino Acid in Feed</div>
-                    <div class="denominator">Same Amino Acid in Egg Protein (Lysine 7.2)</div>
+                    <div class="numerator"><span class="dynamic-slot slot-pro"><span class="slot-tag">Feed AA</span><span id="preview-cs-feed">Feed AA</span></span></div>
+                    <div class="denominator"><span class="dynamic-slot slot-cho"><span class="slot-tag">Egg AA</span><span id="preview-cs-egg">7.2</span></span></div>
                 </div> × 100
-                &nbsp;|&nbsp; GPV = A / ⁰A
+                &nbsp;|&nbsp; GPV = 
+                <span class="dynamic-slot slot-dcp"><span class="slot-tag">A</span><span id="preview-gpv-a">A</span></span> / 
+                <span class="dynamic-slot slot-dcp"><span class="slot-tag">⁰A</span><span id="preview-gpv-casein">⁰A</span></span>
             </div>
             <div class="form-grid hide-on-export">
                 <div class="form-row">
@@ -1114,10 +1121,18 @@
             <span class="calc-tag">Ash % (20% of Remainder)</span>
         </div>
         <hr class="section-divider">
+        <div class="law-box-preview">
+            Muscle % = 
+            <div class="fraction">
+                <div class="numerator"><span class="dynamic-slot slot-energy"><span class="slot-tag">Water %</span><span id="preview-bc-water">Water</span></span></div>
+                <div class="denominator">0.73</div>
+            </div>
+            &nbsp;|&nbsp; Fat % = 100 − Muscle %
+        </div>
         <div class="form-grid hide-on-export">
             <div class="form-group">
                 <label>Total Body Water (%):</label>
-                <input type="number" step="0.01" id="bc_water" placeholder="e.g. 60" oninput="calcBodyComp()">
+                <input type="number" step="0.01" id="bc_water" class="input-energy" placeholder="e.g. 60" oninput="calcBodyComp()">
             </div>
         </div>
         <button class="action-btn hide-on-export" onclick="calcBodyComp()">Calculate Body Composition</button>
@@ -1142,29 +1157,236 @@
                 <tr><th>Law / Parameter</th><th>Exact Formula</th><th>Clinical & Academic Scope</th></tr>
             </thead>
             <tbody>
-                <tr><td><strong>DE (Digestible Energy)</strong></td><td>DE = Intake Energy (Kcal/day) − Fecal Energy (Kcal/day)</td><td>The gross caloric intake minus total energy excreted in faeces. Energy digestibility % = (DE / Intake Energy) × 100.</td></tr>
-                <tr><td><strong>DN (Digestible Nutrients)</strong></td><td>DN = Nutrient Consumed (Intake) − Nutrient Excreted (Faeces)</td><td>Total absolute quantity (g or kg) of nutrient absorbed by the animal.</td></tr>
-                <tr><td><strong>Apparent CD %</strong></td><td>[ (Nutrient in feed − Nutrient in faeces) ÷ Nutrient in feed ] × 100</td><td>Apparent digestion coefficient; treats all fecal excretion as unabsorbed feed residue.</td></tr>
-                <tr><td><strong>True Digestibility (TD %)</strong></td><td>[ (Nutrient in feed − (Faecal Nutrient − MFN)) ÷ Nutrient in feed ] × 100</td><td>Corrects for endogenous metabolic fecal loss (MFN: ~0.5g / 100g meal intake).</td></tr>
-                <tr><td><strong>Indicator Method</strong></td><td>[ (g ind/Kg DM faeces − g ind/Kg DM food) ÷ g ind/Kg DM faeces ]</td><td>Used in digestion trials without complete collection using indigestible markers (e.g. Chromic oxide Cr2O3).</td></tr>
-                <tr><td><strong>Feed Efficiency</strong></td><td>Total Weight Gain ÷ Total Feed Consumed</td><td>Ratio of live weight gain per unit of feed intake. Inverse of FCR (Feed Conversion Ratio).</td></tr>
-                <tr><td><strong>TDN % (Total Digestible Nutrients)</strong></td><td>TDN % = DCP + DNFE + DCF + (DEE × 2.25)</td><td>Fat (DEE) is multiplied by 2.25 because it yields 2.25× more caloric energy than carbs and protein.</td></tr>
-                <tr><td><strong>CP % (Crude Protein)</strong></td><td>CP % = N % × 6.25 (Kjeldahl: Vol Acid × 0.0014 / Ws × 100)</td><td>Assumes average protein contains 16% Nitrogen (100 / 16 = 6.25).</td></tr>
-                <tr><td><strong>NR (Nutritive Ratio)</strong></td><td>NR = 1 : [ (TDN − DCP) ÷ DCP ]</td><td>Narrow (<1:6) for lactation/growth, Medium (1:7), Wide (>1:8) for maintenance.</td></tr>
-                <tr><td><strong>DM % & Moisture</strong></td><td>DM % = [ (W0 − Wd) ÷ Ws ] × 100 | Moisture = 100 − DM %</td><td>Oven-dry residue at 100–105°C for feed stability and dry matter basis conversion.</td></tr>
-                <tr><td><strong>Ash & OM %</strong></td><td>Ash % = [ (Wa − Wc) ÷ Ws ] × 100 | OM % = 100 − Ash %</td><td>Inorganic mineral residue after muffle furnace incineration at 550°C.</td></tr>
-                <tr><td><strong>CF % (Crude Fiber)</strong></td><td>CF % = [ (Dry Residue − Ash) ÷ Ws ] × 100</td><td>Insoluble structural cellulose and lignin after weak acid and weak alkali boiling.</td></tr>
-                <tr><td><strong>EE % (Ether Extract)</strong></td><td>EE % = [ (Wa − Wc) ÷ Ws ] × 100</td><td>Crude lipids extracted using Soxhlet petroleum/diethyl ether extraction.</td></tr>
-                <tr><td><strong>NFE % (Nitrogen Free Extract)</strong></td><td>100 − (Moisture + CP + CF + EE + Ash)</td><td>Readily digestible soluble non-structural carbohydrates (starches, simple sugars).</td></tr>
-                <tr><td><strong>PE (Protein Equivalent)</strong></td><td>PE = DTP + (DNPN / 2) = (DCP + DTP) / 2</td><td>Ruminant nitrogen value combining intact digestible true protein and non-protein nitrogen.</td></tr>
-                <tr><td><strong>PER (Protein Efficiency Ratio)</strong></td><td>Weight Gain (g) ÷ Protein Intake (g)</td><td>Standard bioassay measuring growth response per gram of test protein consumed.</td></tr>
-                <tr><td><strong>Apparent BV</strong></td><td>[ N intake − (Faecal N + Urinary N) ] ÷ [ N intake − Faecal N ] × 100</td><td>Percentage of absorbed dietary nitrogen retained in the animal body.</td></tr>
-                <tr><td><strong>True BV</strong></td><td>[ N intake − (FN − MFN) − (UN − EUN) ] ÷ [ N intake − (FN − MFN) ] × 100</td><td>Biological value corrected for metabolic fecal nitrogen (MFN) and endogenous urinary nitrogen (EUN).</td></tr>
-                <tr><td><strong>Chemical Score (CS)</strong></td><td>(Limiting AA in Feed ÷ Same AA in Whole Egg) × 100</td><td>Chemical evaluation of protein quality compared to ideal reference egg protein.</td></tr>
-                <tr><td><strong>GPV (Gross Protein Value)</strong></td><td>Weight gain per g test protein (A) ÷ Weight gain per g Casein (⁰A)</td><td>Relative biological assay referencing casein as the gold standard (1.0).</td></tr>
-                <tr><td><strong>Starch Equivalent (SE)</strong></td><td>(Fat stored per unit food ÷ Fat stored per unit starch [0.248]) × 100</td><td>Kellner's energy evaluation system expressing feeding value relative to 100kg starch.</td></tr>
-                <tr><td><strong>ME & NE</strong></td><td>ME = DE − (UE + Gas) | Net Energy (NE) = ME − HI</td><td>Energy available after urinary and combustible methane gas, minus heat increment.</td></tr>
-                <tr><td><strong>SARA (Subacute Ruminal Acidosis)</strong></td><td>Clinical Pathology</td><td>A metabolic disorder occurring when ruminal pH drops below 5.6 for prolonged periods, typically caused by excess rapidly fermentable grains and insufficient effective fiber (eNDF).</td></tr>
+                <tr>
+                    <td><strong>DE (Digestible Energy)</strong></td>
+                    <td>DE = Intake Energy (Kcal/day) − Fecal Energy (Kcal/day)</td>
+                    <td>
+                        The gross caloric intake minus total energy excreted in faeces. Energy digestibility % = (DE / Intake Energy) × 100.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             الطاقة اللي الحيوان بلعها في الأكل ونشيل منها اللي نزل في الروث.. يعني شوية الطاقة اللي جسمه عرف يهضمهم ويستفيد بيهم فعلياً.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>DN (Digestible Nutrients)</strong></td>
+                    <td>DN = Nutrient Consumed (Intake) − Nutrient Excreted (Faeces)</td>
+                    <td>
+                        Total absolute quantity (g or kg) of nutrient absorbed by the animal.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             الوزن الصافي بالجرام أو الكيلو من أي مادة غذائية دخلت كرش الحيوان ومخرجتش في البراز، يعني دخلت جوه دمه.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Apparent CD %</strong></td>
+                    <td>[ (Nutrient in feed − Nutrient in faeces) ÷ Nutrient in feed ] × 100</td>
+                    <td>
+                        Apparent digestion coefficient; treats all fecal excretion as unabsorbed feed residue.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             معامل الهضم الظاهري.. بنفترض إن كل اللي خرج في الروث ده أكل متهضمش وخلاص (من غير ما نحسب إفرازات الجسم نفسه).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>True Digestibility (TD %)</strong></td>
+                    <td>[ (Nutrient in feed − (Faecal Nutrient − MFN)) ÷ Nutrient in feed ] × 100</td>
+                    <td>
+                        Corrects for endogenous metabolic fecal loss (MFN: ~0.5g / 100g meal intake).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             معامل الهضم الحقيقي.. هنا بنشيل من الروث الخلايا والإنزيمات الميتة بتاعة جسم الحيوان نفسه (MFN) عشان نعرف العلف اتهضم منه كام بالظبط بدون ظلم.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Indicator Method</strong></td>
+                    <td>[ (g ind/Kg DM faeces − g ind/Kg DM food) ÷ g ind/Kg DM faeces ]</td>
+                    <td>
+                        Used in digestion trials without complete collection using indigestible markers (e.g. Chromic oxide Cr2O3).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             طريقة الماركر.. بدل ما نجمع روث الحيوان كله لأيام، بنحط مادة مبتتهضمش (زي أكسيد الكروم) ونشوف زاد تركيزها قد إيه في الروث ونحسب الهضم في ثواني.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Feed Efficiency</strong></td>
+                    <td>Total Weight Gain ÷ Total Feed Consumed</td>
+                    <td>
+                        Ratio of live weight gain per unit of feed intake. Inverse of FCR (Feed Conversion Ratio).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             كفاءة التحويل.. الحيوان زاد كام كيلو لحم قصاد كل كيلو علف أكله (وعكسها الـ FCR اللي بيقول أكل كام كيلو عشان يزيد كيلو واحد).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>TDN % (Total Digestible Nutrients)</strong></td>
+                    <td>TDN % = DCP + DNFE + DCF + (DEE × 2.25)</td>
+                    <td>
+                        Fat (DEE) is multiplied by 2.25 because it yields 2.25× more caloric energy than carbs and protein.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             مجموع العناصر الغذائية المهضومة.. بنجمع البروتين والنشويات والألياف، وبنضرب الدهون المهضومة في 2.25 عشان طاقتها وقيمتها أعلى بكتير من النشويات.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>CP % (Crude Protein)</strong></td>
+                    <td>CP % = N % × 6.25 (Kjeldahl: Vol Acid × 0.0014 / Ws × 100)</td>
+                    <td>
+                        Assumes average protein contains 16% Nitrogen (100 / 16 = 6.25).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             البروتين الخام بطريقة كلداهل.. بنقيس نسبة النيتروجين الكلي في العينة ونضربه في 6.25 على أساس إن أغلب البروتينات فيها حوالي 16% نيتروجين.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NR (Nutritive Ratio)</strong></td>
+                    <td>NR = 1 : [ (TDN − DCP) ÷ DCP ]</td>
+                    <td>
+                        Narrow (<1:6) for lactation/growth, Medium (1:7), Wide (>1:8) for maintenance.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             النسبة الغذائية.. مقارنة بين كمية الطاقة والبروتين في العليقة؛ لو ضيقة (<1:6) تناسب نمو وعشار وحليب، ولو واسعة (>1:8) تناسب حيوان يا دوب عايش وواقف في مكانه (Maintenance).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>DM % & Moisture</strong></td>
+                    <td>DM % = [ (W0 − Wd) ÷ Ws ] × 100 | Moisture = 100 − DM %</td>
+                    <td>
+                        Oven-dry residue at 100–105°C for feed stability and dry matter basis conversion.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             المادة الجافة والرطوبة.. بنحط العلف في الفرن نطير كل المية، اللي اتبقى ونشف ده المادة الجافة (DM)، والمية اللي طارت هي الرطوبة (Moisture).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Ash & OM %</strong></td>
+                    <td>Ash % = [ (Wa − Wc) ÷ Ws ] × 100 | OM % = 100 − Ash %</td>
+                    <td>
+                        Inorganic mineral residue after muffle furnace incineration at 550°C.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             الرماد والمادة العضوية.. بنحرق العينة في فرن الحرق عند 550 درجة؛ اللي بيتحرق ده المادة العضوية (OM)، وشوية التراب المعدني اللي مبيتحرقوش هما الرماد (Ash).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>CF % (Crude Fiber)</strong></td>
+                    <td>CF % = [ (Dry Residue − Ash) ÷ Ws ] × 100</td>
+                    <td>
+                        Insoluble structural cellulose and lignin after weak acid and weak alkali boiling.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             الألياف الخام.. بنغلي العينة في حمض ضعيف وبعدين قلوي ضعيف، اللي مبيتدوبش ويفضل صلب زي السليلوز والخشب هو الألياف الصعبة دي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>EE % (Ether Extract)</strong></td>
+                    <td>EE % = [ (Wa − Wc) ÷ Ws ] × 100</td>
+                    <td>
+                        Crude lipids extracted using Soxhlet petroleum/diethyl ether extraction.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             مستخلص الإيثر (الدهن الخام).. بندوب العينة بمذيب عضوي في جهاز السوكسليت عشان نسحب كل الدهون والزيوت اللي فيها ونوزنها.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NFE % (Nitrogen Free Extract)</strong></td>
+                    <td>100 − (Moisture + CP + CF + EE + Ash)</td>
+                    <td>
+                        Readily digestible soluble non-structural carbohydrates (starches, simple sugars).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             الكربوهيدرات الذائبة السهلة.. بنطرح كل التحاليل اللي فاتت من 100%، الباقي بيكون السكريات والنشا السهلة اللي بتدي طاقة سريعة للحيوان.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>PE (Protein Equivalent)</strong></td>
+                    <td>PE = DTP + (DNPN / 2) = (DCP + DTP) / 2</td>
+                    <td>
+                        Ruminant nitrogen value combining intact digestible true protein and non-protein nitrogen.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             مكافئ البروتين في المجترات.. بيجمع بين البروتين الحقيقي المهضوم، والنيتروجين غير البروتيني (زي اليوريا) اللي بكتيريا الكرش بتعرف تحوله لبروتين بس بنحسبه بنص كفاءة.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>PER (Protein Efficiency Ratio)</strong></td>
+                    <td>Weight Gain (g) ÷ Protein Intake (g)</td>
+                    <td>
+                        Standard bioassay measuring growth response per gram of test protein consumed.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             كفاءة البروتين.. بنشوف الحيوان زاد كام جرام وزن قصاد كل جرام بروتين أكله، عشان نعرف جودة ونقاء البروتين ده.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Apparent BV</strong></td>
+                    <td>[ N intake − (Faecal N + Urinary N) ] ÷ [ N intake − Faecal N ] × 100</td>
+                    <td>
+                        Percentage of absorbed dietary nitrogen retained in the animal body.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             القيمة الحيوية الظاهرية.. نسبة النيتروجين اللي جسم الحيوان احتفظ بيه وبنى بيه عضلات من إجمالي اللي امتصه، ومخرجش لا في بول ولا روث.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>True BV</strong></td>
+                    <td>[ N intake − (FN − MFN) − (UN − EUN) ] ÷ [ N intake − (FN − MFN) ] × 100</td>
+                    <td>
+                        Biological value corrected for metabolic fecal nitrogen (MFN) and endogenous urinary nitrogen (EUN).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             القيمة الحيوية الحقيقية.. نفس الفكرة بس بنخصم النيتروجين الداخلي اللي ناتج عن تكسير خلايا الجسم نفسه (MFN و EUN) عشان نحكم على جودة العلف بدقة متناهية.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Chemical Score (CS)</strong></td>
+                    <td>(Limiting AA in Feed ÷ Same AA in Whole Egg) × 100</td>
+                    <td>
+                        Chemical evaluation of protein quality compared to ideal reference egg protein.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             السكور الكيميائي.. بنقارن أقل حمض أميني أساسي موجود في العلف بنفس الحمض في بروتين البيض الكامل (اللي هو المعيار المثالي 100%).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>GPV (Gross Protein Value)</strong></td>
+                    <td>Weight gain per g test protein (A) ÷ Weight gain per g Casein (⁰A)</td>
+                    <td>
+                        Relative biological assay referencing casein as the gold standard (1.0).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             القيمة الكلية للبروتين.. تجربة حيوية بنقارن فيها الزيادة في وزن الحيوان بالبروتين بتاعنا مقارنة بالزيادة اللي بيحققها بروتين الكازين (بروتين اللبن القياسي).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Starch Equivalent (SE)</strong></td>
+                    <td>(Fat stored per unit food ÷ Fat stored per unit starch [0.248]) × 100</td>
+                    <td>
+                        Kellner's energy evaluation system expressing feeding value relative to 100kg starch.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             مكافئ النشا (نظام كيلنر).. العلف ده بيبني دهن في جسم الحيوان قد إيه مقارنة بـ 100 كجم من النشا النقي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>ME & NE</strong></td>
+                    <td>ME = DE − (UE + Gas) | Net Energy (NE) = ME − HI</td>
+                    <td>
+                        Energy available after urinary and combustible methane gas, minus heat increment.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             الطاقة الممثلة والصافية.. الـ ME هي الطاقة بعد خصم البول وغازات الكرش، ونطرح منها الحرارة اللي بتضيع أثناء الهضم (HI) يتبقالنا الطاقة الصافية (NE) اللي بتبني لبن ولحم فعلي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>SARA (Subacute Ruminal Acidosis)</strong></td>
+                    <td>Clinical Pathology</td>
+                    <td>
+                        A metabolic disorder occurring when ruminal pH drops below 5.6 for prolonged periods, typically caused by excess rapidly fermentable grains and insufficient effective fiber (eNDF).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                             حموضة الكرش تحت الحادة.. مشكلة بتحصل لما حموضة الكرش (pH) تنزل تحت 5.6 لفترة طويلة بسبب كثرة الحبوب والنشا السريعة وقلة الدريس والألياف الخشنة اللي بتشجع الحيوان يجتر.
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -1379,6 +1601,19 @@
         let fecesKg = parseFloat(document.getElementById('de_feces_kg').value);
         let fecesKcal = parseFloat(document.getElementById('de_feces_kcal').value);
 
+        // تحديث خانة الدخول والخروج فور توفر طرفيها دون انتظار باقي المدخلات
+        if (!isNaN(feedKg) && !isNaN(feedKcal)) {
+            document.getElementById('preview-de-in').innerText = (feedKg * 1000 * feedKcal).toFixed(0);
+        } else {
+            document.getElementById('preview-de-in').innerText = "--";
+        }
+
+        if (!isNaN(fecesKg) && !isNaN(fecesKcal)) {
+            document.getElementById('preview-de-out').innerText = (fecesKg * 1000 * fecesKcal).toFixed(0);
+        } else {
+            document.getElementById('preview-de-out').innerText = "--";
+        }
+
         if (isNaN(feedKg) || isNaN(feedKcal) || isNaN(fecesKg) || isNaN(fecesKcal)) {
             document.getElementById('res_de_slide').innerHTML = "Please fill in all 4 inputs.";
             document.getElementById('step_de_slide').style.display = 'none';
@@ -1388,9 +1623,6 @@
         let energyIn = feedKg * 1000 * feedKcal;
         let energyOut = fecesKg * 1000 * fecesKcal;
         let deAmount = energyIn - energyOut;
-
-        document.getElementById('preview-de-in').innerText = energyIn.toFixed(0);
-        document.getElementById('preview-de-out').innerText = energyOut.toFixed(0);
 
         if (energyIn <= 0) {
             document.getElementById('res_de_slide').innerHTML = "Feed energy intake must be greater than zero.";
@@ -1427,8 +1659,16 @@
         const isTrueDig = document.getElementById('c_toggle_true').checked;
 
         if (currentCDMode === 'direct') {
-            intake = parseFloat(document.getElementById('c_intake').value);
-            feces = parseFloat(document.getElementById('c_faeces').value);
+            let inVal = document.getElementById('c_intake').value;
+            let faeVal = document.getElementById('c_faeces').value;
+
+            // تحديث لحظي للقيم في القانون بمجرد البدء بالكتابة
+            document.getElementById('preview-intake').innerText = inVal !== "" ? inVal : "Intake";
+            document.getElementById('preview-intake2').innerText = inVal !== "" ? inVal : "Intake";
+            document.getElementById('preview-faeces').innerText = faeVal !== "" ? faeVal : "Faeces";
+
+            intake = parseFloat(inVal);
+            feces = parseFloat(faeVal);
             mealWeight = parseFloat(document.getElementById('c_mfn_feed_base').value) || intake;
             
             if (isNaN(intake) || isNaN(feces)) {
@@ -1442,6 +1682,22 @@
             let feedPct = parseFloat(document.getElementById('c_feed_pct').value);
             let totalFeces = parseFloat(document.getElementById('c_total_feces').value);
             let fecesPct = parseFloat(document.getElementById('c_feces_pct').value);
+
+            if (!isNaN(totalMeal) && !isNaN(feedPct)) {
+                let calcIn = totalMeal * (feedPct / 100);
+                document.getElementById('preview-intake').innerText = calcIn.toFixed(1);
+                document.getElementById('preview-intake2').innerText = calcIn.toFixed(1);
+            } else {
+                document.getElementById('preview-intake').innerText = "Intake";
+                document.getElementById('preview-intake2').innerText = "Intake";
+            }
+
+            if (!isNaN(totalFeces) && !isNaN(fecesPct)) {
+                let calcFae = totalFeces * (fecesPct / 100);
+                document.getElementById('preview-faeces').innerText = calcFae.toFixed(1);
+            } else {
+                document.getElementById('preview-faeces').innerText = "Faeces";
+            }
 
             if (isNaN(totalMeal) || isNaN(feedPct) || isNaN(totalFeces) || isNaN(fecesPct)) {
                 document.getElementById('res_c').innerText = "Please fill in all meal & feces percentage inputs.";
@@ -1458,14 +1714,21 @@
             stepsInfo.push(`• Nutrient in Feces = ${totalFeces}g × ${fecesPct}% = <strong>${feces.toFixed(2)}g</strong>`);
         }
 
-        document.getElementById('preview-intake').innerText = intake.toFixed(1);
-        document.getElementById('preview-faeces').innerText = feces.toFixed(1);
-        document.getElementById('preview-intake2').innerText = intake.toFixed(1);
-
         if (intake <= 0) {
             document.getElementById('res_c').innerText = "Please specify a positive Nutrient Intake amount.";
             document.getElementById('step_c').style.display = 'none';
             return;
+        }
+
+        // تحديث قيمة MFN فورياً في القانون إذا كان خيار الـ True مفعلاً
+        if (document.getElementById('c_toggle_true').checked) {
+            let userBase = parseFloat(document.getElementById('c_mfn_feed_base').value);
+            let effectiveFeedBase = (!isNaN(userBase) && userBase > 0) ? userBase : (mealWeight > 0 ? mealWeight : (intake > 0 ? intake : 0));
+            let mfnRate = parseFloat(document.getElementById('c_mfn_rate').value);
+            if (isNaN(mfnRate)) mfnRate = 0.5;
+
+            let mfnLive = (effectiveFeedBase * mfnRate) / 100;
+            document.getElementById('preview-mfn').innerText = effectiveFeedBase > 0 ? mfnLive.toFixed(2) : "MFN";
         }
 
         if (isTrueDig) {
@@ -1537,28 +1800,36 @@
     // 3. TDN %
     function calcTDN() {
         // التحقق أولاً إذا كان المستخدم يُدخل بيانات الطريقة الثانية (مسألة 5)
-        let r_cp = parseFloat(document.getElementById('raw_cp')?.value);
-        let r_cp_dc = parseFloat(document.getElementById('raw_cp_dc')?.value);
+        let r_cp_val = document.getElementById('raw_cp')?.value;
+        let r_cp_dc_val = document.getElementById('raw_cp_dc')?.value;
+        let r_cf_val = document.getElementById('raw_cf')?.value;
+        let r_cf_dc_val = document.getElementById('raw_cf_dc')?.value;
+        let r_nfe_val = document.getElementById('raw_nfe')?.value;
+        let r_nfe_dc_val = document.getElementById('raw_nfe_dc')?.value;
+        let r_ee_val = document.getElementById('raw_ee')?.value;
+        let r_ee_dc_val = document.getElementById('raw_ee_dc')?.value;
 
-        if (!isNaN(r_cp) && !isNaN(r_cp_dc)) {
-            let r_cf = parseFloat(document.getElementById('raw_cf')?.value) || 0;
-            let r_cf_dc = parseFloat(document.getElementById('raw_cf_dc')?.value) || 0;
-            let r_nfe = parseFloat(document.getElementById('raw_nfe')?.value) || 0;
-            let r_nfe_dc = parseFloat(document.getElementById('raw_nfe_dc')?.value) || 0;
-            let r_ee = parseFloat(document.getElementById('raw_ee')?.value) || 0;
-            let r_ee_dc = parseFloat(document.getElementById('raw_ee_dc')?.value) || 0;
+        if (r_cp_val || r_cp_dc_val || r_cf_val || r_cf_dc_val || r_nfe_val || r_nfe_dc_val || r_ee_val || r_ee_dc_val) {
+            let r_cp = parseFloat(r_cp_val) || 0;
+            let r_cp_dc = parseFloat(r_cp_dc_val) || 0;
+            let r_cf = parseFloat(r_cf_val) || 0;
+            let r_cf_dc = parseFloat(r_cf_dc_val) || 0;
+            let r_nfe = parseFloat(r_nfe_val) || 0;
+            let r_nfe_dc = parseFloat(r_nfe_dc_val) || 0;
+            let r_ee = parseFloat(r_ee_val) || 0;
+            let r_ee_dc = parseFloat(r_ee_dc_val) || 0;
 
-            let dcp = r_cp * (r_cp_dc / 100);
-            let dcf = r_cf * (r_cf_dc / 100);
-            let dnfe = r_nfe * (r_nfe_dc / 100);
-            let dee = r_ee * (r_ee_dc / 100);
+            let dcp = (r_cp > 0 && r_cp_dc > 0) ? r_cp * (r_cp_dc / 100) : 0;
+            let dcf = (r_cf > 0 && r_cf_dc > 0) ? r_cf * (r_cf_dc / 100) : 0;
+            let dnfe = (r_nfe > 0 && r_nfe_dc > 0) ? r_nfe * (r_nfe_dc / 100) : 0;
+            let dee = (r_ee > 0 && r_ee_dc > 0) ? r_ee * (r_ee_dc / 100) : 0;
+
+            document.getElementById('preview-dcp').innerText = dcp > 0 ? dcp.toFixed(1) : "DCP";
+            document.getElementById('preview-dnfe').innerText = dnfe > 0 ? dnfe.toFixed(1) : "DNFE";
+            document.getElementById('preview-dcf').innerText = dcf > 0 ? dcf.toFixed(1) : "DCF";
+            document.getElementById('preview-dee').innerText = dee > 0 ? dee.toFixed(1) : "DEE";
 
             let tdn = dcp + dcf + dnfe + (dee * 2.25);
-
-            document.getElementById('preview-dcp').innerText = dcp.toFixed(1);
-            document.getElementById('preview-dnfe').innerText = dnfe.toFixed(1);
-            document.getElementById('preview-dcf').innerText = dcf.toFixed(1);
-            document.getElementById('preview-dee').innerText = dee.toFixed(1);
 
             document.getElementById('res_t').innerHTML = `TDN = <strong>${tdn.toFixed(2)} g</strong>`;
             let step = document.getElementById('step_t');
@@ -1575,21 +1846,27 @@
         }
 
         // الطريقة الأولى (القيم جاهزة - مسألة 4)
-        let dcp = parseFloat(document.getElementById('t_dcp').value);
-        let dnfe = parseFloat(document.getElementById('t_dnfe').value);
-        let dcf = parseFloat(document.getElementById('t_dcf').value);
-        let dee = parseFloat(document.getElementById('t_dee').value);
+        let dcpVal = document.getElementById('t_dcp').value;
+        let dnfeVal = document.getElementById('t_dnfe').value;
+        let dcfVal = document.getElementById('t_dcf').value;
+        let deeVal = document.getElementById('t_dee').value;
+
+        // تحديث القانون فورياً لأي خانة تُكتب
+        document.getElementById('preview-dcp').innerText = dcpVal !== "" ? dcpVal : "DCP";
+        document.getElementById('preview-dnfe').innerText = dnfeVal !== "" ? dnfeVal : "DNFE";
+        document.getElementById('preview-dcf').innerText = dcfVal !== "" ? dcfVal : "DCF";
+        document.getElementById('preview-dee').innerText = deeVal !== "" ? deeVal : "DEE";
+
+        let dcp = parseFloat(dcpVal);
+        let dnfe = parseFloat(dnfeVal);
+        let dcf = parseFloat(dcfVal);
+        let dee = parseFloat(deeVal);
 
         if(isNaN(dcp) || isNaN(dnfe) || isNaN(dcf) || isNaN(dee)) {
             document.getElementById('res_t').innerText = "Please fill in the nutrient fields.";
             document.getElementById('step_t').style.display = 'none';
             return;
         }
-
-        document.getElementById('preview-dcp').innerText = dcp;
-        document.getElementById('preview-dnfe').innerText = dnfe;
-        document.getElementById('preview-dcf').innerText = dcf;
-        document.getElementById('preview-dee').innerText = dee;
 
         let tdn = dcp + dnfe + dcf + (dee * 2.25);
         document.getElementById('res_t').innerHTML = `Total Digestible Nutrients (TDN) = <strong>${tdn.toFixed(2)}</strong>`;
@@ -1600,7 +1877,10 @@
 
     // دالة مسألة 8: حساب ديناميكية كتلة الجسم
     function calcBodyComp() {
-        let water = parseFloat(document.getElementById('bc_water').value);
+        let waterVal = document.getElementById('bc_water').value;
+        document.getElementById('preview-bc-water').innerText = waterVal !== "" ? waterVal : "Water";
+
+        let water = parseFloat(waterVal);
         if (isNaN(water) || water <= 0) {
             document.getElementById('res_body').innerText = "Please enter a valid body water percentage.";
             document.getElementById('step_body').style.display = 'none';
@@ -1631,17 +1911,21 @@
 
     // 4. Crude Protein
     function calcCP() {
-        let v = parseFloat(document.getElementById('p_vol').value);
-        let w = parseFloat(document.getElementById('p_wt').value);
+        let vVal = document.getElementById('p_vol').value;
+        let wVal = document.getElementById('p_wt').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-vol').innerText = vVal !== "" ? vVal : "Vol";
+        document.getElementById('preview-wt').innerText = wVal !== "" ? wVal : "Wt";
+
+        let v = parseFloat(vVal);
+        let w = parseFloat(wVal);
 
         if(isNaN(v) || isNaN(w) || w <= 0) {
             document.getElementById('res_p').innerText = "Please enter acid volume and sample weight.";
             document.getElementById('step_p').style.display = 'none';
             return;
         }
-
-        document.getElementById('preview-vol').innerText = v;
-        document.getElementById('preview-wt').innerText = w;
 
         let np = (v * 0.0014 / w) * 100;
         let cp = np * 6.25;
@@ -1653,18 +1937,22 @@
 
     // 5. Nutritive Ratio
     function calcNR() {
-        let tdn = parseFloat(document.getElementById('n_tdn').value);
-        let dcp = parseFloat(document.getElementById('n_dcp').value);
+        let tdnVal = document.getElementById('n_tdn').value;
+        let dcpVal = document.getElementById('n_dcp').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-nr-tdn').innerText = tdnVal !== "" ? tdnVal : "TDN";
+        document.getElementById('preview-nr-dcp').innerText = dcpVal !== "" ? dcpVal : "DCP";
+        document.getElementById('preview-nr-dcp2').innerText = dcpVal !== "" ? dcpVal : "DCP";
+
+        let tdn = parseFloat(tdnVal);
+        let dcp = parseFloat(dcpVal);
 
         if(isNaN(tdn) || isNaN(dcp) || dcp <= 0) {
             document.getElementById('res_n').innerText = "Please enter valid TDN and DCP values (DCP > 0).";
             document.getElementById('step_n').style.display = 'none';
             return;
         }
-
-        document.getElementById('preview-nr-tdn').innerText = tdn;
-        document.getElementById('preview-nr-dcp').innerText = dcp;
-        document.getElementById('preview-nr-dcp2').innerText = dcp;
 
         let r = (tdn - dcp) / dcp;
         let cls = r <= 6 ? "Narrow (Growth / Lactation)" : (r <= 7 ? "Medium" : "Wide (Maintenance)");
@@ -1676,18 +1964,23 @@
 
     // 6. Dry Matter
     function calcDM() {
-        let w0 = parseFloat(document.getElementById('dm_w0').value);
-        let wd = parseFloat(document.getElementById('dm_wd').value);
-        let ws = parseFloat(document.getElementById('dm_ws').value);
+        let w0Val = document.getElementById('dm_w0').value;
+        let wdVal = document.getElementById('dm_wd').value;
+        let wsVal = document.getElementById('dm_ws').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-dm-w0').innerText = w0Val !== "" ? w0Val : "W0";
+        document.getElementById('preview-dm-wd').innerText = wdVal !== "" ? wdVal : "Wd";
+        document.getElementById('preview-dm-ws').innerText = wsVal !== "" ? wsVal : "Ws";
+
+        let w0 = parseFloat(w0Val);
+        let wd = parseFloat(wdVal);
+        let ws = parseFloat(wsVal);
 
         if(isNaN(w0) || isNaN(wd) || isNaN(ws) || ws <= 0) {
             document.getElementById('res_dm').innerText = "Please enter W0, Wd, and Ws.";
             return;
         }
-
-        document.getElementById('preview-dm-w0').innerText = w0;
-        document.getElementById('preview-dm-wd').innerText = wd;
-        document.getElementById('preview-dm-ws').innerText = ws;
 
         let dm = ((w0 - wd) / ws) * 100;
         let m = 100 - dm;
@@ -1696,18 +1989,23 @@
 
     // 7. Ash & OM
     function calcAsh() {
-        let wa = parseFloat(document.getElementById('ash_wa').value);
-        let wc = parseFloat(document.getElementById('ash_wc').value);
-        let ws = parseFloat(document.getElementById('ash_ws').value);
+        let waVal = document.getElementById('ash_wa').value;
+        let wcVal = document.getElementById('ash_wc').value;
+        let wsVal = document.getElementById('ash_ws').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-ash-wa').innerText = waVal !== "" ? waVal : "Wa";
+        document.getElementById('preview-ash-wc').innerText = wcVal !== "" ? wcVal : "Wc";
+        document.getElementById('preview-ash-ws').innerText = wsVal !== "" ? wsVal : "Ws";
+
+        let wa = parseFloat(waVal);
+        let wc = parseFloat(wcVal);
+        let ws = parseFloat(wsVal);
 
         if(isNaN(wa) || isNaN(wc) || isNaN(ws) || ws <= 0) {
             document.getElementById('res_ash').innerText = "Please enter Wa, Wc, and Ws.";
             return;
         }
-
-        document.getElementById('preview-ash-wa').innerText = wa;
-        document.getElementById('preview-ash-wc').innerText = wc;
-        document.getElementById('preview-ash-ws').innerText = ws;
 
         let ash = ((wa - wc) / ws) * 100;
         let om = 100 - ash;
@@ -1716,27 +2014,41 @@
 
     // 8. Crude Fiber & Ether Extract (EE)
     function calcCF() {
-        let d = parseFloat(document.getElementById('cf_d').value);
-        let a = parseFloat(document.getElementById('cf_a').value);
-        let ws = parseFloat(document.getElementById('cf_ws').value);
+        let dVal = document.getElementById('cf_d').value;
+        let aVal = document.getElementById('cf_a').value;
+        let wsVal = document.getElementById('cf_ws').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-cf-d').innerText = dVal !== "" ? dVal : "Residue";
+        document.getElementById('preview-cf-a').innerText = aVal !== "" ? aVal : "Ash";
+        document.getElementById('preview-cf-ws').innerText = wsVal !== "" ? wsVal : "Wt";
+
+        let d = parseFloat(dVal);
+        let a = parseFloat(aVal);
+        let ws = parseFloat(wsVal);
 
         if(isNaN(d) || isNaN(a) || isNaN(ws) || ws <= 0) {
             document.getElementById('res_cf').innerText = "Please enter residue, ash, and sample weight.";
             return;
         }
 
-        document.getElementById('preview-cf-d').innerText = d;
-        document.getElementById('preview-cf-a').innerText = a;
-        document.getElementById('preview-cf-ws').innerText = ws;
-
         let cf = ((d - a) / ws) * 100;
         document.getElementById('res_cf').innerHTML = `Crude Fiber (CF %) = <strong>${cf.toFixed(2)}%</strong>`;
     }
 
     function calcEE() {
-        let wa = parseFloat(document.getElementById('ee_wa').value);
-        let wc = parseFloat(document.getElementById('ee_wc').value);
-        let ws = parseFloat(document.getElementById('ee_ws').value);
+        let waVal = document.getElementById('ee_wa').value;
+        let wcVal = document.getElementById('ee_wc').value;
+        let wsVal = document.getElementById('ee_ws').value;
+
+        // تحديث لحظي فوري لمربعات EE
+        document.getElementById('preview-ee-wa').innerText = waVal !== "" ? waVal : "Wa";
+        document.getElementById('preview-ee-wc').innerText = wcVal !== "" ? wcVal : "Wc";
+        document.getElementById('preview-ee-ws').innerText = wsVal !== "" ? wsVal : "Ws";
+
+        let wa = parseFloat(waVal);
+        let wc = parseFloat(wcVal);
+        let ws = parseFloat(wsVal);
 
         if(isNaN(wa) || isNaN(wc) || isNaN(ws) || ws <= 0) {
             document.getElementById('res_ee').innerText = "Please enter Wa, Wc, and Ws.";
@@ -1751,24 +2063,30 @@
         step.innerHTML = `<strong>Steps:</strong><br>EE % = [(${wa} - ${wc}) ÷ ${ws}] × 100 = <strong>${ee.toFixed(2)}%</strong>`;
     }
 
-    // 9. NFE
     function calcNFE() {
-        let w = parseFloat(document.getElementById('nfe_w').value);
-        let cp = parseFloat(document.getElementById('nfe_pro').value);
-        let cf = parseFloat(document.getElementById('nfe_dcf').value);
-        let ee = parseFloat(document.getElementById('nfe_ee').value);
-        let ash = parseFloat(document.getElementById('nfe_ash').value);
+        let wVal = document.getElementById('nfe_w').value;
+        let cpVal = document.getElementById('nfe_pro').value;
+        let cfVal = document.getElementById('nfe_dcf').value;
+        let eeVal = document.getElementById('nfe_ee').value;
+        let ashVal = document.getElementById('nfe_ash').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-nfe-w').innerText = wVal !== "" ? wVal : "Water";
+        document.getElementById('preview-nfe-pro').innerText = cpVal !== "" ? cpVal : "CP";
+        document.getElementById('preview-nfe-dcf').innerText = cfVal !== "" ? cfVal : "CF";
+        document.getElementById('preview-nfe-ee').innerText = eeVal !== "" ? eeVal : "EE";
+        document.getElementById('preview-nfe-ash').innerText = ashVal !== "" ? ashVal : "Ash";
+
+        let w = parseFloat(wVal);
+        let cp = parseFloat(cpVal);
+        let cf = parseFloat(cfVal);
+        let ee = parseFloat(eeVal);
+        let ash = parseFloat(ashVal);
 
         if(isNaN(w) || isNaN(cp) || isNaN(cf) || isNaN(ee) || isNaN(ash)) {
             document.getElementById('res_nfe').innerText = "Please fill in all 5 proximate fractions.";
             return;
         }
-
-        document.getElementById('preview-nfe-w').innerText = w;
-        document.getElementById('preview-nfe-pro').innerText = cp;
-        document.getElementById('preview-nfe-dcf').innerText = cf;
-        document.getElementById('preview-nfe-ee').innerText = ee;
-        document.getElementById('preview-nfe-ash').innerText = ash;
 
         let nfe = 100 - (w + cp + cf + ee + ash);
         document.getElementById('res_nfe').innerHTML = `Nitrogen Free Extract (NFE %) = <strong>${nfe.toFixed(2)}%</strong>`;
@@ -1776,17 +2094,21 @@
 
     // 10. Protein Quality
     function calcPE() {
-        let dtp = parseFloat(document.getElementById('pe_dtp').value);
-        let npn = parseFloat(document.getElementById('pe_npn').value);
+        let dtpVal = document.getElementById('pe_dtp').value;
+        let npnVal = document.getElementById('pe_npn').value;
+
+        // تحديث لحظي فوري
+        document.getElementById('preview-pe-dtp').innerText = dtpVal !== "" ? dtpVal : "DTP";
+        document.getElementById('preview-pe-npn').innerText = npnVal !== "" ? npnVal : "DNPN";
+
+        let dtp = parseFloat(dtpVal);
+        let npn = parseFloat(npnVal);
 
         if(isNaN(dtp) || isNaN(npn)) {
             document.getElementById('res_pe').innerText = "Please enter DTP and DNPN values.";
             document.getElementById('step_pe').style.display = 'none';
             return;
         }
-
-        document.getElementById('preview-pe-dtp').innerText = dtp;
-        document.getElementById('preview-pe-npn').innerText = npn;
 
         let pe = dtp + (npn / 2);
         let dcpEquivalent = dtp + npn;
@@ -1845,10 +2167,21 @@
     }
 
     function calcCS() {
-        let feedAA = parseFloat(document.getElementById('cs_feed').value);
-        let eggAA = parseFloat(document.getElementById('cs_egg').value);
-        let a = parseFloat(document.getElementById('gpv_a').value);
-        let casein = parseFloat(document.getElementById('gpv_casein').value);
+        let feedAAVal = document.getElementById('cs_feed').value;
+        let eggAAVal = document.getElementById('cs_egg').value;
+        let aVal = document.getElementById('gpv_a').value;
+        let caseinVal = document.getElementById('gpv_casein').value;
+
+        // تحديث فوري لحظي في القانون
+        document.getElementById('preview-cs-feed').innerText = feedAAVal !== "" ? feedAAVal : "Feed AA";
+        document.getElementById('preview-cs-egg').innerText = eggAAVal !== "" ? eggAAVal : "7.2";
+        document.getElementById('preview-gpv-a').innerText = aVal !== "" ? aVal : "A";
+        document.getElementById('preview-gpv-casein').innerText = caseinVal !== "" ? caseinVal : "⁰A";
+
+        let feedAA = parseFloat(feedAAVal);
+        let eggAA = parseFloat(eggAAVal);
+        let a = parseFloat(aVal);
+        let casein = parseFloat(caseinVal);
 
         let out = [];
         let steps = [];
