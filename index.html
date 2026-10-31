@@ -536,6 +536,17 @@
             </div>
         </div>
 
+        <!-- Group 4: Lec. 4: Water Requirements -->
+        <div class="nav-group-wrapper group-core">
+            <div class="nav-group-title">4. Lec. 4: Water Requirements & Temperature Dynamics</div>
+            <div class="nav-menu">
+                <button class="nav-btn" onclick="switchTab('t_water')">
+                    <strong>Water Requirements (Lec. 4)</strong>
+                    <span class="sub-tag">Horse & Poultry • Heat Stress (+6%/°C)</span>
+                </button>
+            </div>
+        </div>
+
         <!-- Group 5: Sec. 4 & 5 -->
         <div class="nav-group-wrapper group-tools">
             <div class="nav-group-title">5. Sec. 4 & 5: Feedstuff Classification & Reference Tools</div>
@@ -1242,6 +1253,81 @@
         <button class="action-btn export-btn hide-on-export" onclick="exportSection('t_body', 'Body_Composition_Result.png')">📸 Export Section as Image</button>
     </div>
 
+    <!-- 12.5 Water Requirements (Lec. 4) -->
+    <div id="t_water" class="section-card">
+        <h2>Water Requirements & Temperature Dynamics (Lec. 4)</h2>
+        <div class="calc-scope-badge hide-on-export">
+            <span class="scope-title">Calculates:</span>
+            <span class="calc-tag">Horse Water (Feed Basis: 2-3 L/kg)</span>
+            <span class="calc-tag">Horse Water (Weight Basis: 5-6% BW)</span>
+            <span class="calc-tag">Heat Stress Adjustment (+6% per °C > 21°C)</span>
+            <span class="calc-tag">Poultry Water & Feed by Age</span>
+        </div>
+        <hr class="section-divider">
+
+        <div class="option-panel hide-on-export">
+            <label style="margin-bottom:6px;">Select Animal:</label>
+            <div class="segmented-control">
+                <button type="button" class="segment-btn active" id="btn-water-horse" onclick="switchWaterSubTab('horse')">🐎 Horse Water</button>
+                <button type="button" class="segment-btn" id="btn-water-poultry" onclick="switchWaterSubTab('poultry')">🐔 Poultry Water</button>
+            </div>
+        </div>
+
+        <!-- Horse Section -->
+        <div id="box-water-horse">
+            <div class="law-box-preview">
+                Normal Base = 5% to 6% of Body Weight &nbsp;|&nbsp; Heat Increase = +6% per 1°C over 21°C
+            </div>
+            <div class="form-grid hide-on-export">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Horse Body Weight (kg):</label>
+                        <input type="number" id="horse_bw" class="input-energy" placeholder="e.g. 500" oninput="calcWaterHorse()">
+                    </div>
+                    <div class="form-group">
+                        <label>Ambient Temperature (°C) [Normal: 20-21°C]:</label>
+                        <input type="number" id="horse_temp" class="input-fat" value="21" oninput="calcWaterHorse()">
+                    </div>
+                    <div class="form-group">
+                        <label>Dry Feed Eaten (kg DM) [Optional]:</label>
+                        <input type="number" id="horse_feed" class="input-cho" placeholder="e.g. 5" oninput="calcWaterHorse()">
+                    </div>
+                </div>
+            </div>
+            <button class="action-btn hide-on-export" onclick="calcWaterHorse()">Calculate Horse Water Requirement</button>
+            <div class="result-box" id="res_water_horse">Result: --</div>
+            <div class="step-breakdown" id="step_water_horse"></div>
+        </div>
+
+        <!-- Poultry Section -->
+        <div id="box-water-poultry" style="display:none;">
+            <div class="law-box-preview">
+                Feed (g) = Age (days) × 5 &nbsp;|&nbsp; Water = 2 to 3 Litres per 1 kg Feed
+            </div>
+            <div class="form-grid hide-on-export">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Chick Age (Days):</label>
+                        <input type="number" id="poultry_age" class="input-energy" placeholder="e.g. 10" oninput="calcWaterPoultry()">
+                    </div>
+                    <div class="form-group">
+                        <label>Direct Feed Amount (kg) [Optional if age given]:</label>
+                        <input type="number" id="poultry_feed" class="input-cho" placeholder="e.g. 50" oninput="calcWaterPoultry()">
+                    </div>
+                    <div class="form-group">
+                        <label>Ambient Temperature (°C) [Normal: 20-21°C]:</label>
+                        <input type="number" id="poultry_temp" class="input-fat" value="21" oninput="calcWaterPoultry()">
+                    </div>
+                </div>
+            </div>
+            <button class="action-btn hide-on-export" onclick="calcWaterPoultry()">Calculate Poultry Water Requirement</button>
+            <div class="result-box" id="res_water_poultry">Result: --</div>
+            <div class="step-breakdown" id="step_water_poultry"></div>
+        </div>
+
+        <button class="action-btn export-btn hide-on-export" style="margin-top:14px;" onclick="exportSection('t_water', 'Water_Requirements_Result.png')">📸 Export Section as Image</button>
+    </div>
+
     <!-- 13. Formula Glossary -->
     <div id="t12" class="section-card">
         <h2>13. Complete Nutrition Laws & Notebook LM Master Glossary</h2>
@@ -1435,9 +1521,10 @@
                     <td><strong>Apparent BV (Biological Value)</strong></td>
                     <td>[ N intake − (Faecal N + Urinary N) ] ÷ [ N intake − Faecal N ] × 100</td>
                     <td>
-                        Percentage of absorbed nitrogen retained in the animal body.
+                        Percentage of absorbed nitrogen retained by tissues for growth and maintenance.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            القيمة الحيوية الظاهرية.. نسبة النيتروجين الممتص المحتفظ به في الجسم.
+                            <strong>القيمة الحيوية الظاهرية:</strong> نسبة النيتروجين اللي الخلايا استفادت منه واحتجزته بعد امتصاصه.<br>
+                            💡 <em>ليه بنطرح Faecal N في المقام؟</em> لأن المقام هنا هو <strong>(النيتروجين الممتص فقط)</strong>؛ الـ BV بيقيس كفاءة الخلايا في استغلال اللي وصلها فعلياً، عكس الـ CD% اللي بيقيس كفاءة الهضم في الأمعاء فبيقسم على الـ Intake كله.
                         </div>
                     </td>
                 </tr>
@@ -1447,7 +1534,7 @@
                     <td>
                         Biological value corrected for metabolic fecal nitrogen (MFN) and endogenous urinary nitrogen (EUN).
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            القيمة الحيوية الحقيقية.. بخصم MFN من الروث و EUN من البول لتنقية الحسابات.
+                            <strong>القيمة الحيوية الحقيقية:</strong> نفس فكرة الـ BV ولكن بننقي الأرقام من إفرازات الجسم نفسه؛ بنطرح خلايا الأمعاء الميتة (MFN) من الروث، ونطرح نواتج الهدم العضلي الداخلي (EUN) من البول، عشان نقيس استغلال بروتين العلف نفسه بنسبة 100%.
                         </div>
                     </td>
                 </tr>
@@ -1553,6 +1640,26 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td><strong>Horse Water Requirement (BW Basis)</strong></td>
+                    <td>Base = 5% to 6% of Body Weight | Heat Extra = +6% per 1°C &gt; 21°C</td>
+                    <td>
+                        Standard hydration maintenance in equines at 20-21°C, scaled with heat stress.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            احتياج الحصان من الماء.. من 5% لـ 6% من وزن جسمه عند 21°م، وكل زيادة 1°م بنزود 6% من الاحتياج الأساسي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Poultry Water &amp; Feed Rule</strong></td>
+                    <td>Feed (g) = Age × 5 | Water = 2 to 3 Litres per 1 kg Feed (+6%/°C &gt; 21°C)</td>
+                    <td>
+                        Broiler daily ration estimation from bird age and corresponding water intake.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            مياه وعلف الدواجن.. الطائر يأكل 5 أضعاف عمره بالجرام، وكل 1 كجم علف يحتاج 2 إلى 3 لتر ماء (+6% لكل 1°م زيادة).
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -1574,10 +1681,42 @@
             <div class="segmented-control">
                 <button type="button" class="segment-btn active" id="btn-quiz-direct" onclick="setQuizMode('direct')">Numerical Input</button>
                 <button type="button" class="segment-btn" id="btn-quiz-mcq" onclick="setQuizMode('mcq')">Multiple Choice (MCQ)</button>
+                <button type="button" class="segment-btn" id="btn-quiz-exam" onclick="setQuizMode('exam')">⏱️ Timed Exam</button>
+            </div>
+
+            <!-- خيارات الامتحان بوقت -->
+            <div id="examConfigPanel" style="display:none; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border-color);">
+                <div class="form-row keep-inline">
+                    <div class="form-group">
+                        <label style="font-size:0.85rem;">Questions Count:</label>
+                        <select id="exam_q_count">
+                            <option value="5">5 Questions</option>
+                            <option value="10" selected>10 Questions</option>
+                            <option value="15">15 Questions</option>
+                            <option value="20">20 Questions</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size:0.85rem;">Time Limit:</label>
+                        <select id="exam_time_limit">
+                            <option value="5">5 Minutes</option>
+                            <option value="10" selected>10 Minutes</option>
+                            <option value="15">15 Minutes</option>
+                            <option value="20">20 Minutes</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="action-btn" style="margin-top: 10px; background-color: var(--color-energy);" onclick="startExam()">🚀 Start Exam Now</button>
             </div>
         </div>
 
-        <button class="action-btn" onclick="generateQuiz()" style="margin-bottom: 20px;">🎲 Generate New Problem</button>
+        <!-- شريط حالة الامتحان (المؤقت والتقدم) -->
+        <div id="examStatusBar" style="display:none; justify-content: space-between; align-items: center; background: var(--card-bg); padding: 12px 16px; border-radius: 8px; border: 1.5px solid var(--color-energy); margin-bottom: 15px; font-weight: bold;">
+            <span id="examProgress">Question: 1 / 10</span>
+            <span id="examTimer" style="color: var(--color-fat); font-size: 1.15rem;">Time: 10:00</span>
+        </div>
+
+        <button class="action-btn" id="btnGenerateQuiz" onclick="generateQuiz()" style="margin-bottom: 20px;">🎲 Generate New Problem</button>
         
         <div id="quizContainer" style="font-size: 1.15rem; font-weight: bold; margin-bottom: 20px; padding: 16px; background: var(--input-bg); border-radius: 8px; border-left: 4px solid var(--primary);">
             Click 'Generate New Problem' to start!
@@ -2458,6 +2597,113 @@
         step.innerHTML = steps.join('<br>');
     }
 
+    function switchWaterSubTab(sub) {
+        document.getElementById('btn-water-horse').classList.remove('active');
+        document.getElementById('btn-water-poultry').classList.remove('active');
+        document.getElementById('box-water-horse').style.display = 'none';
+        document.getElementById('box-water-poultry').style.display = 'none';
+
+        if (sub === 'horse') {
+            document.getElementById('btn-water-horse').classList.add('active');
+            document.getElementById('box-water-horse').style.display = 'block';
+        } else {
+            document.getElementById('btn-water-poultry').classList.add('active');
+            document.getElementById('box-water-poultry').style.display = 'block';
+        }
+    }
+
+    function calcWaterHorse() {
+        let bw = parseFloat(document.getElementById('horse_bw').value);
+        let temp = parseFloat(document.getElementById('horse_temp').value) || 21;
+        let feed = parseFloat(document.getElementById('horse_feed').value);
+
+        if (isNaN(bw) && isNaN(feed)) {
+            document.getElementById('res_water_horse').innerText = "Please enter Horse Body Weight or Dry Feed.";
+            document.getElementById('step_water_horse').style.display = 'none';
+            return;
+        }
+
+        let tempDiff = Math.max(0, temp - 21);
+        let heatFactor = 1 + (tempDiff * 0.06);
+        let outHtml = [];
+        let stepHtml = [];
+
+        if (!isNaN(bw) && bw > 0) {
+            let baseMin = bw * 0.05;
+            let baseMax = bw * 0.06;
+            let finalMin = baseMin * heatFactor;
+            let finalMax = baseMax * heatFactor;
+
+            outHtml.push(`Water from Body Weight: <strong>${finalMin.toFixed(1)} – ${finalMax.toFixed(1)} Litres/day</strong>`);
+            stepHtml.push(`<strong>1. Body Weight Basis (${bw} kg):</strong>`);
+            stepHtml.push(`• Normal Base (5% - 6% at 21°C) = ${baseMin.toFixed(1)} to ${baseMax.toFixed(1)} L`);
+            if (tempDiff > 0) {
+                stepHtml.push(`• Temperature Increase = ${tempDiff}°C above 21°C → +${(tempDiff * 6)}%`);
+                stepHtml.push(`• Total Water = Base × (1 + ${(tempDiff * 0.06).toFixed(2)}) = <strong>${finalMin.toFixed(1)} – ${finalMax.toFixed(1)} Litres</strong>`);
+            }
+        }
+
+        if (!isNaN(feed) && feed > 0) {
+            let feedWaterMin = feed * 2 * heatFactor;
+            let feedWaterMax = feed * 3 * heatFactor;
+            outHtml.push(`Water from Feed (${feed} kg DM): <strong>${feedWaterMin.toFixed(1)} – ${feedWaterMax.toFixed(1)} Litres</strong>`);
+            stepHtml.push(`<br><strong>2. Feed Intake Basis:</strong>`);
+            stepHtml.push(`• Rule: 2 to 3 L per 1 kg Feed DM = ${(feed * 2).toFixed(1)} to ${(feed * 3).toFixed(1)} L (Base)`);
+            if (tempDiff > 0) {
+                stepHtml.push(`• Adjusted for ${temp}°C (+${tempDiff * 6}%) = <strong>${feedWaterMin.toFixed(1)} – ${feedWaterMax.toFixed(1)} Litres</strong>`);
+            }
+        }
+
+        document.getElementById('res_water_horse').innerHTML = outHtml.join('<br>');
+        let step = document.getElementById('step_water_horse');
+        step.style.display = 'block';
+        step.innerHTML = stepHtml.join('<br>');
+    }
+
+    function calcWaterPoultry() {
+        let age = parseFloat(document.getElementById('poultry_age').value);
+        let feedInput = parseFloat(document.getElementById('poultry_feed').value);
+        let temp = parseFloat(document.getElementById('poultry_temp').value) || 21;
+
+        let totalFeedKg = 0;
+        let stepHtml = [];
+
+        if (!isNaN(age) && age > 0) {
+            let feedGrams = age * 5;
+            totalFeedKg = feedGrams / 1000;
+            stepHtml.push(`<strong>1. Feed Calculation from Age:</strong>`);
+            stepHtml.push(`• Feed per chick = ${age} days × 5 = ${feedGrams} g (${totalFeedKg.toFixed(3)} kg)`);
+        } else if (!isNaN(feedInput) && feedInput > 0) {
+            totalFeedKg = feedInput;
+            stepHtml.push(`• Feed Consumed given directly = <strong>${totalFeedKg} kg</strong>`);
+        } else {
+            document.getElementById('res_water_poultry').innerText = "Please enter chick age or feed amount.";
+            document.getElementById('step_water_poultry').style.display = 'none';
+            return;
+        }
+
+        let tempDiff = Math.max(0, temp - 21);
+        let heatFactor = 1 + (tempDiff * 0.06);
+
+        let wMin = totalFeedKg * 2 * heatFactor;
+        let wMax = totalFeedKg * 3 * heatFactor;
+
+        document.getElementById('res_water_poultry').innerHTML = `
+            Water Requirement: <strong>${wMin.toFixed(2)} – ${wMax.toFixed(2)} Litres</strong>
+        `;
+
+        stepHtml.push(`<br><strong>2. Water Intake:</strong>`);
+        stepHtml.push(`• Base Water (2 - 3 L / kg feed) = ${(totalFeedKg * 2).toFixed(2)} to ${(totalFeedKg * 3).toFixed(2)} L`);
+        if (tempDiff > 0) {
+            stepHtml.push(`• Temp increase = ${tempDiff}°C over 21°C (+${tempDiff * 6}%)`);
+            stepHtml.push(`• Total Water = Base × ${heatFactor.toFixed(2)} = <strong>${wMin.toFixed(2)} – ${wMax.toFixed(2)} Litres</strong>`);
+        }
+
+        let step = document.getElementById('step_water_poultry');
+        step.style.display = 'block';
+        step.innerHTML = stepHtml.join('<br>');
+    }
+
     function filterGlossary() {
         let input = document.getElementById('glossarySearch').value.toUpperCase();
         let tr = document.getElementById('glossaryTable').getElementsByTagName('tr');
@@ -2471,170 +2717,408 @@
     let currentQuizUnit = "%";
     let currentQuizMode = 'direct';
 
+    // Exam State Variables
+    let examTimerInterval = null;
+    let examTimeRemaining = 0;
+    let examTotalQuestions = 10;
+    let examCurrentIndex = 0;
+    let examScore = 0;
+    let examActive = false;
+
     function setQuizMode(mode) {
         currentQuizMode = mode;
         const btnDirect = document.getElementById('btn-quiz-direct');
         const btnMcq = document.getElementById('btn-quiz-mcq');
+        const btnExam = document.getElementById('btn-quiz-exam');
         const boxDirect = document.getElementById('quizDirectBox');
         const boxMcq = document.getElementById('quizMcqBox');
+        const configExam = document.getElementById('examConfigPanel');
+        const statusBar = document.getElementById('examStatusBar');
+        const btnGen = document.getElementById('btnGenerateQuiz');
         const fb = document.getElementById('quizFeedback');
-        if(fb) fb.style.display = 'none';
+
+        if (fb) fb.style.display = 'none';
+        clearInterval(examTimerInterval);
+        examActive = false;
+        if (statusBar) statusBar.style.display = 'none';
+
+        btnDirect.classList.remove('active');
+        btnMcq.classList.remove('active');
+        if (btnExam) btnExam.classList.remove('active');
 
         if (mode === 'direct') {
             btnDirect.classList.add('active');
-            btnMcq.classList.remove('active');
             boxDirect.style.display = 'block';
             boxMcq.style.display = 'none';
-        } else {
+            if (configExam) configExam.style.display = 'none';
+            if (btnGen) btnGen.style.display = 'block';
+            generateQuiz();
+        } else if (mode === 'mcq') {
             btnMcq.classList.add('active');
-            btnDirect.classList.remove('active');
             boxDirect.style.display = 'none';
             boxMcq.style.display = 'block';
+            if (configExam) configExam.style.display = 'none';
+            if (btnGen) btnGen.style.display = 'block';
+            generateQuiz();
+        } else if (mode === 'exam') {
+            if (btnExam) btnExam.classList.add('active');
+            boxDirect.style.display = 'none';
+            boxMcq.style.display = 'none';
+            if (configExam) configExam.style.display = 'block';
+            if (btnGen) btnGen.style.display = 'none';
+            document.getElementById('quizContainer').innerHTML = "Select your Question Count & Time Limit, then click <strong>'Start Exam Now'</strong>.";
         }
-        generateQuiz();
     }
 
-            const quizGenerators = [
+    function startExam() {
+        examActive = true;
+        examScore = 0;
+        examCurrentIndex = 0;
+        examTotalQuestions = parseInt(document.getElementById('exam_q_count').value);
+        let timeMinutes = parseInt(document.getElementById('exam_time_limit').value);
+        examTimeRemaining = timeMinutes * 60;
+
+        document.getElementById('examConfigPanel').style.display = 'none';
+        document.getElementById('quizMcqBox').style.display = 'block';
+        document.getElementById('examStatusBar').style.display = 'flex';
+        document.getElementById('quizFeedback').style.display = 'none';
+
+        updateTimerDisplay();
+        clearInterval(examTimerInterval);
+        examTimerInterval = setInterval(() => {
+            examTimeRemaining--;
+            updateTimerDisplay();
+            if (examTimeRemaining <= 0) {
+                clearInterval(examTimerInterval);
+                finishExam(true);
+            }
+        }, 1000);
+
+        loadExamQuestion();
+    }
+
+    function updateTimerDisplay() {
+        let mins = Math.floor(examTimeRemaining / 60);
+        let secs = examTimeRemaining % 60;
+        document.getElementById('examTimer').innerText = `Time: ${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    }
+
+    function loadExamQuestion() {
+        examCurrentIndex++;
+        document.getElementById('examProgress').innerText = `Question: ${examCurrentIndex} / ${examTotalQuestions}`;
+
+        let randomIndex = Math.floor(Math.random() * quizGenerators.length);
+        let questionHtml = quizGenerators[randomIndex]();
+        document.getElementById('quizContainer').innerHTML = questionHtml;
+        document.getElementById('quizFeedback').style.display = 'none';
+
+        renderMcqChoices();
+    }
+
+    function finishExam(isTimeOut = false) {
+        clearInterval(examTimerInterval);
+        examActive = false;
+        document.getElementById('examStatusBar').style.display = 'none';
+        document.getElementById('quizMcqBox').style.display = 'none';
+
+        let percent = ((examScore / examTotalQuestions) * 100).toFixed(1);
+        let gradeBadge = percent >= 85 ? "Excellent 🏆" : (percent >= 70 ? "Very Good 👏" : (percent >= 50 ? "Passed 👍" : "Need Review ⚠️"));
+
+        document.getElementById('quizContainer').innerHTML = `
+            <div style="text-align: center; padding: 10px;">
+                ${isTimeOut ? '<div style="color: var(--color-fat); margin-bottom: 8px;">⏳ Time is up!</div>' : ''}
+                <h3 style="margin-top: 0; color: var(--primary);">Exam Completed!</h3>
+                <p style="font-size: 1.3rem; margin: 10px 0;">Your Score: <strong>${examScore} / ${examTotalQuestions}</strong> (<strong>${percent}%</strong>)</p>
+                <div style="font-size: 1.1rem; color: var(--color-mfn);">Rating: <strong>${gradeBadge}</strong></div>
+                <button class="action-btn" style="margin-top: 18px; max-width: 260px;" onclick="setQuizMode('exam')">🔄 Take Another Exam</button>
+            </div>
+        `;
+    }
+
+                const quizGenerators = [
+        // 1. DE %
         () => {
             let feedKg = (1.5 + Math.random() * 0.5).toFixed(2);
             let feedKcal = (4.2 + Math.random() * 0.4).toFixed(2);
-            // ضبط كمية الروث وطاقته لتضمن معامل هضم فسيولوجي طبيعي (55% - 75%)
             let fecesKg = (parseFloat(feedKg) * (0.28 + Math.random() * 0.12)).toFixed(2);
             let fecesKcal = (4.0 + Math.random() * 0.4).toFixed(2);
             let inE = parseFloat(feedKg) * 1000 * parseFloat(feedKcal);
             let outE = parseFloat(fecesKg) * 1000 * parseFloat(fecesKcal);
             currentQuizCorrect = ((inE - outE) / inE) * 100;
             currentQuizUnit = "%";
-            return `A sheep ate <strong>${feedKg} Kg</strong> DM (${feedKcal} Kcal/g) and excreted <strong>${fecesKg} Kg</strong> faeces (${fecesKcal} Kcal/g).<br>Calculate <strong>Apparent Digestibility of Energy (%)</strong>:`;
+            let templates = [
+                `A sheep consumed <strong>${feedKg} Kg</strong> DM (${feedKcal} Kcal/g) and excreted <strong>${fecesKg} Kg</strong> faeces (${fecesKcal} Kcal/g).<br>Calculate <strong>Apparent Digestibility of Energy (%)</strong>:`,
+                `In an energy balance trial, daily gross energy intake was measured from <strong>${feedKg} Kg</strong> feed (${feedKcal} Kcal/g), with <strong>${fecesKg} Kg</strong> fecal output (${fecesKcal} Kcal/g).<br>Find the <strong>Apparent Energy Digestibility Coefficient (%)</strong>:`,
+                `Determine the <strong>Energy Digestibility (%)</strong> for a ram fed <strong>${feedKg} Kg DM</strong> (${feedKcal} Kcal/g) producing <strong>${fecesKg} Kg</strong> feces (${fecesKcal} Kcal/g):`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 2. TDN %
         () => {
-            let dcp = Math.floor(Math.random() * 6) + 8; // 8 - 13%
-            let dnfe = Math.floor(Math.random() * 10) + 40; // 40 - 49%
-            let dcf = Math.floor(Math.random() * 8) + 12; // 12 - 19%
-            let dee = (1.5 + Math.random() * 2.0).toFixed(1); // 1.5 - 3.5%
+            let dcp = Math.floor(Math.random() * 6) + 8;
+            let dnfe = Math.floor(Math.random() * 10) + 40;
+            let dcf = Math.floor(Math.random() * 8) + 12;
+            let dee = (1.5 + Math.random() * 2.0).toFixed(1);
             currentQuizCorrect = dcp + dnfe + dcf + (parseFloat(dee) * 2.25);
             currentQuizUnit = "%";
-            return `Calculate <strong>Total Digestible Nutrients (TDN %)</strong>:<br>DCP = <strong>${dcp}%</strong> | DNFE = <strong>${dnfe}%</strong> | DCF = <strong>${dcf}%</strong> | DEE = <strong>${dee}%</strong>`;
+            let templates = [
+                `Calculate <strong>Total Digestible Nutrients (TDN %)</strong> for this ration:<br>DCP = <strong>${dcp}%</strong> | DNFE = <strong>${dnfe}%</strong> | DCF = <strong>${dcf}%</strong> | DEE = <strong>${dee}%</strong>`,
+                `A feedstuff analysis shows digestible nutrients: <strong>${dcp}% DCP</strong>, <strong>${dnfe}% DNFE</strong>, <strong>${dcf}% DCF</strong>, and <strong>${dee}% DEE</strong>.<br>What is the total <strong>TDN %</strong>?`,
+                `Using the classic energy formula weighting lipid energy by 2.25, compute <strong>TDN (%)</strong> given:<br>DCP: <strong>${dcp}%</strong>, DCF: <strong>${dcf}%</strong>, DNFE: <strong>${dnfe}%</strong>, DEE: <strong>${dee}%</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 3. PER
         () => {
-            let gain = Math.floor(Math.random() * 25) + 35; // 35 - 59g
-            let intake = Math.floor(Math.random() * 8) + 15; // 15 - 22g -> PER بين 1.6 و 3.5 طبيعي
+            let gain = Math.floor(Math.random() * 25) + 35;
+            let intake = Math.floor(Math.random() * 8) + 15;
             currentQuizCorrect = gain / intake;
             currentQuizUnit = "";
-            return `Calculate the <strong>Protein Efficiency Ratio (PER)</strong>:<br>Weight Gain = <strong>${gain} g</strong> | Protein Intake = <strong>${intake} g</strong>`;
+            let templates = [
+                `Calculate the <strong>Protein Efficiency Ratio (PER)</strong>:<br>Weight Gain = <strong>${gain} g</strong> | Protein Intake = <strong>${intake} g</strong>`,
+                `During a 28-day bioassay, a growing rat consumed <strong>${intake} g</strong> of test crude protein and achieved <strong>${gain} g</strong> of body weight gain.<br>Determine the <strong>PER</strong> value:`,
+                `An animal gained <strong>${gain} g</strong> of live weight after ingesting a total of <strong>${intake} g</strong> dietary protein.<br>What is the biological <strong>Protein Efficiency Ratio</strong>?`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 4. Indicator Method
         () => {
-            let foodInd = (1.5 + Math.random() * 1.0).toFixed(1); // 1.5 - 2.5
-            let fecesInd = (parseFloat(foodInd) * (3.0 + Math.random() * 2.0)).toFixed(1); // مؤشر الروث دائماً أعلى
+            let foodInd = (1.5 + Math.random() * 1.0).toFixed(1);
+            let fecesInd = (parseFloat(foodInd) * (3.0 + Math.random() * 2.0)).toFixed(1);
             currentQuizCorrect = ((parseFloat(fecesInd) - parseFloat(foodInd)) / parseFloat(fecesInd)) * 100;
             currentQuizUnit = "%";
-            return `Calculate digestibility (%) using the <strong>Indicator Method</strong>:<br>Food Marker = <strong>${foodInd} g/Kg</strong> | Faeces Marker = <strong>${fecesInd} g/Kg</strong>`;
+            let templates = [
+                `Calculate digestibility (%) using the <strong>Indicator Method</strong>:<br>Food Marker = <strong>${foodInd} g/Kg</strong> | Faeces Marker = <strong>${fecesInd} g/Kg</strong>`,
+                `Using chromic oxide as an inert internal marker, dietary concentration was <strong>${foodInd} g/Kg DM</strong> while fecal concentration reached <strong>${fecesInd} g/Kg DM</strong>.<br>Compute <strong>Apparent Digestibility (%)</strong>:`,
+                `In an indicator feeding trial without total fecal collection, marker in food was <strong>${foodInd} g/Kg</strong> and in feces was <strong>${fecesInd} g/Kg</strong>.<br>Determine <strong>Digestibility Coefficient (%)</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 5. Nutritive Ratio (NR)
         () => {
-            let tdn = Math.floor(Math.random() * 15) + 65; // 65 - 79%
-            let dcp = Math.floor(Math.random() * 5) + 8; // 8 - 12% -> NR طبيعي بين 1:4.5 و 1:8.5
+            let tdn = Math.floor(Math.random() * 15) + 65;
+            let dcp = Math.floor(Math.random() * 5) + 8;
             currentQuizCorrect = (tdn - dcp) / dcp;
             currentQuizUnit = " (1 : X)";
-            return `Calculate X in <strong>Nutritive Ratio (1 : X)</strong>:<br>TDN = <strong>${tdn}%</strong> | DCP = <strong>${dcp}%</strong>`;
+            let templates = [
+                `Calculate X in <strong>Nutritive Ratio (1 : X)</strong>:<br>TDN = <strong>${tdn}%</strong> | DCP = <strong>${dcp}%</strong>`,
+                `A balanced ration contains <strong>${tdn}% TDN</strong> and <strong>${dcp}% DCP</strong>.<br>Compute the non-protein to protein energy ratio <strong>X in (1 : X)</strong>:`,
+                `Determine the <strong>Nutritive Ratio (NR) value (1 : X)</strong> for a diet supplying <strong>${tdn}% TDN</strong> and <strong>${dcp}% digestible protein</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 6. DM %
         () => {
             let wd = Math.floor(Math.random() * 15) + 90;
             let ws = Math.floor(Math.random() * 20) + 40;
-            // المادة الجافة للأعلاف الهوائية بين 85% و 92%
             let dmPct = 0.85 + Math.random() * 0.07;
             let drySample = (ws * dmPct).toFixed(2);
             let w0 = (wd + parseFloat(drySample)).toFixed(2);
             currentQuizCorrect = ((parseFloat(w0) - wd) / ws) * 100;
             currentQuizUnit = "%";
-            return `Sample Ws = <strong>${ws}g</strong>, Dish+Dry W0 = <strong>${w0}g</strong>, Dish Wd = <strong>${wd}g</strong>.<br>Calculate <strong>Dry Matter (DM %)</strong>:`;
+            let templates = [
+                `Sample Ws = <strong>${ws}g</strong>, Dish+Dry W0 = <strong>${w0}g</strong>, Dish Wd = <strong>${wd}g</strong>.<br>Calculate <strong>Dry Matter (DM %)</strong>:`,
+                `In an oven-drying lab test at 105°C, a fresh feed of <strong>${ws}g (Ws)</strong> in a dish of <strong>${wd}g (Wd)</strong> weighed <strong>${w0}g (W0)</strong> after drying.<br>Find the <strong>DM %</strong>:`,
+                `Determine <strong>Dry Matter percentage</strong> for a forage sample weighing <strong>${ws}g</strong> fresh, dried in an empty dish (<strong>${wd}g</strong>) to a final weight of <strong>${w0}g</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 7. Ash %
         () => {
             let wc = Math.floor(Math.random() * 15) + 90;
             let ws = (4.5 + Math.random() * 1.5).toFixed(1);
-            // نسبة الرماد الطبيعية بين 5% و 10%
             let ashWt = (parseFloat(ws) * (0.05 + Math.random() * 0.05)).toFixed(3);
             let wa = (wc + parseFloat(ashWt)).toFixed(3);
             currentQuizCorrect = ((parseFloat(wa) - wc) / parseFloat(ws)) * 100;
             currentQuizUnit = "%";
-            return `Sample Ws = <strong>${ws}g</strong>, Crucible+Ash Wa = <strong>${wa}g</strong>, Empty Crucible Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ash %</strong>:`;
+            let templates = [
+                `Sample Ws = <strong>${ws}g</strong>, Crucible+Ash Wa = <strong>${wa}g</strong>, Empty Crucible Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ash %</strong>:`,
+                `After muffle furnace incineration at 550°C, a <strong>${ws}g</strong> feed sample inside a crucible (<strong>${wc}g</strong>) had a final weight of <strong>${wa}g</strong>.<br>Find the crude <strong>Ash %</strong>:`,
+                `Calculate the total inorganic mineral residue (<strong>Ash %</strong>) from: Sample = <strong>${ws}g</strong>, Empty crucible = <strong>${wc}g</strong>, Ash + crucible = <strong>${wa}g</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 8. CF %
         () => {
-            let ws = 2.0; // وزن قياسي معتمد في المعمل
-            let a = 0.400; // وزن البوتقة مع الرماد
-            let cfPct = 0.08 + Math.random() * 0.14; // ألياف بين 8% و 22%
+            let ws = 2.0;
+            let a = 0.400;
+            let cfPct = 0.08 + Math.random() * 0.14;
             let cfWt = ws * cfPct;
             let d = (a + cfWt).toFixed(3);
             currentQuizCorrect = ((parseFloat(d) - a) / ws) * 100;
             currentQuizUnit = "%";
-            return `Sample Ws = <strong>${ws.toFixed(1)}g</strong>, Residue+Dish = <strong>${d}g</strong>, Ash+Dish = <strong>${a.toFixed(3)}g</strong>.<br>Calculate <strong>Crude Fiber (CF %)</strong>:`;
+            let templates = [
+                `Sample Ws = <strong>${ws.toFixed(1)}g</strong>, Residue+Dish = <strong>${d}g</strong>, Ash+Dish = <strong>${a.toFixed(3)}g</strong>.<br>Calculate <strong>Crude Fiber (CF %)</strong>:`,
+                `Following sequential acid and alkali boiling of a <strong>${ws.toFixed(1)}g</strong> sample, dried insoluble residue was <strong>${d}g</strong> and ignited ash was <strong>${a.toFixed(3)}g</strong>.<br>Compute <strong>CF %</strong>:`,
+                `Determine <strong>Crude Fiber percentage</strong> in proximate analysis: Initial Sample = <strong>${ws.toFixed(1)}g</strong>, Dry residue dish = <strong>${d}g</strong>, Incinerated dish = <strong>${a.toFixed(3)}g</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 9. EE %
         () => {
             let wc = (50.0 + Math.random() * 5.0).toFixed(3);
             let ws = 2.0;
-            let eePct = 0.025 + Math.random() * 0.045; // دهن خام بين 2.5% و 7%
+            let eePct = 0.025 + Math.random() * 0.045;
             let fatWt = ws * eePct;
             let wa = (parseFloat(wc) + fatWt).toFixed(3);
             currentQuizCorrect = ((parseFloat(wa) - parseFloat(wc)) / ws) * 100;
             currentQuizUnit = "%";
-            return `Sample Ws = <strong>${ws.toFixed(1)}g</strong>, Flask+Fat Wa = <strong>${wa}g</strong>, Flask Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ether Extract (EE %)</strong>:`;
+            let templates = [
+                `Sample Ws = <strong>${ws.toFixed(1)}g</strong>, Flask+Fat Wa = <strong>${wa}g</strong>, Flask Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ether Extract (EE %)</strong>:`,
+                `In a Soxhlet lipid extraction of <strong>${ws.toFixed(1)}g</strong> sample, empty distillation flask was <strong>${wc}g</strong> and flask with extracted fat was <strong>${wa}g</strong>.<br>Compute <strong>EE (Crude Fat %)</strong>:`,
+                `Determine the crude lipid content (<strong>EE %</strong>): Sample Wt = <strong>${ws.toFixed(1)}g</strong>, Tare flask = <strong>${wc}g</strong>, Flask + extracted fat = <strong>${wa}g</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 10. NFE %
         () => {
-            let w = Math.floor(Math.random() * 4) + 9; // رطوبة 9 - 12%
-            let cp = Math.floor(Math.random() * 8) + 12; // بروتين 12 - 19%
-            let cf = Math.floor(Math.random() * 6) + 6; // ألياف 6 - 11%
-            let ee = Math.floor(Math.random() * 3) + 2; // دهن 2 - 4%
-            let ash = Math.floor(Math.random() * 4) + 5; // رماد 5 - 8%
+            let w = Math.floor(Math.random() * 4) + 9;
+            let cp = Math.floor(Math.random() * 8) + 12;
+            let cf = Math.floor(Math.random() * 6) + 6;
+            let ee = Math.floor(Math.random() * 3) + 2;
+            let ash = Math.floor(Math.random() * 4) + 5;
             currentQuizCorrect = 100 - (w + cp + cf + ee + ash);
             currentQuizUnit = "%";
-            return `Moisture = <strong>${w}%</strong>, CP = <strong>${cp}%</strong>, CF = <strong>${cf}%</strong>, EE = <strong>${ee}%</strong>, Ash = <strong>${ash}%</strong>.<br>Calculate <strong>NFE %</strong>:`;
+            let templates = [
+                `Moisture = <strong>${w}%</strong>, CP = <strong>${cp}%</strong>, CF = <strong>${cf}%</strong>, EE = <strong>${ee}%</strong>, Ash = <strong>${ash}%</strong>.<br>Calculate <strong>NFE %</strong>:`,
+                `By difference in Weende proximate analysis, compute soluble carbohydrates (<strong>NFE %</strong>) for a diet with: <strong>${w}% Moisture</strong>, <strong>${cp}% CP</strong>, <strong>${cf}% CF</strong>, <strong>${ee}% EE</strong>, and <strong>${ash}% Ash</strong>:`,
+                `Find <strong>Nitrogen-Free Extract (NFE %)</strong> from the proximate fractions: Water: <strong>${w}%</strong> | Protein: <strong>${cp}%</strong> | Fiber: <strong>${cf}%</strong> | Fat: <strong>${ee}%</strong> | Ash: <strong>${ash}%</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 11. CP % (Kjeldahl)
         () => {
-            let w = (1.2 + Math.random() * 0.6).toFixed(1); // عينة 1.2 - 1.8 جم
-            let targetCP = 12 + Math.random() * 12; // بروتين طبيعي 12 - 24%
+            let w = (1.2 + Math.random() * 0.6).toFixed(1);
+            let targetCP = 12 + Math.random() * 12;
             let targetN = targetCP / 6.25;
-            let v = ((targetN * parseFloat(w)) / 0.14).toFixed(1); // حساب دقيق لحجم الحمض
+            let v = ((targetN * parseFloat(w)) / 0.14).toFixed(1);
             let np = (parseFloat(v) * 0.0014 / parseFloat(w)) * 100;
             currentQuizCorrect = np * 6.25;
             currentQuizUnit = "%";
-            return `Acid Vol = <strong>${v} mL</strong> (N/10), Sample Wt = <strong>${w} g</strong>.<br>Calculate <strong>Crude Protein (CP %)</strong>:`;
+            let templates = [
+                `Acid Vol = <strong>${v} mL</strong> (N/10), Sample Wt = <strong>${w} g</strong>.<br>Calculate <strong>Crude Protein (CP %)</strong>:`,
+                `In a macro-Kjeldahl distillation, neutralizing ammonia from a <strong>${w} g</strong> feed sample required <strong>${v} mL</strong> of 0.1N standard acid.<br>Compute <strong>Crude Protein (CP %)</strong>:`,
+                `Determine crude protein using standard factor 6.25: Titrated Acid Volume = <strong>${v} mL</strong> (N/10 HCl), Sample Weight = <strong>${w} g</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 12. PE %
         () => {
-            let dtp = Math.floor(Math.random() * 6) + 10; // 10 - 15%
-            let npn = Math.floor(Math.random() * 3) + 2; // 2 - 4%
+            let dtp = Math.floor(Math.random() * 6) + 10;
+            let npn = Math.floor(Math.random() * 3) + 2;
             currentQuizCorrect = dtp + (npn / 2);
             currentQuizUnit = "%";
-            return `Digestible True Protein (DTP) = <strong>${dtp}%</strong> | Digestible NPN = <strong>${npn}%</strong>.<br>Calculate <strong>Protein Equivalent (PE)</strong>:`;
+            let templates = [
+                `Digestible True Protein (DTP) = <strong>${dtp}%</strong> | Digestible NPN = <strong>${npn}%</strong>.<br>Calculate <strong>Protein Equivalent (PE)</strong>:`,
+                `For a ruminant diet with <strong>${dtp}% DTP</strong> and <strong>${npn}% digestible NPN</strong>, determine the <strong>Protein Equivalent (PE %)</strong>:`,
+                `Compute the <strong>Protein Equivalent (PE)</strong> considering non-protein nitrogen utilization: DTP = <strong>${dtp}%</strong>, DNPN = <strong>${npn}%</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 13. Apparent BV %
         () => {
-            let ni = Math.floor(Math.random() * 6) + 16; // N intake 16 - 21g
-            let fn = (parseFloat(ni) * (0.20 + Math.random() * 0.08)).toFixed(1); // هضم بروتين 72 - 80%
+            let ni = Math.floor(Math.random() * 6) + 16;
+            let fn = (parseFloat(ni) * (0.20 + Math.random() * 0.08)).toFixed(1);
             let absorbedN = parseFloat(ni) - parseFloat(fn);
-            // ضبط البول ليكون بين 25% و 40% من النيتروجين الممتص، ليكون Apparent BV دائماً بين 60% و 75%
             let un = (absorbedN * (0.25 + Math.random() * 0.15)).toFixed(1);
             currentQuizCorrect = ((parseFloat(ni) - (parseFloat(fn) + parseFloat(un))) / (parseFloat(ni) - parseFloat(fn))) * 100;
             currentQuizUnit = "%";
-            return `N Intake = <strong>${ni}g</strong>, Faecal N = <strong>${fn}g</strong>, Urinary N = <strong>${un}g</strong>.<br>Calculate <strong>Apparent Biological Value (BV %)</strong>:`;
+            let templates = [
+                `N Intake = <strong>${ni}g</strong>, Faecal N = <strong>${fn}g</strong>, Urinary N = <strong>${un}g</strong>.<br>Calculate <strong>Apparent Biological Value (BV %)</strong>:`,
+                `In a nitrogen balance metabolism crate, an animal consumed <strong>${ni}g N</strong>, lost <strong>${fn}g N</strong> in feces, and <strong>${un}g N</strong> in urine.<br>What is the <strong>Apparent Biological Value (%)</strong>?`,
+                `Determine tissue retention efficiency (<strong>Apparent BV %</strong>) given: Nitrogen ingested = <strong>${ni}g</strong>, Fecal N = <strong>${fn}g</strong>, Urinary N = <strong>${un}g</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 14. Chemical Score (CS %)
         () => {
-            let eggAA = 7.2; // لايسين البيض المرجعي
-            let feedAA = (3.6 + Math.random() * 2.2).toFixed(2); // نسبة لايسين العلف 3.6 - 5.8
+            let eggAA = 7.2;
+            let feedAA = (3.6 + Math.random() * 2.2).toFixed(2);
             currentQuizCorrect = (parseFloat(feedAA) / eggAA) * 100;
             currentQuizUnit = "%";
-            return `Limiting AA in Feed = <strong>${feedAA}g/16g N</strong>, Egg Reference = <strong>${eggAA}g</strong>.<br>Calculate <strong>Chemical Score (CS %)</strong>:`;
+            let templates = [
+                `Limiting AA in Feed = <strong>${feedAA}g/16g N</strong>, Egg Reference = <strong>${eggAA}g</strong>.<br>Calculate <strong>Chemical Score (CS %)</strong>:`,
+                `Comparing the most limiting essential amino acid in a cereal grain (<strong>${feedAA}g/16g N</strong>) against whole egg protein standard (<strong>${eggAA}g/16g N</strong>).<br>Compute the <strong>Chemical Score (%)</strong>:`,
+                `Determine the <strong>Chemical Score (CS)</strong> for a dietary protein containing <strong>${feedAA}g</strong> limiting amino acid compared to <strong>${eggAA}g</strong> in reference egg:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 15. NE (Net Energy)
         () => {
-            let me = Math.floor(Math.random() * 600) + 2400; // 2400 - 3000 Kcal
-            let hi = Math.floor(parseFloat(me) * (0.20 + Math.random() * 0.10)); // الزيادة الحرارية 20 - 30% من ME
+            let me = Math.floor(Math.random() * 600) + 2400;
+            let hi = Math.floor(parseFloat(me) * (0.20 + Math.random() * 0.10));
             currentQuizCorrect = me - hi;
             currentQuizUnit = "Kcal/day";
-            return `Metabolizable Energy (ME) = <strong>${me} Kcal</strong>, Heat Increment (HI) = <strong>${hi} Kcal</strong>.<br>Calculate <strong>Net Energy (NE)</strong>:`;
+            let templates = [
+                `Metabolizable Energy (ME) = <strong>${me} Kcal</strong>, Heat Increment (HI) = <strong>${hi} Kcal</strong>.<br>Calculate <strong>Net Energy (NE)</strong>:`,
+                `In indirect respiration calorimetry, daily ME was <strong>${me} Kcal</strong> with a total Heat Increment (HI) of <strong>${hi} Kcal</strong>.<br>Find the remaining <strong>Net Energy (NE)</strong>:`,
+                `Calculate the productive energy retained (<strong>Net Energy</strong> in Kcal/day) from: ME = <strong>${me} Kcal</strong> and HI = <strong>${hi} Kcal</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         },
+        // 16. Body Composition (Muscle Mass %)
         () => {
-            // محصورة بدقة فسيولوجية بين 50% و 60% لتظل كتلة العضلات بين 68% و 82% ونسبة الدهن موجبة وطبيعية
             let water = (50.0 + Math.random() * 10.0).toFixed(1);
             currentQuizCorrect = parseFloat(water) / 0.73;
             currentQuizUnit = "%";
-            return `Total Body Water = <strong>${water}%</strong>.<br>Calculate <strong>Muscle Mass %</strong>:`;
+            let templates = [
+                `Total Body Water = <strong>${water}%</strong>.<br>Calculate <strong>Muscle Mass %</strong>:`,
+                `Using the Pace-Rathbun constant hydration model (73% water in lean tissue), a carcass measures <strong>${water}%</strong> total water.<br>Determine <strong>Muscle Mass %</strong>:`,
+                `An animal body composition scan indicates <strong>${water}%</strong> total body water.<br>Compute estimated <strong>Lean Muscle Mass %</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
+        },
+        // 17. Horse Water Requirement & Heat Dynamics
+        () => {
+            let isReverse = Math.random() > 0.5;
+            let bw = (Math.floor(Math.random() * 3) + 4) * 100;
+            let tempInc = Math.floor(Math.random() * 4) + 1;
+            let temp = 21 + tempInc;
+            let baseWater = bw * 0.06;
+            let totalWater = baseWater * (1 + (tempInc * 0.06));
+
+            if (isReverse) {
+                currentQuizCorrect = bw;
+                currentQuizUnit = "kg";
+                let templates = [
+                    `During heat stress at <strong>${temp}°C</strong>, a horse consumed <strong>${totalWater.toFixed(1)} L</strong> of water. Base intake is 6% BW (+6% per 1°C over 21°C).<br>Calculate the horse's <strong>Body Weight (kg)</strong>:`,
+                    `A stall-housed horse required <strong>${totalWater.toFixed(1)} Litres</strong> of daily water at <strong>${temp}°C</strong> ambient temperature.<br>(Base = 6% BW, Heat increase = +6%/°C above 21°C). Find the <strong>Weight of the Horse (kg)</strong>:`
+                ];
+                return templates[Math.floor(Math.random() * templates.length)];
+            } else {
+                currentQuizCorrect = totalWater;
+                currentQuizUnit = "Litres";
+                let templates = [
+                    `A horse weighs <strong>${bw} kg</strong> housed at <strong>${temp}°C</strong>. If normal water intake is 6% BW with +6% per 1°C elevation over 21°C.<br>Calculate total daily <strong>Water Requirement (Litres)</strong>:`,
+                    `Compute daily water needs for a <strong>${bw} kg</strong> horse at an elevated ambient temperature of <strong>${temp}°C</strong>.<br>(Rule: 6% of BW at 21°C, adding 6% extra water per degree increase):`
+                ];
+                return templates[Math.floor(Math.random() * templates.length)];
+            }
+        },
+        // 18. Poultry Water & Broiler Ration Dynamics
+        () => {
+            let chicksCount = (Math.floor(Math.random() * 5) + 1) * 100;
+            let ageDays = Math.floor(Math.random() * 11) + 10;
+            let isSummer = Math.random() > 0.5;
+            let season = isSummer ? "Summer (3 L/kg feed)" : "Winter (2 L/kg feed)";
+            let waterPerKg = isSummer ? 3 : 2;
+            let tempInc = Math.floor(Math.random() * 4);
+            let temp = 21 + tempInc;
+
+            let feedPerChickG = ageDays * 5;
+            let totalFlockFeedKg = (feedPerChickG * chicksCount) / 1000;
+            let baseWater = totalFlockFeedKg * waterPerKg;
+            let heatFactor = 1 + (tempInc * 0.06);
+
+            currentQuizCorrect = baseWater * heatFactor;
+            currentQuizUnit = "Litres";
+
+            let templates = [
+                `A flock of <strong>${chicksCount} chicks</strong> aged <strong>${ageDays} days</strong> in <strong>${season}</strong> at <strong>${temp}°C</strong>.<br>(Rule: feed = 5×age in grams, heat stress = +6%/°C over 21°C).<br>Calculate total flock <strong>Water Requirement (Litres)</strong>:`,
+                `Estimate daily water supply for <strong>${chicksCount} broiler chicks</strong> (Age: <strong>${ageDays} days</strong>) raised in <strong>${season}</strong> at <strong>${temp}°C</strong>.<br>(Feed consumption = 5 × Age grams/bird, Heat stress = +6% per 1°C above 21°C):`,
+                `In a poultry barn with <strong>${chicksCount} chicks</strong> at <strong>${ageDays} days of age</strong> during <strong>${season}</strong> (House temp: <strong>${temp}°C</strong>).<br>Find total flock <strong>Daily Water Requirement (Litres)</strong>:`
+            ];
+            return templates[Math.floor(Math.random() * templates.length)];
         }
     ];
 
@@ -2702,16 +3186,30 @@
         const allButtons = document.querySelectorAll('#mcqOptionsGrid button');
         allButtons.forEach(btn => btn.disabled = true);
 
-        if (Math.abs(selectedVal - currentQuizCorrect) < 0.05) {
+        let isCorrect = Math.abs(selectedVal - currentQuizCorrect) < 0.05;
+
+        if (isCorrect) {
             clickedBtn.style.backgroundColor = 'rgba(16, 185, 129, 0.2)';
             clickedBtn.style.borderColor = '#10b981';
             clickedBtn.style.color = '#10b981';
             fb.innerHTML = `✅ <strong>Correct!</strong> Well done. The exact answer is <strong>${currentQuizCorrect.toFixed(2)} ${currentQuizUnit}</strong>.`;
+            if (examActive) examScore++;
         } else {
             clickedBtn.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
             clickedBtn.style.borderColor = '#ef4444';
             clickedBtn.style.color = '#ef4444';
             fb.innerHTML = `❌ <strong>Incorrect.</strong> The correct answer was <strong>${currentQuizCorrect.toFixed(2)} ${currentQuizUnit}</strong>.`;
+        }
+
+        if (examActive) {
+            fb.innerHTML += `<div style="font-size:0.85rem; margin-top:5px; opacity:0.85;">Loading next question...</div>`;
+            setTimeout(() => {
+                if (examCurrentIndex < examTotalQuestions) {
+                    loadExamQuestion();
+                } else {
+                    finishExam(false);
+                }
+            }, 1200);
         }
     }
 
