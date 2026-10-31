@@ -1253,129 +1253,19 @@
         </div>
         <hr class="section-divider">
         <input type="text" id="glossarySearch" placeholder="Search laws & terms (DE, TDN, PER, BV, SE, Kjeldahl, SARA...)" onkeyup="filterGlossary()" style="margin-bottom: 20px;">
-        <table id="glossaryTable">
+                <table id="glossaryTable">
             <thead>
                 <tr><th>Law / Parameter</th><th>Exact Formula</th><th>Clinical & Academic Scope</th></tr>
             </thead>
             <tbody>
-                <!-- 1. الرطوبة والمادة الجافة -->
-                <tr>
-                    <td><strong>Moisture (Water %)</strong></td>
-                    <td>Moisture % = 100 − DM % = [ (Ws − Dry Sample) ÷ Ws ] × 100</td>
-                    <td>
-                        The free and bound water evaporated by oven drying at 100–105°C until constant weight.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            نسبة المية والرطوبة في العلف.. بنوزن العينة طازة وندخلها فرن التجفيف عند 105 درجة مئوية، كمية المية اللي بتتبخر وتطير في الهوا هي دي الرطوبة، وعليها بنعرف العلف ده هيعفن بسرعة ولا هيعيش ومتخزن صح.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>DM % (Dry Matter)</strong></td>
-                    <td>DM % = [ (W0 − Wd) ÷ Ws ] × 100</td>
-                    <td>
-                        Oven-dry residue containing all nutrients (organic and inorganic) minus moisture.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            المادة الجافة.. البودرة والوزن اللي فضل بعد ما طيرنا كل نقطة مية في الفرن؛ دي الحتة الأهم في التغذية لأن كل الفيتامينات والبروتينات والطاقة موجودة جواها، ومينفعش تقارن سعر أو جودة علفين إلا على أساس المادة الجافة.
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- 2. المعادن والمادة العضوية -->
-                <tr>
-                    <td><strong>Ash % (Crude Minerals)</strong></td>
-                    <td>Ash % = [ (Wa − Wc) ÷ Ws ] × 100</td>
-                    <td>
-                        Inorganic mineral residue remaining after muffle furnace incineration at 550°C.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            الرماد الخام (المعادن).. بناخد العينة الجافة ونحرقها في فرن الحرق عند 550 درجة مئوية لحد ما تولع وتبقى بودرة بيضا أو رمادي؛ ده عبارة عن العناصر المعدنية اللي مبتتحرقش (كالسيوم، فسفور، بوتاسيوم.. أو شوية تراب ورمل).
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>OM % (Organic Matter)</strong></td>
-                    <td>OM % = 100 − Ash %</td>
-                    <td>
-                        Total combustible portion of feed dry matter comprising proteins, lipids, and carbohydrates.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            المادة العضوية.. الجزء اللي بيتحرق ويطير في الفرن؛ يعني كل المركبات الحيوية اللي بتدي طاقة وبتبني جسم زي البروتين والدهون والنشويات والألياف، وهي العلف الحقيقي بدون المعادن الصامتة.
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- 3. البروتين -->
-                <tr>
-                    <td><strong>CP % (Crude Protein)</strong></td>
-                    <td>CP % = N % × 6.25 (Kjeldahl: Vol Acid × 0.0014 / Ws × 100)</td>
-                    <td>
-                        Total nitrogen content multiplied by standard conversion factor (assumes 16% N in plant/animal protein).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            البروتين الخام.. في المعمل مش بنقيس البروتين نفسه، إحنا بنقيس النيتروجين بجهاز كلداهل ونضربه في 6.25 لأن بروتينات العلف في المتوسط فيها 16% نيتروجين (100 ÷ 16 = 6.25)، وده بيشمل البروتين الحقيقي وأي نيتروجين غير بروتيني.
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- 4. الدهون -->
-                <tr>
-                    <td><strong>EE % (Ether Extract / Crude Fat)</strong></td>
-                    <td>EE % = [ (Wa − Wc) ÷ Ws ] × 100</td>
-                    <td>
-                        Crude lipids, waxes, and pigments dissolved and extracted using non-polar ether solvents (Soxhlet).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            مستخلص الإيثر (الدهن الخام).. بندوّب العينة في مذيب الإيثر بجهاز السوكسليت؛ الإيثر بيسحب كل الزيوت والدهون والشموع والصبغات ويفصلهم، وده أغنى جزء بيدي طاقة مركزة في العليقة.
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- 5. الكربوهيدرات: التوضيح الشامل والفرق بين CF و NFE -->
-                <tr>
-                    <td><strong>Carbohydrates in Feed (CHO)</strong></td>
-                    <td>Total CHO = CF % + NFE %</td>
-                    <td>
-                        Dietary carbohydrates split analytically into structural/fibrous wall (CF) and non-structural soluble cell contents (NFE).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            <strong>الكربوهيدرات الكلية في العلف:</strong> بتتقسم في التحليل لفرعين أساسيين هما <strong>CF</strong> و <strong>NFE</strong>؛ الاتنين سكريات وكربوهيدرات، بس واحد جدار خلايا خشن وصعب الهضم، والتاني حشو الخلية الداخلي اللي كله سكر ونشا سهل الهضم جداً.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>CF % (Crude Fiber)</strong></td>
-                    <td>CF % = [ (Dry Residue − Ash) ÷ Ws ] × 100</td>
-                    <td>
-                        <strong>Structural Carbohydrates:</strong> Insoluble cellulose, hemicellulose, and lignin remaining after sequential boiling in dilute acid (1.25% H2SO4) and dilute alkali (1.25% NaOH).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            <strong>الألياف الخام (كربوهيدرات هيكلية معقدة):</strong> دي كربوهيدرات جدار النبات الخشنة (سليلوز ولجنين)؛ بنغليها في حمض مخفف ثم قلوي مخفف ومبتدوبش. في المعدة البسيطة زي الدواجن مبتتهضمش تقريباً، لكن في المجترات بكتيريا الكرش بتخمرها وتستفيد منها وتخلي الحيوان يجتر وينظم حموضة كرشه.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>NFE % (Nitrogen Free Extract)</strong></td>
-                    <td>NFE % = 100 − (Moisture + CP + CF + EE + Ash)</td>
-                    <td>
-                        <strong>Non-Structural Soluble Carbohydrates:</strong> Calculated by difference; represents highly digestible starches, sucrose, fructans, and simple sugars inside plant cells.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            <strong>المستخلص الخالي من النيتروجين (كربوهيدرات ذائبة سهلة):</strong> ده الجزء التاني من الكربوهيدرات؛ ملوش تجربة كيميائية مخصوصة، بنحسبه بطرح باقي التحاليل من 100%. دي النشا والسكريات السهلة الذائبة جوه الحبوب اللي بتتهضم وتمتص بسرعة البرق وتدي طاقة عالية فورية.
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- 6. الطاقة والهضم -->
-                <tr>
-                    <td><strong>DE (Digestible Energy)</strong></td>
-                    <td>DE = Gross Energy Intake − Fecal Energy Output</td>
-                    <td>
-                        The gross caloric intake minus total energy excreted in faeces. Apparent energy digestibility % = (DE / GE) × 100.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            الطاقة المهضومة.. إجمالي السعرات الحرارية اللي الحيوان بلعها في العلف ناقص السعرات اللي نزلت وطردها في الروث؛ يعني شوية الطاقة اللي جسمه عرف يمتصهم ويدخلهم الدورة الدموية.
-                        </div>
-                    </td>
-                </tr>
+                <!-- 1. Lec. 1 & 2: Basic Digestibility, TDN & NR -->
                 <tr>
                     <td><strong>DN (Digestible Nutrients)</strong></td>
                     <td>DN = Nutrient Consumed (Intake) − Nutrient Excreted (Faeces)</td>
                     <td>
                         Absolute physical quantity (g or kg) of nutrient absorbed across the intestinal wall.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            العناصر الغذائية المهضومة الصافية.. الوزن الصافي الفعلي بالجرام أو الكيلو من أي مادة غذائية دخلت مع الأكل ومخرجتش في الروث، يعني استقرت جوه جسم الحيوان.
+                            العناصر الغذائية المهضومة الصافية.. الوزن الصافي الفعلي بالجرام أو الكيلو من أي مادة غذائية دخلت مع الأكل ومخرجتش في الروث.
                         </div>
                     </td>
                 </tr>
@@ -1385,37 +1275,7 @@
                     <td>
                         Apparent digestion coefficient; treats all fecal excretion as unabsorbed feed residue.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            معامل الهضم الظاهري.. النسبة المئوية لكمية الهضم؛ بنعتبر فيها إن كل اللي نزل في الروث ده بواقي علف متهضمتش، من غير ما نفصل إفرازات جسم الحيوان نفسه.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>True Digestibility (TD %)</strong></td>
-                    <td>[ (Intake − (Faeces − MFN)) ÷ Intake ] × 100</td>
-                    <td>
-                        Corrects for endogenous metabolic fecal loss (MFN: ~0.5g / 100g meal intake) from sloughed mucosa, digestive enzymes, and microbial debris.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            معامل الهضم الحقيقي.. هنا بنشيل من الروث الخلايا الميتة والإنزيمات الهاضمة بتاعة جدار أمعاء الحيوان نفسه (MFN) عشان نعرف نسبة هضم العلف الصافية بدقة ومظلومية أقل.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Indicator Method</strong></td>
-                    <td>[ (Marker in faeces − Marker in food) ÷ Marker in faeces ]</td>
-                    <td>
-                        Digestion assessment without total fecal collection using inert, indigestible external/internal markers (e.g. Chromic oxide Cr2O3 or acid-insoluble ash).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            طريقة المؤشر (الماركر).. بدل ما نجمع روث الحيوان كله على مدار أيام ونوزنه، بنحط في العلف صبغة أو مادة مبتتهضمش (زي أكسيد الكروم)؛ وبنقيس تركيزها في عينة صغيرة من الروث وبمعادلة بسيطة بنعرف الهضم في ثواني.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Feed Efficiency & FCR</strong></td>
-                    <td>FE = Live Weight Gain ÷ Feed Intake | FCR = 1 ÷ FE</td>
-                    <td>
-                        Feed efficiency measures growth per unit feed; Feed Conversion Ratio (FCR) is the feed required per unit gain.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            كفاءة التحويل ومعدل التحويل (FCR).. كفاءة التحويل بتقول الحيوان بيزيد كام كيلو وزن قصاد كل كيلو علف بياكله، والـ FCR هو العكس (أكل كام كيلو علف عشان يزيد كيلو لحم واحد.. وكل ما الـ FCR يقل كل ما كانت المزرعة كسبانة أكتر).
+                            معامل الهضم الظاهري.. النسبة المئوية لكمية الهضم؛ بنعتبر فيها إن كل اللي نزل في الروث ده بواقي علف متهضمتش.
                         </div>
                     </td>
                 </tr>
@@ -1423,9 +1283,29 @@
                     <td><strong>TDN % (Total Digestible Nutrients)</strong></td>
                     <td>TDN % = DCP + DNFE + DCF + (DEE × 2.25)</td>
                     <td>
-                        Comprehensive energy index summing digestible proximate fractions, weighting ether extract by 2.25 due to its higher caloric density (9.4 vs 4.15 Kcal/g).
+                        Comprehensive energy index summing digestible proximate fractions, weighting ether extract by 2.25.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            مجموع المركبات الغذائية المهضومة.. مقياس طاقة كلاسيكي بنجمع فيه البروتين والنشويات والألياف المهضومة، وبنضرب الدهن المهضوم في 2.25 لأن جرام الدهن بيدي سعرات وطاقة أد جرام الكربوهيدرات والبروتين مرتين وربع.
+                            مجموع المركبات الغذائية المهضومة.. مقياس طاقة كلاسيكي بنجمع فيه البروتين والنشويات والألياف المهضومة، وبنضرب الدهن في 2.25.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Carbohydrates in Feed (CHO)</strong></td>
+                    <td>Total CHO = CF % + NFE %</td>
+                    <td>
+                        Dietary carbohydrates split analytically into structural and non-structural components.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            الكربوهيدرات الكلية في العلف.. بتتقسم في التحليل لألياف خشنة CF ومستخلص خالٍ من النيتروجين NFE.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>True Digestibility (TD %)</strong></td>
+                    <td>[ (Intake − (Faeces − MFN)) ÷ Intake ] × 100</td>
+                    <td>
+                        Corrects for endogenous metabolic fecal loss (MFN).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            معامل الهضم الحقيقي.. هنا بنشيل من الروث الخلايا الميتة والإنزيمات الهاضمة (MFN) عشان نعرف نسبة هضم العلف بدقة.
                         </div>
                     </td>
                 </tr>
@@ -1433,83 +1313,51 @@
                     <td><strong>NR (Nutritive Ratio)</strong></td>
                     <td>NR = 1 : [ (TDN − DCP) ÷ DCP ]</td>
                     <td>
-                        Ratio of non-protein digestible energy nutrients to digestible crude protein; Narrow (<1:6) for growth/lactation, Wide (>1:8) for maintenance.
+                        Ratio of non-protein digestible energy nutrients to digestible crude protein.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            النسبة الغذائية.. نسبة بتوضح التوازن بين الطاقة والبروتين في العليقة (1 بروتين قصاد كام طاقة)؛ لو ضيقة (<1:6) يعني بروتينها عالي تناسب عجل بيكبر أو بقرة حلابة، ولو واسعة (>1:8) يعني طاقتها عالية وبروتينها قليل تناسب حيوان كبير مش مطلوب منه إنتاج غير إنه يفضل عايش.
+                            النسبة الغذائية.. نسبة بتوضح التوازن بين الطاقة والبروتين في العليقة (1 بروتين قصاد كام طاقة).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Body Composition Dynamics</strong></td>
+                    <td>Muscle % = Water % ÷ 0.73 | Fat % = 100 − Muscle %</td>
+                    <td>
+                        Pace-Rathbun hydration model estimating lean muscle and body fat from total body water percentage.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            ديناميكية كتلة الجسم.. بنقيس نسبة المية في جسم الحيوان ونقسمها على 0.73 لنعرف نسبة العضلات.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Indicator Method</strong></td>
+                    <td>[ (Marker in faeces − Marker in food) ÷ Marker in faeces ]</td>
+                    <td>
+                        Digestion assessment without total fecal collection using inert markers.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            طريقة المؤشر (الماركر).. لقياس الهضم باستخدام صبغة أو مادة مبتتهضمش من غير ما نجمع الروث كله.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Feed Efficiency & FCR</strong></td>
+                    <td>FE = Live Weight Gain ÷ Feed Intake | FCR = 1 ÷ FE</td>
+                    <td>
+                        Feed efficiency measures growth per unit feed; FCR is feed required per unit gain.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            كفاءة التحويل ومعدل التحويل (FCR).. العلف اللازم لزيادة وحدة الوزن.
                         </div>
                     </td>
                 </tr>
 
-                <!-- 7. تقييم جودة البروتين والقيمة الحيوية -->
+                <!-- 2. Lec. 3: Energy, Protein & Evaluation Laws -->
                 <tr>
-                    <td><strong>PE (Protein Equivalent)</strong></td>
-                    <td>PE = DTP + (DNPN / 2) = (DCP + DTP) / 2</td>
+                    <td><strong>DE (Digestible Energy)</strong></td>
+                    <td>DE = Gross Energy Intake − Fecal Energy Output</td>
                     <td>
-                        Ruminant protein value accounting for digestible true protein and 50% utilization efficiency of digestible non-protein nitrogen (NPN).
+                        Gross caloric intake minus total energy excreted in faeces.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            مكافئ البروتين في المجترات.. بيجمع بين البروتين الحقيقي المهضوم (DTP) والنيتروجين غير البروتيني المهضوم (DNPN زي اليوريا)، وبنقسم النيتروجين غير البروتيني على 2 لأن بكتيريا الكرش بتستفيد منه بنص كفاءة البروتين الأصلي تقريباً.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>PER (Protein Efficiency Ratio)</strong></td>
-                    <td>PER = Animal Body Weight Gain (g) ÷ Crude Protein Intake (g)</td>
-                    <td>
-                        Bioassay assessing protein nutritional quality by measuring mass gained per gram of test dietary protein eaten.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            معدل كفاءة البروتين.. تجربة بنأكل فيها حيوان تجارب بروتين معين ونشوف هيزيد كام جرام وزن في جسمه قصاد كل جرام بروتين أكله؛ ده بيعرفنا قد إيه البروتين ده متوازن وأحماضه الأمينية ممتازة للبناء.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Apparent BV (Biological Value)</strong></td>
-                    <td>[ N intake − (Faecal N + Urinary N) ] ÷ [ N intake − Faecal N ] × 100</td>
-                    <td>
-                        Percentage of absorbed nitrogen retained in the animal body for tissue synthesis and production.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            القيمة الحيوية الظاهرية.. نسبة النيتروجين اللي امتصه جسم الحيوان وعرف يحتفظ بيه ومخرجوش في البول؛ يعني قد إيه من البروتين اللي دخل الدم اتحول لعضلات ولحم وما نزلش فضلات.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>True BV (Biological Value)</strong></td>
-                    <td>[ N intake − (FN − MFN) − (UN − EUN) ] ÷ [ N intake − (FN − MFN) ] × 100</td>
-                    <td>
-                        Biological value corrected for metabolic fecal nitrogen (MFN) and endogenous urinary nitrogen (EUN) from body protein turnover.
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            القيمة الحيوية الحقيقية.. نفس المعادلة بس بنخصم منها النيتروجين الأيضي في الروث (MFN) الناتج عن إفرازات القناة الهضمية، ونيتروجين البول الداخلي (EUN) الناتج عن تكسير وهدم الأنسجة؛ عشان نطلع القيمة الحقيقية للبروتين المعطى بدون أي تداخلات.
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Chemical Score (CS %)</strong></td>
-                    <td>(Limiting Essential AA in Test Feed ÷ Same AA in Whole Egg Protein) × 100</td>
-                    <td>
-                        Chemical index evaluating protein quality against the amino acid profile of whole egg protein (Lysine = 7.2%).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            السكور الكيميائي للبروتين.. تحليل معملي بنشوف فيه أقل حمض أميني أساسي (Limiting AA) موجود في العلف ونقارنه بنسبته في بروتين البيض الكامل (اللي بيعتبر المعيار الذهبي المثالي 100% لبناء الأنسجة).
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>GPV (Gross Protein Value)</strong></td>
-                    <td>Weight gain per g test protein (A) ÷ Weight gain per g Casein standard (⁰A)</td>
-                    <td>
-                        Relative biological assay referencing casein milk protein as the standard (1.0).
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            القيمة الكلية للبروتين.. مقارنة بيولوجية بنشوف فيها العلف بتاعنا بيزود وزن الحيوان قد إيه، ونقسمه على الزيادة اللي بيعملها بروتين الكازين (بروتين اللبن النقي القياسي).
-                        </div>
-                    </td>
-                </tr>
-
-                <!-- 8. أنظمة الطاقة المتقدمة وتقسيم الطاقة -->
-                <tr>
-                    <td><strong>Starch Equivalent (SE)</strong></td>
-                    <td>(Fat stored per 1g test food ÷ Fat stored per 1g pure starch [0.248 g]) × 100</td>
-                    <td>
-                        Kellner's net energy evaluation expressing feeding production value relative to 1g of pure digested starch[cite: 2].
-                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            مكافئ النشا (نظام كيلنر).. بنقيس العلف ده هيبني دهن في جسم حيوان التسمين قد إيه (لكل 1 جرام)، مقارنة باللي بيبنيه 1 جرام من النشا النقي (النشا بيبني 0.248 جرام دهن صافي في الحيوان)[cite: 2].
+                            الطاقة المهضومة.. إجمالي الطاقة في الأكل ناقص الطاقة في الروث.
                         </div>
                     </td>
                 </tr>
@@ -1517,9 +1365,9 @@
                     <td><strong>ME (Metabolizable Energy)</strong></td>
                     <td>ME = DE − (Urinary Energy + Fermentation Gas Energy)</td>
                     <td>
-                        Portion of gross intake energy available for metabolism after accounting for faecal, urinary, and combustible gaseous (methane) losses.
+                        Portion of gross intake energy available for metabolism after accounting for faecal, urinary, and gas losses.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            الطاقة الممثلة (التمثيلية).. دي الطاقة اللي بتفضل في جسم الحيوان بعد ما نطرح طاقة الروث والبول والغازات اللي بتخرج من الكرش (زي غاز الميثان).
+                            الطاقة الممثلة.. الطاقة اللي بتفضل بعد طرح طاقة الروث والبول والغازات.
                         </div>
                     </td>
                 </tr>
@@ -1527,31 +1375,181 @@
                     <td><strong>NE (Net Energy) & HI</strong></td>
                     <td>NE = ME − Heat Increment (HI)</td>
                     <td>
-                        Net energy available exclusively for maintenance (NEm) and production (NEp: growth/lactation) after subtracting the heat lost during eating, digestion, and fermentation (HI).
+                        Net energy available exclusively for maintenance and production after subtracting heat increment.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            الطاقة الصافية (NE) والزيادة الحرارية (HI).. بنطرح الحرارة اللي بيفرزها ويضيعها الحيوان أثناء مضغ وتخمير وهضم الأكل (Heat Increment)، فيتبقى الطاقة الصافية اللي بتروح صافي لبناء اللحم واللبن وحفظ حياة الحيوان.
+                            الطاقة الصافية والزيادة الحرارية.. الطاقة المتبقية بعد طرح حرارة الهضم والتخمير.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Starch Equivalent (SE)</strong></td>
+                    <td>(Fat stored per 1g test food ÷ Fat stored per 1g pure starch [0.248 g]) × 100</td>
+                    <td>
+                        Kellner's net energy evaluation expressing feeding production value relative to 1g of pure digested starch.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            مكافئ النشا.. دهن العلف مقارنة بالدهن اللي بيبنيه 1 جرام من النشا النقي (0.248 جم).
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>CP % (Crude Protein)</strong></td>
+                    <td>CP % = N % × 6.25 (Kjeldahl)</td>
+                    <td>
+                        Total nitrogen content multiplied by standard conversion factor (6.25).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            البروتين الخام.. نسبة النيتروجين في العلف مضروبة في 6.25.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Digestible Crude Protein (DCP)</strong></td>
+                    <td>DCP = Protein Intake − Protein Output (in Faeces)</td>
+                    <td>
+                        Absolute quantity of crude protein absorbed through the digestive tract.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            البروتين الخام المهضوم.. كمية البروتين الممتصة مطروح منها ما خرج في الروث.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>PER (Protein Efficiency Ratio)</strong></td>
+                    <td>PER = Animal Body Weight Gain (g) ÷ Crude Protein Intake (g)</td>
+                    <td>
+                        Bioassay assessing protein nutritional quality by mass gained per gram of protein eaten.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            معدل كفاءة البروتين.. الزيادة في الوزن مقسومة على كمية البروتين المأكول.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>GPV (Gross Protein Value)</strong></td>
+                    <td>Weight gain per g test protein (A) ÷ Weight gain per g Casein standard (⁰A)</td>
+                    <td>
+                        Relative biological assay referencing casein milk protein as standard.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            القيمة الكلية للبروتين.. مقارنة زيادة الوزن ببروتين العلف بزيادة وزن بروتين الكازين القياسي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Apparent BV (Biological Value)</strong></td>
+                    <td>[ N intake − (Faecal N + Urinary N) ] ÷ [ N intake − Faecal N ] × 100</td>
+                    <td>
+                        Percentage of absorbed nitrogen retained in the animal body.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            القيمة الحيوية الظاهرية.. نسبة النيتروجين الممتص المحتفظ به في الجسم.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>True BV (Biological Value)</strong></td>
+                    <td>[ N intake − (FN − MFN) − (UN − EUN) ] ÷ [ N intake − (FN − MFN) ] × 100</td>
+                    <td>
+                        Biological value corrected for metabolic fecal nitrogen (MFN) and endogenous urinary nitrogen (EUN).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            القيمة الحيوية الحقيقية.. بخصم MFN من الروث و EUN من البول لتنقية الحسابات.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Chemical Score (CS %)</strong></td>
+                    <td>(Limiting Essential AA in Test Feed ÷ Same AA in Whole Egg Protein) × 100</td>
+                    <td>
+                        Chemical index evaluating protein quality against whole egg protein profile.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            السكور الكيميائي.. نسبة أقل حمض أميني أساسي في العلف مقارنة ببروتين البيض القياسي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>PE (Protein Equivalent)</strong></td>
+                    <td>PE = DTP + (DNPN / 2) = (DCP + DTP) / 2</td>
+                    <td>
+                        Ruminant protein value accounting for digestible true protein and NPN utilization.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            مكافئ البروتين.. للجمتات، بيجمع البروتين الحقيقي المهضوم ونصف النيتروجين غير البروتيني.
                         </div>
                     </td>
                 </tr>
 
-                <!-- 9. كتلة الجسم وأمراض التغذية الإكلينيكية -->
+                <!-- 3. General Lab & Proximate Analysis & Reference Items -->
                 <tr>
-                    <td><strong>Body Composition Dynamics</strong></td>
-                    <td>Muscle % = Water % ÷ 0.73 | Fat % = 100 − Muscle %</td>
+                    <td><strong>Moisture (Water %)</strong></td>
+                    <td>Moisture % = 100 − DM % = [ (Ws − Dry Sample) ÷ Ws ] × 100</td>
                     <td>
-                        Pace-Rathbun hydration model estimating lean muscle, body fat, protein (80% of dry fat-free lean), and ash (20% of dry fat-free lean) from total body water percentage.
+                        The free and bound water evaporated by oven drying at 100–105°C.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            ديناميكية كتلة الجسم.. بنقيس نسبة المية في جسم الحيوان؛ وبما إن العضل الخالي من الدهن فيه دايماً 73% مية، بنقدر نقسم المية على 0.73 ونعرف نسبة اللحم الأحمر، والباقي بيكون دهن وعظام وبروتين.
+                            نسبة الرطوبة.. المية اللي بتتبخر بالتجفيف في الفرن عند 105 درجة مئوية.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>DM % (Dry Matter)</strong></td>
+                    <td>DM % = [ (W0 − Wd) ÷ Ws ] × 100</td>
+                    <td>
+                        Oven-dry residue containing all nutrients minus moisture.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            المادة الجافة.. البودرة المتبقية بعد طيران المية بالكامل.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Ash % (Crude Minerals)</strong></td>
+                    <td>Ash % = [ (Wa − Wc) ÷ Ws ] × 100</td>
+                    <td>
+                        Inorganic mineral residue remaining after muffle furnace incineration at 550°C.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            الرماد الخام.. العناصر المعدنية المتبقية بعد الحرق في فرن 550 درجة مئوية.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>OM % (Organic Matter)</strong></td>
+                    <td>OM % = 100 − Ash %</td>
+                    <td>
+                        Total combustible portion of feed dry matter.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            المادة العضوية.. الجزء القابل للحتراق والحرق من العلف الجاف.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>EE % (Ether Extract / Crude Fat)</strong></td>
+                    <td>EE % = [ (Wa − Wc) ÷ Ws ] × 100</td>
+                    <td>
+                        Crude lipids, waxes, and pigments extracted using ether (Soxhlet).
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            مستخلص الإيثر.. الدهون والزيوت المستخلصة بجهاز السوكسليت.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>CF % (Crude Fiber)</strong></td>
+                    <td>CF % = [ (Dry Residue − Ash) ÷ Ws ] × 100</td>
+                    <td>
+                        Structural carbohydrates remaining after sequential boiling in acid and alkali.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            الألياف الخام.. جدار الخلية النباتية المتبقي بعد الغلي في الحمض والقلوي.
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>NFE % (Nitrogen Free Extract)</strong></td>
+                    <td>NFE % = 100 − (Moisture + CP + CF + EE + Ash)</td>
+                    <td>
+                        Non-structural soluble carbohydrates calculated by difference.
+                        <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
+                            المستخلص الخالي من النيتروجين.. السكريات والنشا الذائبة المحسوبة بالطرح.
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>SARA (Subacute Ruminal Acidosis)</strong></td>
-                    <td>Clinical Pathology (Ruminal pH < 5.6 for >3 hours/day)</td>
+                    <td>Clinical Pathology (Ruminal pH &lt; 5.6 for &gt;3 hours/day)</td>
                     <td>
-                        A metabolic disorder occurring when ruminal pH drops below 5.6 for prolonged periods, typically caused by excess rapidly fermentable grains and insufficient effective fiber (eNDF).
+                        A metabolic disorder occurring when ruminal pH drops due to excess rapidly fermentable grains.
                         <div style="margin-top: 6px; color: var(--primary); font-size: 0.88rem; direction: rtl; text-align: right;">
-                            حموضة الكرش تحت الحادة.. مرض بيحصل لما حموضة الكرش (pH) تنزل تحت 5.6 لساعات طويلة بسبب زيادة الحبوب والنشا السريعة وقلة الألياف الخشنة والدريس، وده بيوقف حركة الكرش ويقلل إنتاج اللبن ويسبب عرج والتهابات في الحافر.
+                            حموضة الكرش تحت الحادة.. اضطراب استقلابي نتيجة انخفاض pH الكرش لفترات طويلة.
                         </div>
                     </td>
                 </tr>
