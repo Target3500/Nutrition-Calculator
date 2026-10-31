@@ -2494,139 +2494,149 @@
         generateQuiz();
     }
 
-        const quizGenerators = [
+            const quizGenerators = [
         () => {
-            let feedKg = (1.2 + Math.random() * 0.8).toFixed(2);
-            let feedKcal = (3.8 + Math.random() * 0.8).toFixed(2);
-            let fecesKg = (0.5 + Math.random() * 0.4).toFixed(2);
-            let fecesKcal = (4.0 + Math.random() * 0.6).toFixed(2);
-            let inE = feedKg * 1000 * feedKcal;
-            let outE = fecesKg * 1000 * fecesKcal;
+            let feedKg = (1.5 + Math.random() * 0.5).toFixed(2);
+            let feedKcal = (4.2 + Math.random() * 0.4).toFixed(2);
+            // ضبط كمية الروث وطاقته لتضمن معامل هضم فسيولوجي طبيعي (55% - 75%)
+            let fecesKg = (parseFloat(feedKg) * (0.28 + Math.random() * 0.12)).toFixed(2);
+            let fecesKcal = (4.0 + Math.random() * 0.4).toFixed(2);
+            let inE = parseFloat(feedKg) * 1000 * parseFloat(feedKcal);
+            let outE = parseFloat(fecesKg) * 1000 * parseFloat(fecesKcal);
             currentQuizCorrect = ((inE - outE) / inE) * 100;
             currentQuizUnit = "%";
             return `A sheep ate <strong>${feedKg} Kg</strong> DM (${feedKcal} Kcal/g) and excreted <strong>${fecesKg} Kg</strong> faeces (${fecesKcal} Kcal/g).<br>Calculate <strong>Apparent Digestibility of Energy (%)</strong>:`;
         },
         () => {
-            let dcp = Math.floor(Math.random() * 12) + 8;
-            let dnfe = Math.floor(Math.random() * 20) + 38;
-            let dcf = Math.floor(Math.random() * 12) + 10;
-            let dee = Math.floor(Math.random() * 4) + 2;
-            currentQuizCorrect = dcp + dnfe + dcf + (dee * 2.25);
+            let dcp = Math.floor(Math.random() * 6) + 8; // 8 - 13%
+            let dnfe = Math.floor(Math.random() * 10) + 40; // 40 - 49%
+            let dcf = Math.floor(Math.random() * 8) + 12; // 12 - 19%
+            let dee = (1.5 + Math.random() * 2.0).toFixed(1); // 1.5 - 3.5%
+            currentQuizCorrect = dcp + dnfe + dcf + (parseFloat(dee) * 2.25);
             currentQuizUnit = "%";
             return `Calculate <strong>Total Digestible Nutrients (TDN %)</strong>:<br>DCP = <strong>${dcp}%</strong> | DNFE = <strong>${dnfe}%</strong> | DCF = <strong>${dcf}%</strong> | DEE = <strong>${dee}%</strong>`;
         },
         () => {
-            let gain = Math.floor(Math.random() * 35) + 35;
-            let intake = Math.floor(Math.random() * 12) + 14;
+            let gain = Math.floor(Math.random() * 25) + 35; // 35 - 59g
+            let intake = Math.floor(Math.random() * 8) + 15; // 15 - 22g -> PER بين 1.6 و 3.5 طبيعي
             currentQuizCorrect = gain / intake;
             currentQuizUnit = "";
             return `Calculate the <strong>Protein Efficiency Ratio (PER)</strong>:<br>Weight Gain = <strong>${gain} g</strong> | Protein Intake = <strong>${intake} g</strong>`;
         },
         () => {
-            let foodInd = (1.5 + Math.random() * 1.5).toFixed(1);
-            let fecesInd = (6.0 + Math.random() * 4.0).toFixed(1);
-            currentQuizCorrect = ((fecesInd - foodInd) / fecesInd) * 100;
+            let foodInd = (1.5 + Math.random() * 1.0).toFixed(1); // 1.5 - 2.5
+            let fecesInd = (parseFloat(foodInd) * (3.0 + Math.random() * 2.0)).toFixed(1); // مؤشر الروث دائماً أعلى
+            currentQuizCorrect = ((parseFloat(fecesInd) - parseFloat(foodInd)) / parseFloat(fecesInd)) * 100;
             currentQuizUnit = "%";
             return `Calculate digestibility (%) using the <strong>Indicator Method</strong>:<br>Food Marker = <strong>${foodInd} g/Kg</strong> | Faeces Marker = <strong>${fecesInd} g/Kg</strong>`;
         },
         () => {
-            let tdn = Math.floor(Math.random() * 20) + 60;
-            let dcp = Math.floor(Math.random() * 7) + 8;
+            let tdn = Math.floor(Math.random() * 15) + 65; // 65 - 79%
+            let dcp = Math.floor(Math.random() * 5) + 8; // 8 - 12% -> NR طبيعي بين 1:4.5 و 1:8.5
             currentQuizCorrect = (tdn - dcp) / dcp;
             currentQuizUnit = " (1 : X)";
             return `Calculate X in <strong>Nutritive Ratio (1 : X)</strong>:<br>TDN = <strong>${tdn}%</strong> | DCP = <strong>${dcp}%</strong>`;
         },
         () => {
-            let wd = Math.floor(Math.random() * 20) + 90;
-            let ws = Math.floor(Math.random() * 30) + 40;
-            let drySample = (ws * (0.80 + Math.random() * 0.15)).toFixed(1);
-            let w0 = (wd + parseFloat(drySample)).toFixed(1);
-            currentQuizCorrect = ((w0 - wd) / ws) * 100;
+            let wd = Math.floor(Math.random() * 15) + 90;
+            let ws = Math.floor(Math.random() * 20) + 40;
+            // المادة الجافة للأعلاف الهوائية بين 85% و 92%
+            let dmPct = 0.85 + Math.random() * 0.07;
+            let drySample = (ws * dmPct).toFixed(2);
+            let w0 = (wd + parseFloat(drySample)).toFixed(2);
+            currentQuizCorrect = ((parseFloat(w0) - wd) / ws) * 100;
             currentQuizUnit = "%";
             return `Sample Ws = <strong>${ws}g</strong>, Dish+Dry W0 = <strong>${w0}g</strong>, Dish Wd = <strong>${wd}g</strong>.<br>Calculate <strong>Dry Matter (DM %)</strong>:`;
         },
         () => {
-            let wc = Math.floor(Math.random() * 20) + 90;
-            let ws = (4.0 + Math.random() * 2.0).toFixed(1);
-            let ashWt = (ws * (0.04 + Math.random() * 0.08)).toFixed(3);
+            let wc = Math.floor(Math.random() * 15) + 90;
+            let ws = (4.5 + Math.random() * 1.5).toFixed(1);
+            // نسبة الرماد الطبيعية بين 5% و 10%
+            let ashWt = (parseFloat(ws) * (0.05 + Math.random() * 0.05)).toFixed(3);
             let wa = (wc + parseFloat(ashWt)).toFixed(3);
-            currentQuizCorrect = ((wa - wc) / ws) * 100;
+            currentQuizCorrect = ((parseFloat(wa) - wc) / parseFloat(ws)) * 100;
             currentQuizUnit = "%";
             return `Sample Ws = <strong>${ws}g</strong>, Crucible+Ash Wa = <strong>${wa}g</strong>, Empty Crucible Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ash %</strong>:`;
         },
         () => {
-            let ws = (1.5 + Math.random() * 1.0).toFixed(1);
-            let cfWt = (ws * (0.05 + Math.random() * 0.15)).toFixed(3);
-            let a = (0.3 + Math.random() * 0.3).toFixed(3);
-            let d = (parseFloat(a) + parseFloat(cfWt)).toFixed(3);
-            currentQuizCorrect = ((d - a) / ws) * 100;
+            let ws = 2.0; // وزن قياسي معتمد في المعمل
+            let a = 0.400; // وزن البوتقة مع الرماد
+            let cfPct = 0.08 + Math.random() * 0.14; // ألياف بين 8% و 22%
+            let cfWt = ws * cfPct;
+            let d = (a + cfWt).toFixed(3);
+            currentQuizCorrect = ((parseFloat(d) - a) / ws) * 100;
             currentQuizUnit = "%";
-            return `Sample Ws = <strong>${ws}g</strong>, Residue+Dish = <strong>${d}g</strong>, Ash+Dish = <strong>${a}g</strong>.<br>Calculate <strong>Crude Fiber (CF %)</strong>:`;
+            return `Sample Ws = <strong>${ws.toFixed(1)}g</strong>, Residue+Dish = <strong>${d}g</strong>, Ash+Dish = <strong>${a.toFixed(3)}g</strong>.<br>Calculate <strong>Crude Fiber (CF %)</strong>:`;
         },
         () => {
-            let wc = Math.floor(Math.random() * 15) + 45;
-            let ws = (1.5 + Math.random() * 1.5).toFixed(1);
-            let fatWt = (ws * (0.03 + Math.random() * 0.08)).toFixed(3);
-            let wa = (wc + parseFloat(fatWt)).toFixed(3);
-            currentQuizCorrect = ((wa - wc) / ws) * 100;
+            let wc = (50.0 + Math.random() * 5.0).toFixed(3);
+            let ws = 2.0;
+            let eePct = 0.025 + Math.random() * 0.045; // دهن خام بين 2.5% و 7%
+            let fatWt = ws * eePct;
+            let wa = (parseFloat(wc) + fatWt).toFixed(3);
+            currentQuizCorrect = ((parseFloat(wa) - parseFloat(wc)) / ws) * 100;
             currentQuizUnit = "%";
-            return `Sample Ws = <strong>${ws}g</strong>, Flask+Fat Wa = <strong>${wa}g</strong>, Flask Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ether Extract (EE %)</strong>:`;
+            return `Sample Ws = <strong>${ws.toFixed(1)}g</strong>, Flask+Fat Wa = <strong>${wa}g</strong>, Flask Wc = <strong>${wc}g</strong>.<br>Calculate <strong>Ether Extract (EE %)</strong>:`;
         },
         () => {
-            let w = Math.floor(Math.random() * 5) + 8;
-            let cp = Math.floor(Math.random() * 8) + 14;
-            let cf = Math.floor(Math.random() * 5) + 4;
-            let ee = Math.floor(Math.random() * 3) + 2;
-            let ash = Math.floor(Math.random() * 4) + 6;
+            let w = Math.floor(Math.random() * 4) + 9; // رطوبة 9 - 12%
+            let cp = Math.floor(Math.random() * 8) + 12; // بروتين 12 - 19%
+            let cf = Math.floor(Math.random() * 6) + 6; // ألياف 6 - 11%
+            let ee = Math.floor(Math.random() * 3) + 2; // دهن 2 - 4%
+            let ash = Math.floor(Math.random() * 4) + 5; // رماد 5 - 8%
             currentQuizCorrect = 100 - (w + cp + cf + ee + ash);
             currentQuizUnit = "%";
             return `Moisture = <strong>${w}%</strong>, CP = <strong>${cp}%</strong>, CF = <strong>${cf}%</strong>, EE = <strong>${ee}%</strong>, Ash = <strong>${ash}%</strong>.<br>Calculate <strong>NFE %</strong>:`;
         },
         () => {
-            let v = (18 + Math.random() * 15).toFixed(1);
-            let w = (1.0 + Math.random() * 0.8).toFixed(1);
-            let np = (v * 0.0014 / w) * 100;
+            let w = (1.2 + Math.random() * 0.6).toFixed(1); // عينة 1.2 - 1.8 جم
+            let targetCP = 12 + Math.random() * 12; // بروتين طبيعي 12 - 24%
+            let targetN = targetCP / 6.25;
+            let v = ((targetN * parseFloat(w)) / 0.14).toFixed(1); // حساب دقيق لحجم الحمض
+            let np = (parseFloat(v) * 0.0014 / parseFloat(w)) * 100;
             currentQuizCorrect = np * 6.25;
             currentQuizUnit = "%";
             return `Acid Vol = <strong>${v} mL</strong> (N/10), Sample Wt = <strong>${w} g</strong>.<br>Calculate <strong>Crude Protein (CP %)</strong>:`;
         },
         () => {
-            let dtp = Math.floor(Math.random() * 8) + 9;
-            let npn = Math.floor(Math.random() * 4) + 1;
+            let dtp = Math.floor(Math.random() * 6) + 10; // 10 - 15%
+            let npn = Math.floor(Math.random() * 3) + 2; // 2 - 4%
             currentQuizCorrect = dtp + (npn / 2);
             currentQuizUnit = "%";
             return `Digestible True Protein (DTP) = <strong>${dtp}%</strong> | Digestible NPN = <strong>${npn}%</strong>.<br>Calculate <strong>Protein Equivalent (PE)</strong>:`;
         },
         () => {
-            let ni = Math.floor(Math.random() * 8) + 14;
-            let fn = (1.5 + Math.random() * 1.5).toFixed(1);
-            let un = (2.0 + Math.random() * 2.0).toFixed(1);
-            currentQuizCorrect = ((ni - (parseFloat(fn) + parseFloat(un))) / (ni - parseFloat(fn))) * 100;
+            let ni = Math.floor(Math.random() * 6) + 16; // N intake 16 - 21g
+            let fn = (parseFloat(ni) * (0.20 + Math.random() * 0.08)).toFixed(1); // هضم بروتين 72 - 80%
+            let absorbedN = parseFloat(ni) - parseFloat(fn);
+            // ضبط البول ليكون بين 25% و 40% من النيتروجين الممتص، ليكون Apparent BV دائماً بين 60% و 75%
+            let un = (absorbedN * (0.25 + Math.random() * 0.15)).toFixed(1);
+            currentQuizCorrect = ((parseFloat(ni) - (parseFloat(fn) + parseFloat(un))) / (parseFloat(ni) - parseFloat(fn))) * 100;
             currentQuizUnit = "%";
             return `N Intake = <strong>${ni}g</strong>, Faecal N = <strong>${fn}g</strong>, Urinary N = <strong>${un}g</strong>.<br>Calculate <strong>Apparent Biological Value (BV %)</strong>:`;
         },
         () => {
-            let eggAA = 7.2;
-            let feedAA = (3.5 + Math.random() * 3.0).toFixed(2);
-            currentQuizCorrect = (feedAA / eggAA) * 100;
+            let eggAA = 7.2; // لايسين البيض المرجعي
+            let feedAA = (3.6 + Math.random() * 2.2).toFixed(2); // نسبة لايسين العلف 3.6 - 5.8
+            currentQuizCorrect = (parseFloat(feedAA) / eggAA) * 100;
             currentQuizUnit = "%";
             return `Limiting AA in Feed = <strong>${feedAA}g/16g N</strong>, Egg Reference = <strong>${eggAA}g</strong>.<br>Calculate <strong>Chemical Score (CS %)</strong>:`;
         },
         () => {
-            let me = Math.floor(Math.random() * 1000) + 2000;
-            let hi = Math.floor(Math.random() * 300) + 450;
+            let me = Math.floor(Math.random() * 600) + 2400; // 2400 - 3000 Kcal
+            let hi = Math.floor(parseFloat(me) * (0.20 + Math.random() * 0.10)); // الزيادة الحرارية 20 - 30% من ME
             currentQuizCorrect = me - hi;
             currentQuizUnit = "Kcal/day";
             return `Metabolizable Energy (ME) = <strong>${me} Kcal</strong>, Heat Increment (HI) = <strong>${hi} Kcal</strong>.<br>Calculate <strong>Net Energy (NE)</strong>:`;
         },
         () => {
-            let water = (65 + Math.random() * 10).toFixed(1);
-            currentQuizCorrect = water / 0.73;
+            // محصورة بدقة فسيولوجية بين 50% و 60% لتظل كتلة العضلات بين 68% و 82% ونسبة الدهن موجبة وطبيعية
+            let water = (50.0 + Math.random() * 10.0).toFixed(1);
+            currentQuizCorrect = parseFloat(water) / 0.73;
             currentQuizUnit = "%";
             return `Total Body Water = <strong>${water}%</strong>.<br>Calculate <strong>Muscle Mass %</strong>:`;
         }
     ];
-
 
     function generateQuiz() {
         let randomIndex = Math.floor(Math.random() * quizGenerators.length);
